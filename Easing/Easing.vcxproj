@@ -137,9 +137,11 @@
   <ItemGroup>
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

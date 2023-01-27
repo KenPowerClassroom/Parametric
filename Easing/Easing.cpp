@@ -22,46 +22,49 @@
 #include <iostream>
 #include <cassert>
 
+#include"Graph.h"
+#include"Viewport.h"
+
 int width = 800;
 int height = 800;
 
-sf::Vector2f toScreenSpace(sf::Vector2f p) {
-    float margin = 100;
-    sf::Vector2i origin(100, 100);
+//sf::Vector2f toScreenSpace(sf::Vector2f p) {
+//    float margin = 100;
+//    sf::Vector2i origin(100, 100);
+//
+//    float boxWidth = width - (2 * margin);
+//    float boxHeight = height - (2 * margin);
+//
+//    float x = margin + boxWidth * p.x;
+//    float y = height - (margin + boxHeight * p.y);
+//
+//    return sf::Vector2f(x, y);
+//
+//}
 
-    float boxWidth = width - (2 * margin);
-    float boxHeight = height - (2 * margin);
+//void drawGraph(int numPoints, float xValues[], float yValues[], sf::RenderWindow& window) {
+//
+//
+//
+//    sf::Vertex line[1001];
+//    line[0].position = toScreenSpace(sf::Vector2f(0, 1));
+//    line[0].color = sf::Color::White;
+//    line[1].position = toScreenSpace(sf::Vector2f(0, 0));
+//    line[1].color = sf::Color::White;
+//    line[2].position = toScreenSpace(sf::Vector2f(1, 0));
+//    line[2].color = sf::Color::White;
+//    window.draw(line, 3, sf::LineStrip);
+//
+//
+//    for (int i = 0; i < numPoints; i++) {
+//        line[i].position = toScreenSpace(sf::Vector2f(xValues[i], yValues[i]));
+//        line[i].color = sf::Color::White;
+//    }
+//    window.draw(line, numPoints, sf::LineStrip);
+//
+//}
 
-    float x = margin + boxWidth * p.x;
-    float y = height - (margin + boxHeight * p.y);
-
-    return sf::Vector2f(x, y);
-
-}
-
-void drawGraph(int numPoints, float xValues[], float yValues[], sf::RenderWindow& window) {
-
-
-
-    sf::Vertex line[1001];
-    line[0].position = toScreenSpace(sf::Vector2f(0, 1));
-    line[0].color = sf::Color::White;
-    line[1].position = toScreenSpace(sf::Vector2f(0, 0));
-    line[1].color = sf::Color::White;
-    line[2].position = toScreenSpace(sf::Vector2f(1, 0));
-    line[2].color = sf::Color::White;
-    window.draw(line, 3, sf::LineStrip);
-
-
-    for (int i = 0; i < numPoints; i++) {
-        line[i].position = toScreenSpace(sf::Vector2f(xValues[i], yValues[i]));
-        line[i].color = sf::Color::White;
-    }
-    window.draw(line, numPoints, sf::LineStrip);
-
-}
-
-void drawBall(sf::Vector2f pos, sf::RenderWindow& window) {
+void drawBall(sf::Vector2f pos, sf::RenderWindow& window, Viewport vp) {
 
     int radius = 25;
     sf::CircleShape circle(radius);
@@ -69,7 +72,7 @@ void drawBall(sf::Vector2f pos, sf::RenderWindow& window) {
 
     circle.setPointCount(100);
 
-    circle.setPosition(toScreenSpace(pos)-sf::Vector2f(radius,0));
+    circle.setPosition(vp.screenSpace(pos)-sf::Vector2f(radius,0));
 
     window.draw(circle);
 }
@@ -79,12 +82,13 @@ void draw(float t) {
 
 }
 
-
 int main() {
+
+    Graph graph;
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
-    width = mode.width;
-    height = mode.height;
-    sf::RenderWindow sfmlWin(mode, "Hello World SFML Window", sf::Style::Fullscreen);
+    width = mode.width *0.8;
+    height = mode.height*0.8;
+    sf::RenderWindow sfmlWin(mode, "Hello World SFML Window");
     sf::Font font;
     //You need to pass the font file location
     if (!font.loadFromFile("GOTHIC.ttf")) {
@@ -98,6 +102,10 @@ int main() {
 
     float t = 0;
     int i = 0;
+
+    Viewport overallVP(width, height, 0, 0);
+    Viewport graphVP(width/2, height/2, width / 4, height/4);
+
 
     while (sfmlWin.isOpen()) {
 
@@ -123,11 +131,11 @@ int main() {
         sfmlWin.clear();
         sfmlWin.draw(message);
 
-        x[i] = t;
-        y[i] = t*t;
+        float y = t * t;
 
-        drawGraph(i, x, y, sfmlWin);
-        drawBall(sf::Vector2f(y[i], -0.05), sfmlWin);
+        graph.addPoint(sf::Vector2f(t, y));
+        graph.drawGraph(sfmlWin, graphVP);
+        drawBall(sf::Vector2f(y, 0.05), sfmlWin, overallVP);
 
 
         sf::sleep(delayTime);

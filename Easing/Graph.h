@@ -1,6 +1,6 @@
 #pragma once
 #include<vector>
-#include <SFML\Graphics.hpp>
+#include"Viewport.h"
 
 class Graph
 {
@@ -8,9 +8,8 @@ class Graph
 
 public:
 
-	void drawGraph(sf::RenderWindow& window);
+	void drawGraph(sf::RenderWindow& window, Viewport& vp);
 	void addPoint(sf::Vector2f point);
 	void reset();
-
 };
 
