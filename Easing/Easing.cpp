@@ -101,13 +101,21 @@ int main() {
     float y[numPoints];
 
     float t = 0;
-    int i = 0;
+
 
     Viewport overallVP(width*0.9, height * 0.9, width * 0.05, height * 0.05, width, height);
     Viewport graphVP(width/2, height/2, width / 4, height / 4, width, height);
 
 
+    sf::Clock deltaClock;
+    sf::Time timeForAnimation = sf::milliseconds(2000);
+    sf::Time delayTime = sf::milliseconds(1);
+    sf::Time pauseTime = sf::milliseconds(500);
+
     while (sfmlWin.isOpen()) {
+        sf::Time dt = deltaClock.restart();
+
+       
 
         sf::Event e;
         while (sfmlWin.pollEvent(e)) {
@@ -126,9 +134,6 @@ int main() {
             }
         }
 
-        sf::Time delayTime = sf::milliseconds(1);
-        sf::Time pauseTime = sf::milliseconds(750);
-
         sfmlWin.clear();
         sfmlWin.draw(message);
 
@@ -144,16 +149,20 @@ int main() {
 
         sfmlWin.display();
 
-        t += 1.0/numPoints;
-
-        i++;
+        if (t < 0.00001) {
+            sf::sleep(pauseTime);
+            deltaClock.restart();
+        }
         //assert(i < 1000);
-        if (t >= 1){
+        if (t >= 1) {
             sf::sleep(pauseTime);
             t = 0;
-            i = 0;
             graph.reset();
+            //deltaClock.restart();
         }
+
+        t += dt.asSeconds() / timeForAnimation.asSeconds();
+ 
     }
     return 0;
 }
