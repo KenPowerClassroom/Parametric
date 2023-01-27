@@ -75,21 +75,24 @@ void drawBall(sf::Vector2f pos, sf::RenderWindow& window) {
 }
 
 
+void draw(float t) {
 
+}
 
 
 int main() {
-    std::string s = "abc";
-    std::cout << "Hello World!\n" << s;
-    sf::RenderWindow sfmlWin(sf::VideoMode(width, height), "Hello World SFML Window");
+    sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+    width = mode.width;
+    height = mode.height;
+    sf::RenderWindow sfmlWin(mode, "Hello World SFML Window", sf::Style::Fullscreen);
     sf::Font font;
     //You need to pass the font file location
     if (!font.loadFromFile("GOTHIC.ttf")) {
         return -1;
     }
-    sf::Text message("Hello, World !", font);
+    sf::Text message("Press ESC to quit", font);
 
-    const int numPoints = 1000;
+    const int numPoints = 1002;
     float x[numPoints];
     float y[numPoints];
 
@@ -105,6 +108,13 @@ int main() {
             case sf::Event::EventType::Closed:
                 sfmlWin.close();
                 break;
+             case sf::Event::KeyPressed:
+                {
+                    //if (event.key.code >= sf::Keyboard::A && event.key.code <= sf::Keyboard::Z) {
+                        sfmlWin.close();
+                        break;
+                
+                }
             }
         }
 
@@ -114,8 +124,7 @@ int main() {
         sfmlWin.draw(message);
 
         x[i] = t;
-        y[i] = sqrt(t);
-        i++;
+        y[i] = t*t;
 
         drawGraph(i, x, y, sfmlWin);
         drawBall(sf::Vector2f(y[i], -0.05), sfmlWin);
@@ -127,6 +136,8 @@ int main() {
 
         t += 1.0/numPoints;
 
+        i++;
+        //assert(i < 1000);
         if (t >= 1){
             t = 0;
             i = 0;
