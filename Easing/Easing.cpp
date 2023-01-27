@@ -63,13 +63,13 @@ void drawGraph(int numPoints, float xValues[], float yValues[], sf::RenderWindow
 
 void drawBall(sf::Vector2f pos, sf::RenderWindow& window) {
 
-    sf::CircleShape circle(25);
+    int radius = 25;
+    sf::CircleShape circle(radius);
     circle.setFillColor(sf::Color(100, 250, 50));
 
-    // change the number of sides (points) to 100
     circle.setPointCount(100);
 
-    circle.setPosition(toScreenSpace(pos));
+    circle.setPosition(toScreenSpace(pos)-sf::Vector2f(radius,0));
 
     window.draw(circle);
 }
