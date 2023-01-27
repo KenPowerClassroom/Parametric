@@ -88,7 +88,7 @@ int main() {
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     width = mode.width *0.8;
     height = mode.height*0.8;
-    sf::RenderWindow sfmlWin(mode, "Hello World SFML Window");
+    sf::RenderWindow sfmlWin(sf::VideoMode(width, height), "Hello World SFML Window");
     sf::Font font;
     //You need to pass the font file location
     if (!font.loadFromFile("GOTHIC.ttf")) {
@@ -103,8 +103,8 @@ int main() {
     float t = 0;
     int i = 0;
 
-    Viewport overallVP(width, height, 0, 0);
-    Viewport graphVP(width/2, height/2, width / 4, height/4);
+    Viewport overallVP(width*0.9, height * 0.9, width * 0.05, height * 0.05, width, height);
+    Viewport graphVP(width/2, height/2, width / 4, height / 4, width, height);
 
 
     while (sfmlWin.isOpen()) {
@@ -127,15 +127,17 @@ int main() {
         }
 
         sf::Time delayTime = sf::milliseconds(1);
+        sf::Time pauseTime = sf::milliseconds(750);
 
         sfmlWin.clear();
         sfmlWin.draw(message);
 
-        float y = t * t;
+        //float y = t * t;
+        float y = t;
 
         graph.addPoint(sf::Vector2f(t, y));
         graph.drawGraph(sfmlWin, graphVP);
-        drawBall(sf::Vector2f(y, 0.05), sfmlWin, overallVP);
+        drawBall(sf::Vector2f(y, 0.2), sfmlWin, overallVP);
 
 
         sf::sleep(delayTime);
@@ -147,8 +149,10 @@ int main() {
         i++;
         //assert(i < 1000);
         if (t >= 1){
+            sf::sleep(pauseTime);
             t = 0;
             i = 0;
+            graph.reset();
         }
     }
     return 0;

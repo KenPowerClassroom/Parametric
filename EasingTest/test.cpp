@@ -28,9 +28,15 @@
 //}
 
 TEST(CornersMappedCorrectly, Viewport) {
-	Viewport vp(100, 100, 10, 10);
+	Viewport vp(100, 100, 10, 10, 1000,1000);
 
 	auto p = vp.screenSpace(sf::Vector2f(0,0));
-	EXPECT_EQ(90, p.x);
-	EXPECT_EQ(90, p.y);
+	EXPECT_EQ(10, p.x);
+	EXPECT_EQ(990, p.y);
+
+	auto q = vp.screenSpace(sf::Vector2f(1, 1));
+	EXPECT_EQ(110, q.x);
+	EXPECT_EQ(890, q.y);
+
+
 }

@@ -4,6 +4,7 @@
 
 class Graph
 {
+	static const int MAX_POINTS = 1010;
 	std::vector<sf::Vector2f> points;
 
 public:
