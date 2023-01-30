@@ -74,7 +74,7 @@ void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
 
 
 float tween(float t, float start, float end) {
-    return start + t*(end - start);
+    return start + t * (end - start);
 }
 float easeIn(float t) {
     return t * t;
@@ -86,6 +86,19 @@ float easeOut(float t) {
 
 float easeInOut(float t) {
     return tween(t, easeIn(t), easeOut(t));
+}
+
+float easeInCubic(float t) {
+    return 16*t*t*t*t*t;
+}
+
+float easeOutCubic(float t) {
+    return 1 - easeInCubic(1 - t);
+}
+
+float easeInOutCubic(float t) {
+    //return tween(t, easeInCubic(t), easeOutCubic(t));
+   return  t < 0.5 ? easeInCubic(t) : easeOutCubic(t);
 }
 
 
@@ -144,10 +157,8 @@ int main() {
         sfmlWin.clear();
         sfmlWin.draw(message);
 
-        ////float y = t * t;
-        //float y = easeIn(t);
-        //float y = easeOut(t);
-        float y = easeInOut(t);
+
+        float y = easeInOutCubic(t);
 
         graph.addPoint(sf::Vector2f(t, y));
         graph.drawGraph(sfmlWin, graphVP);
