@@ -56,6 +56,22 @@ void drawChangeColorBall(float t, sf::RenderWindow& window, Viewport vp) {
     window.draw(circle);
 }
 
+void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
+
+    int endRadius = 50;
+    int radius = 0 + t * (endRadius - 0);
+    sf::CircleShape circle(radius);
+
+    circle.setOrigin(sf::Vector2f(radius, radius));
+    circle.setFillColor(sf::Color(100, 150, 250));
+
+    circle.setPointCount(100);
+
+    circle.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.6)) + sf::Vector2f(50,0));
+
+    window.draw(circle);
+}
+
 
 float easeIn(float t) {
     return t * t;
@@ -133,7 +149,8 @@ int main() {
         graph.addPoint(sf::Vector2f(t, y));
         graph.drawGraph(sfmlWin, graphVP);
         drawBall(sf::Vector2f(y, 0.2), sfmlWin, overallVP);
-        drawChangeColorBall(y, sfmlWin, overallVP);
+        drawChangeColorBall(y, sfmlWin, overallVP);        
+        drawChangeSizeBall(y, sfmlWin, overallVP);
 
 
         sf::sleep(delayTime);
