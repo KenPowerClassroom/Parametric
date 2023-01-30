@@ -82,6 +82,19 @@ void draw(float t) {
 
 }
 
+float easeIn(float t) {
+    return t * t;
+}
+
+float easeOut(float t) {
+    return 1 - (1-t) * (1-t);
+}
+
+float easeInOut(float t) {
+    return easeIn(t) + t * (easeOut(t)-easeIn(t));
+}
+
+
 int main() {
 
     Graph graph;
@@ -112,10 +125,10 @@ int main() {
     sf::Time delayTime = sf::milliseconds(1);
     sf::Time pauseTime = sf::milliseconds(500);
 
+    bool firstFrame = true, lastFrame = false;
     while (sfmlWin.isOpen()) {
         sf::Time dt = deltaClock.restart();
-
-       
+        t += dt.asSeconds() / timeForAnimation.asSeconds();
 
         sf::Event e;
         while (sfmlWin.pollEvent(e)) {
@@ -137,8 +150,10 @@ int main() {
         sfmlWin.clear();
         sfmlWin.draw(message);
 
-        //float y = t * t;
-        float y = t;
+        ////float y = t * t;
+        //float y = easeIn(t);
+        //float y = easeOut(t);
+        float y = easeInOut(t);
 
         graph.addPoint(sf::Vector2f(t, y));
         graph.drawGraph(sfmlWin, graphVP);
@@ -149,19 +164,22 @@ int main() {
 
         sfmlWin.display();
 
-        if (t < 0.00001) {
+        if (firstFrame) {
             sf::sleep(pauseTime);
-            deltaClock.restart();
+            sf::Time dt = deltaClock.restart(); 
+            firstFrame = false;
+
         }
         //assert(i < 1000);
         if (t >= 1) {
             sf::sleep(pauseTime);
             t = 0;
             graph.reset();
-            //deltaClock.restart();
+            firstFrame = true;
+            deltaClock.restart();
         }
 
-        t += dt.asSeconds() / timeForAnimation.asSeconds();
+
  
     }
     return 0;
