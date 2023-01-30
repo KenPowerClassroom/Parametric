@@ -53,6 +53,16 @@ void drawChangeColorBall(float t, sf::RenderWindow& window, Viewport vp) {
 
     circle.setPosition(vp.screenSpace(sf::Vector2f(0.1,0.4)));
 
+    sf::CircleShape outLine(radius);
+    outLine.setFillColor(sf::Color(0,0,0, 0));
+    outLine.setOutlineThickness(2);
+    outLine.setOutlineColor(sf::Color(200, 150, 50));
+
+    outLine.setPointCount(100);
+
+    outLine.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.4)));
+
+    window.draw(outLine);
     window.draw(circle);
 }
 
@@ -68,7 +78,18 @@ void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
     circle.setPointCount(100);
 
     circle.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.6)) + sf::Vector2f(50,0));
+    
+    sf::CircleShape outLine(endRadius);
+    outLine.setOrigin(sf::Vector2f(endRadius, endRadius));
+    outLine.setFillColor(sf::Color(0, 0, 0, 0));
+    outLine.setOutlineThickness(2);
+    outLine.setOutlineColor(sf::Color(100, 150, 250));
 
+    outLine.setPointCount(100);
+
+    outLine.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.6)) + sf::Vector2f(endRadius, 0) );
+
+    window.draw(outLine);
     window.draw(circle);
 }
 
@@ -89,7 +110,7 @@ float easeInOut(float t) {
 }
 
 float easeInCubic(float t) {
-    return 16*t*t*t*t*t;
+    return 4*t*t*t;
 }
 
 float easeOutCubic(float t) {
