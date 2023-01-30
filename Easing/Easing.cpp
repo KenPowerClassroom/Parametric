@@ -73,16 +73,19 @@ void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
 }
 
 
+float tween(float t, float start, float end) {
+    return start + t*(end - start);
+}
 float easeIn(float t) {
     return t * t;
 }
 
 float easeOut(float t) {
-    return 1 - (1-t) * (1-t);
+    return 1 - easeIn(1-t);
 }
 
 float easeInOut(float t) {
-    return easeIn(t) + t * (easeOut(t)-easeIn(t));
+    return tween(t, easeIn(t), easeOut(t));
 }
 
 
