@@ -97,16 +97,17 @@ void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
 float tween(float t, float start, float end) {
     return start + t * (end - start);
 }
-float easeIn(float t) {
-    return t * t;
+float easeInQuadratic(float t) {
+    return 2 * t * t;
 }
 
-float easeOut(float t) {
-    return 1 - easeIn(1-t);
+float easeOutQuadratic(float t) {
+    return 1 - easeInQuadratic(1-t);
 }
 
-float easeInOut(float t) {
-    return tween(t, easeIn(t), easeOut(t));
+float easeInOutQuadratic(float t) {
+    //return tween(t, easeInQuadratic(t), easeOutQuadratic(t));
+    return  t < 0.5 ? easeInQuadratic(t) : easeOutQuadratic(t);
 }
 
 float easeInCubic(float t) {
@@ -122,10 +123,26 @@ float easeInOutCubic(float t) {
    return  t < 0.5 ? easeInCubic(t) : easeOutCubic(t);
 }
 
+float easeInQuintic(float t) {
+    return 16 * t *t * t * t * t;
+}
+
+float easeOutQuintic(float t) {
+    return 1 - easeInQuintic(1 - t);
+}
+
+float easeInOutQuintic(float t) {
+    //return tween(t, easeInCubic(t), easeOutCubic(t));
+    return  t < 0.5 ? easeInQuintic(t) : easeOutQuintic(t);
+}
+
 
 int main() {
 
-    Graph graph;
+    Graph graph1;
+    Graph graph2;
+    Graph graph3;
+
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     width = mode.width *0.8;
     height = mode.height*0.8;
@@ -145,7 +162,7 @@ int main() {
 
 
     Viewport overallVP(width*0.9, height * 0.9, width * 0.05, height * 0.05, width, height);
-    Viewport graphVP(width/2, height/2, width / 4, height / 4, width, height);
+    Viewport graphVP(width/2, height/2, width / 4, 3*height / 8, width, height);
 
 
     sf::Clock deltaClock;
@@ -179,12 +196,19 @@ int main() {
         sfmlWin.draw(message);
 
 
-        float y = easeInOutCubic(t);
+        float y = easeInOutQuadratic(t);
+        float quin = easeInOutQuintic(t);
 
-        graph.addPoint(sf::Vector2f(t, y));
-        graph.drawGraph(sfmlWin, graphVP);
+        graph1.addPoint(sf::Vector2f(t, y));
+        graph1.drawGraph(sfmlWin, graphVP);
+        graph2.addPoint(sf::Vector2f(t, quin));
+        graph2.drawGraph(sfmlWin, graphVP);
+        graph3.addPoint(sf::Vector2f(t, t));
+        graph3.drawGraph(sfmlWin, graphVP);
+        drawBall(sf::Vector2f(t, 0.1), sfmlWin, overallVP);
         drawBall(sf::Vector2f(y, 0.2), sfmlWin, overallVP);
-        drawChangeColorBall(y, sfmlWin, overallVP);        
+        drawBall(sf::Vector2f(quin, 0.3), sfmlWin, overallVP);
+        drawChangeColorBall(y, sfmlWin, overallVP);
         drawChangeSizeBall(y, sfmlWin, overallVP);
 
 
@@ -202,7 +226,10 @@ int main() {
         if (t >= 1) {
             sf::sleep(pauseTime);
             t = 0;
-            graph.reset();
+            graph1.reset();
+            graph2.reset();
+            graph3.reset();
+
             firstFrame = true;
             deltaClock.restart();
         }
