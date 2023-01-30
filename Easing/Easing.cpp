@@ -36,14 +36,14 @@ void drawBall(sf::Vector2f pos, sf::RenderWindow& window, Viewport vp) {
 
     circle.setPointCount(100);
 
-    circle.setPosition(vp.screenSpace(pos)-sf::Vector2f(radius,0));
+    circle.setPosition(vp.screenSpace(pos) - sf::Vector2f(radius,0));
 
     window.draw(circle);
 }
 
-void drawChangeColorBall(float t, sf::RenderWindow& window, Viewport vp) {
+void drawChangeColorBall(float t, float h, sf::RenderWindow& window, Viewport vp) {
 
-    int radius = 50;
+    int radius = 25;
     sf::CircleShape circle(radius);
     int trans = 0 + t * (255 - 0);
     
@@ -51,7 +51,7 @@ void drawChangeColorBall(float t, sf::RenderWindow& window, Viewport vp) {
 
     circle.setPointCount(100);
 
-    circle.setPosition(vp.screenSpace(sf::Vector2f(0.1,0.4)));
+    circle.setPosition(vp.screenSpace(sf::Vector2f(0.05,h)));
 
     sf::CircleShape outLine(radius);
     outLine.setFillColor(sf::Color(0,0,0, 0));
@@ -60,15 +60,15 @@ void drawChangeColorBall(float t, sf::RenderWindow& window, Viewport vp) {
 
     outLine.setPointCount(100);
 
-    outLine.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.4)));
+    outLine.setPosition(vp.screenSpace(sf::Vector2f(0.05, h)));
 
     window.draw(outLine);
     window.draw(circle);
 }
 
-void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
+void drawChangeSizeBall(float t, float h, sf::RenderWindow& window, Viewport vp) {
 
-    int endRadius = 50;
+    int endRadius = 25;
     int radius = 0 + t * (endRadius - 0);
     sf::CircleShape circle(radius);
 
@@ -77,7 +77,7 @@ void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
 
     circle.setPointCount(100);
 
-    circle.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.6)) + sf::Vector2f(50,0));
+    circle.setPosition(vp.screenSpace(sf::Vector2f(0.0, h)) + sf::Vector2f(endRadius, endRadius));
     
     sf::CircleShape outLine(endRadius);
     outLine.setOrigin(sf::Vector2f(endRadius, endRadius));
@@ -87,12 +87,16 @@ void drawChangeSizeBall(float t, sf::RenderWindow& window, Viewport vp) {
 
     outLine.setPointCount(100);
 
-    outLine.setPosition(vp.screenSpace(sf::Vector2f(0.1, 0.6)) + sf::Vector2f(endRadius, 0) );
+    outLine.setPosition(vp.screenSpace(sf::Vector2f(0.0, h)) + sf::Vector2f(endRadius, endRadius) );
 
     window.draw(outLine);
     window.draw(circle);
 }
-
+void drawBalls(float t, float h, sf::RenderWindow& window, Viewport vp){
+    drawBall(sf::Vector2f(t, h), window, vp);
+    drawChangeColorBall(t, h, window, vp);
+    drawChangeSizeBall(t, h,  window, vp);
+}
 
 float tween(float t, float start, float end) {
     return start + t * (end - start);
@@ -202,14 +206,13 @@ int main() {
         graph1.addPoint(sf::Vector2f(t, y));
         graph1.drawGraph(sfmlWin, graphVP);
         graph2.addPoint(sf::Vector2f(t, quin));
-        graph2.drawGraph(sfmlWin, graphVP);
+        graph2.drawGraph(sfmlWin, graphVP),
         graph3.addPoint(sf::Vector2f(t, t));
         graph3.drawGraph(sfmlWin, graphVP);
-        drawBall(sf::Vector2f(t, 0.1), sfmlWin, overallVP);
-        drawBall(sf::Vector2f(y, 0.2), sfmlWin, overallVP);
-        drawBall(sf::Vector2f(quin, 0.3), sfmlWin, overallVP);
-        drawChangeColorBall(y, sfmlWin, overallVP);
-        drawChangeSizeBall(y, sfmlWin, overallVP);
+        drawBalls(t, 0.1, sfmlWin, overallVP); 
+        drawBalls(y, 0.2, sfmlWin, overallVP); 
+        drawBalls(quin, 0.3, sfmlWin, overallVP);
+
 
 
         sf::sleep(delayTime);
