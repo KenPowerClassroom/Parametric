@@ -28,42 +28,6 @@
 int width = 800;
 int height = 800;
 
-//sf::Vector2f toScreenSpace(sf::Vector2f p) {
-//    float margin = 100;
-//    sf::Vector2i origin(100, 100);
-//
-//    float boxWidth = width - (2 * margin);
-//    float boxHeight = height - (2 * margin);
-//
-//    float x = margin + boxWidth * p.x;
-//    float y = height - (margin + boxHeight * p.y);
-//
-//    return sf::Vector2f(x, y);
-//
-//}
-
-//void drawGraph(int numPoints, float xValues[], float yValues[], sf::RenderWindow& window) {
-//
-//
-//
-//    sf::Vertex line[1001];
-//    line[0].position = toScreenSpace(sf::Vector2f(0, 1));
-//    line[0].color = sf::Color::White;
-//    line[1].position = toScreenSpace(sf::Vector2f(0, 0));
-//    line[1].color = sf::Color::White;
-//    line[2].position = toScreenSpace(sf::Vector2f(1, 0));
-//    line[2].color = sf::Color::White;
-//    window.draw(line, 3, sf::LineStrip);
-//
-//
-//    for (int i = 0; i < numPoints; i++) {
-//        line[i].position = toScreenSpace(sf::Vector2f(xValues[i], yValues[i]));
-//        line[i].color = sf::Color::White;
-//    }
-//    window.draw(line, numPoints, sf::LineStrip);
-//
-//}
-
 void drawBall(sf::Vector2f pos, sf::RenderWindow& window, Viewport vp) {
 
     int radius = 25;
@@ -77,10 +41,21 @@ void drawBall(sf::Vector2f pos, sf::RenderWindow& window, Viewport vp) {
     window.draw(circle);
 }
 
+void drawChangeColorBall(float t, sf::RenderWindow& window, Viewport vp) {
 
-void draw(float t) {
+    int radius = 50;
+    sf::CircleShape circle(radius);
+    int trans = 0 + t * (255 - 0);
+    
+    circle.setFillColor(sf::Color(200, 150, 50, trans));
 
+    circle.setPointCount(100);
+
+    circle.setPosition(vp.screenSpace(sf::Vector2f(0.1,0.4)));
+
+    window.draw(circle);
 }
+
 
 float easeIn(float t) {
     return t * t;
@@ -158,6 +133,7 @@ int main() {
         graph.addPoint(sf::Vector2f(t, y));
         graph.drawGraph(sfmlWin, graphVP);
         drawBall(sf::Vector2f(y, 0.2), sfmlWin, overallVP);
+        drawChangeColorBall(y, sfmlWin, overallVP);
 
 
         sf::sleep(delayTime);
