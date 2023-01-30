@@ -140,12 +140,32 @@ float easeInOutQuintic(float t) {
     return  t < 0.5 ? easeInQuintic(t) : easeOutQuintic(t);
 }
 
+float easeInBack(float t) {
+
+    const float c1 = 1.70158;
+    const float c3 = c1 + 1;
+
+    return 4*c3 * t * t * t - 2*c1 * t * t;
+    
+}
+
+float easeOutBack(float t) {
+
+    return 1 - easeInBack(1 - t);
+
+}
+
+float easeInOutBack(float t) {
+    //return tween(t, easeInCubic(t), easeOutCubic(t));
+    return  t < 0.5 ? easeInBack(t) : easeOutBack(t);
+}
 
 int main() {
 
     Graph graph1;
     Graph graph2;
     Graph graph3;
+    Graph graph4;
 
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     width = mode.width *0.8;
@@ -166,7 +186,7 @@ int main() {
 
 
     Viewport overallVP(width*0.9, height * 0.9, width * 0.05, height * 0.05, width, height);
-    Viewport graphVP(width/2, height/2, width / 4, 3*height / 8, width, height);
+    Viewport graphVP(width/2, height/2, width / 4, 3.8*height / 8, width, height);
 
 
     sf::Clock deltaClock;
@@ -202,6 +222,7 @@ int main() {
 
         float y = easeInOutQuadratic(t);
         float quin = easeInOutQuintic(t);
+        float easeBack = easeInOutBack(t);
 
         graph1.addPoint(sf::Vector2f(t, y));
         graph1.drawGraph(sfmlWin, graphVP);
@@ -209,9 +230,12 @@ int main() {
         graph2.drawGraph(sfmlWin, graphVP),
         graph3.addPoint(sf::Vector2f(t, t));
         graph3.drawGraph(sfmlWin, graphVP);
-        drawBalls(t, 0.1, sfmlWin, overallVP); 
+        graph4.addPoint(sf::Vector2f(t, easeBack));
+        graph4.drawGraph(sfmlWin, graphVP);
+        drawBalls(t, 0.1, sfmlWin, overallVP);
         drawBalls(y, 0.2, sfmlWin, overallVP); 
         drawBalls(quin, 0.3, sfmlWin, overallVP);
+        drawBalls(easeBack, 0.4, sfmlWin, overallVP);
 
 
 
@@ -232,6 +256,7 @@ int main() {
             graph1.reset();
             graph2.reset();
             graph3.reset();
+            graph4.reset();
 
             firstFrame = true;
             deltaClock.restart();
