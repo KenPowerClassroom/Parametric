@@ -163,10 +163,12 @@ float easeInOutBack(float t) {
 
 int main() {
 
-    Graph graph1;
-    Graph graph2;
-    Graph graph3;
-    Graph graph4;
+    Graph graph;
+
+    graph.addCurve();
+    graph.addCurve();
+    graph.addCurve();
+    graph.addCurve();
 
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     width = mode.width *0.8;
@@ -225,14 +227,15 @@ int main() {
         float quin = easeInOutQuintic(t);
         float easeBack = easeInOutBack(t);
 
-        graph1.addPoint(sf::Vector2f(t, y));
-        graph1.drawGraph(sfmlWin, graphVP);
-        graph2.addPoint(sf::Vector2f(t, quin));
-        graph2.drawGraph(sfmlWin, graphVP),
-        graph3.addPoint(sf::Vector2f(t, t));
-        graph3.drawGraph(sfmlWin, graphVP);
-        graph4.addPoint(sf::Vector2f(t, easeBack));
-        graph4.drawGraph(sfmlWin, graphVP);
+        graph.addPoint(0, sf::Vector2f(t, y));
+
+        graph.addPoint(1, sf::Vector2f(t, quin));
+  
+        graph.addPoint(2, sf::Vector2f(t, t));
+
+        graph.addPoint(3, sf::Vector2f(t, easeBack));
+
+        graph.drawGraph(sfmlWin, graphVP);
         drawBalls(t, 0.1, sfmlWin, overallVP);
         drawBalls(y, 0.2, sfmlWin, overallVP); 
         drawBalls(quin, 0.3, sfmlWin, overallVP);
@@ -254,10 +257,8 @@ int main() {
         if (t >= 1) {
             sf::sleep(pauseTime);
             t = 0;
-            graph1.reset();
-            graph2.reset();
-            graph3.reset();
-            graph4.reset();
+            graph.reset();
+
 
             firstFrame = true;
             deltaClock.restart();

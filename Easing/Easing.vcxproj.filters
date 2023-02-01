@@ -24,12 +24,18 @@
     <ClCompile Include="Viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Problem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Viewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

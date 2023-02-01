@@ -1,7 +1,7 @@
 #include "Graph.h"
 #include <cassert>
 
-void Graph::drawGraph( sf::RenderWindow& window, Viewport& vp) {
+void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
 
     sf::Vertex line[MAX_POINTS];
     sf::Vertex axes[5];
@@ -18,22 +18,24 @@ void Graph::drawGraph( sf::RenderWindow& window, Viewport& vp) {
     axes[4].color = sf::Color::White;
     window.draw(axes, 5, sf::LineStrip);
 
-    int i = 0;
-    for (auto p: points) {
-        line[i].position = vp.screenSpace(sf::Vector2f(p));
-        line[i].color = sf::Color::White;
-        i++;
+    for (auto c : curves){
+        int i = 0;
+        for (auto p : *c) {
+            line[i].position = vp.screenSpace(sf::Vector2f(p));
+            line[i].color = sf::Color::White;
+            i++;
+        }
+        window.draw(line, curves[0]->size(), sf::LineStrip);    
     }
-    window.draw(line, points.size(), sf::LineStrip);
 
 }
 
-void Graph::addPoint(sf::Vector2f point) {
-    assert(points.size() < MAX_POINTS);
-    points.push_back(point);
+void Graph::addPoint(int curve, sf::Vector2f point) {
+    assert(curves[curve]->size() < MAX_POINTS);
+    curves[curve]->push_back(point);
 
 }
 
 void Graph::reset() {
-    points.clear();
+    curves[0]->clear();
 }
