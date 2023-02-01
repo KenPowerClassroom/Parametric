@@ -18,24 +18,24 @@ void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
     axes[4].color = sf::Color::White;
     window.draw(axes, 5, sf::LineStrip);
 
-    for (auto c : curves){
+    for (auto& c : curves){
         int i = 0;
-        for (auto p : *c) {
+        for (auto p : c->points) {
             line[i].position = vp.screenSpace(sf::Vector2f(p));
             line[i].color = sf::Color::White;
             i++;
         }
-        window.draw(line, curves[0]->size(), sf::LineStrip);    
+        window.draw(line, curves.size(), sf::LineStrip);    
     }
 
 }
 
 void Graph::addPoint(int curve, sf::Vector2f point) {
-    assert(curves[curve]->size() < MAX_POINTS);
-    curves[curve]->push_back(point);
+    assert(curves[curve]->points.size() < MAX_POINTS);
+    curves[curve]->points.push_back(point);
 
 }
 
 void Graph::reset() {
-    curves[0]->clear();
+    curves[0]->points.clear();
 }

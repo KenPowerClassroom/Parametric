@@ -197,6 +197,11 @@ int main() {
     sf::Time delayTime = sf::milliseconds(1);
     sf::Time pauseTime = sf::milliseconds(500);
 
+
+    typedef float (*myFunc)(float);
+
+    myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
+
     bool firstFrame = true, lastFrame = false;
     while (sfmlWin.isOpen()) {
         sf::Time dt = deltaClock.restart();
@@ -222,24 +227,19 @@ int main() {
         sfmlWin.clear();
         sfmlWin.draw(message);
 
-
+        int i = 0;
+        for (auto f : functions) {
+            float y = f(t);
+            graph.addPoint(i, sf::Vector2f(t, y));
+            drawBalls(y, 0.1*i, sfmlWin, overallVP);
+            i++;
+        }
         float y = easeInOutQuadratic(t);
         float quin = easeInOutQuintic(t);
         float easeBack = easeInOutBack(t);
 
-        graph.addPoint(0, sf::Vector2f(t, y));
-
-        graph.addPoint(1, sf::Vector2f(t, quin));
-  
-        graph.addPoint(2, sf::Vector2f(t, t));
-
-        graph.addPoint(3, sf::Vector2f(t, easeBack));
-
         graph.drawGraph(sfmlWin, graphVP);
-        drawBalls(t, 0.1, sfmlWin, overallVP);
-        drawBalls(y, 0.2, sfmlWin, overallVP); 
-        drawBalls(quin, 0.3, sfmlWin, overallVP);
-        drawBalls(easeBack, 0.4, sfmlWin, overallVP);
+
 
 
 

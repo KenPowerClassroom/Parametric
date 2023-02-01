@@ -3,13 +3,21 @@
 #include"Viewport.h"
 
 using namespace std;
+
+
+typedef vector<sf::Vector2f> PointList;
+
+struct Curve{
+	PointList points;
+	sf::Color color = sf::Color::White;
+
+};
 class Graph
 {
 	static const int MAX_POINTS = 1010;
 	
-	typedef vector<sf::Vector2f> PointList;
 
-	vector<PointList*> curves;
+	vector<Curve*> curves;
 
 public:
 
@@ -17,7 +25,7 @@ public:
 	void addPoint(int i, sf::Vector2f point);
 	void reset();
 	void addCurve() {
-		curves.push_back(new PointList);
+		curves.push_back(new Curve);
 	}
 };
 
