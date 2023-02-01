@@ -43,9 +43,10 @@ void drawBall(sf::Vector2f pos, sf::RenderWindow& window, Viewport vp) {
 
 void drawChangeColorBall(float t, float h, sf::RenderWindow& window, Viewport vp) {
 
+    auto clamp = [](float i) {return i > 1.0 ? 1.0 : i<0?0.0:i;  };
     int radius = 25;
     sf::CircleShape circle(radius);
-    int trans = 0 + t * (255 - 0);
+    int trans =  0 + clamp(t) * (255 - 0);
     
     circle.setFillColor(sf::Color(200, 150, 50, trans));
 
