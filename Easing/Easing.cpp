@@ -165,10 +165,10 @@ int main() {
 
     Graph graph;
 
-    graph.addCurve();
-    graph.addCurve();
-    graph.addCurve();
-    graph.addCurve();
+    graph.addCurve(sf::Color::Cyan);
+    graph.addCurve(sf::Color::Green);
+    graph.addCurve(sf::Color(255,255,0));
+    graph.addCurve(sf::Color(127, 255, 255));
 
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     width = mode.width *0.8;

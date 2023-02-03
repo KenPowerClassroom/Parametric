@@ -24,8 +24,10 @@ public:
 	void drawGraph(sf::RenderWindow& window, Viewport& vp);
 	void addPoint(int i, sf::Vector2f point);
 	void reset();
-	void addCurve() {
-		curves.push_back(new Curve);
+	void addCurve(sf::Color color = sf::Color::White) {
+		auto curve = new Curve;
+		curve->color = color;
+		curves.push_back(curve);
 	}
 };
 

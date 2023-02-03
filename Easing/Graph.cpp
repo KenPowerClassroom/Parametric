@@ -20,12 +20,12 @@ void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
 
     for (auto& c : curves){
         int i = 0;
-        for (auto p : c->points) {
+        for (auto& p : c->points) {
             line[i].position = vp.screenSpace(sf::Vector2f(p));
-            line[i].color = sf::Color::White;
+            line[i].color = c->color;
             i++;
         }
-        window.draw(line, curves.size(), sf::LineStrip);    
+        window.draw(line, c->points.size(), sf::LineStrip);    
     }
 
 }
@@ -37,5 +37,5 @@ void Graph::addPoint(int curve, sf::Vector2f point) {
 }
 
 void Graph::reset() {
-    curves[0]->points.clear();
+    for (auto& c : curves) c->points.clear();
 }
