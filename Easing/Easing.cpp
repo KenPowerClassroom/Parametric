@@ -169,10 +169,9 @@ int main() {
 
     Graph graph;
 
-    graph.addCurve(sf::Color::Cyan);
+    graph.addCurve(sf::Color(100,100,100),0.03);
     graph.addCurve(sf::Color::Green);
-    graph.addCurve(sf::Color(255,255,0));
-    graph.addCurve(sf::Color(127, 255, 255));
+
 
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
     width = mode.width *0.8;
@@ -207,10 +206,12 @@ int main() {
 	
     problems[sf::Keyboard::Key::A] = Problem("Move line up", "Make the white line go through the grey region", "lineA", lineA, lineATarget);
     problems[sf::Keyboard::Key::B] = Problem("Move line up", "Make the white line go through the grey region", "????", easeInOutQuadratic, easeInOutBack);
+    problems[sf::Keyboard::Key::C] = Problem("Move line up", "Make the white line go through the grey region", "????", lineB, lineBTarget);
 
     Problem currentProblem = problems[sf::Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
     while (sfmlWin.isOpen()) {
+        bool changeProblem = false;
         sf::Time dt = deltaClock.restart();
         t += dt.asSeconds() / timeForAnimation.asSeconds();
 
@@ -230,23 +231,35 @@ int main() {
 				auto p = problems.find(e.key.code);
                 if (p != problems.end()) {
                     currentProblem =p->second;
+                    changeProblem = true;
                     break;
                 }
             }
             
         }
 
+        if (t >= 1 or changeProblem) {
+            if(!changeProblem)sf::sleep(pauseTime);
+            t = 0;
+            graph.reset();
+
+
+            firstFrame = true;
+            deltaClock.restart();
+            continue;
+        }
+
         sfmlWin.clear();
         sfmlWin.draw(message);
 
         float y;
-        y = currentProblem.starter(t);
 		
+        y = currentProblem.target(t);
         graph.addPoint(0, sf::Vector2f(t, y));
         drawBalls(y, 0.1 * 0, sfmlWin, overallVP);
 
-        y = currentProblem.target(t);
 
+        y = currentProblem.starter(t);
         graph.addPoint(1, sf::Vector2f(t, y));
         drawBalls(y, 0.1 * 1, sfmlWin, overallVP);
 
@@ -276,15 +289,7 @@ int main() {
 
         }
         //assert(i < 1000);
-        if (t >= 1) {
-            sf::sleep(pauseTime);
-            t = 0;
-            graph.reset();
 
-
-            firstFrame = true;
-            deltaClock.restart();
-        }
 
 
  

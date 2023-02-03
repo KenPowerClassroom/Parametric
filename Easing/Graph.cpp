@@ -4,7 +4,7 @@
 
 void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
 
-    sf::Vertex line[MAX_POINTS];
+
     sf::Vertex axes[5];
 
     axes[0].position = vp.screenSpace(sf::Vector2f(0, 1));
@@ -20,16 +20,10 @@ void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
     window.draw(axes, 5, sf::LineStrip);
 
 
-
-    //ThickLine::convert(p, q, 50);
-
-
-    //sf::Vertex line[1000];
-
     for (auto& c : curves) {
         PointList q;
         int i = 0;
-        ThickLine::convert(c->points, q, 0.01);
+        ThickLine::convert(c->points, q, c->thickness);
         for (auto& p : q) {
             line[i].position = vp.screenSpace(sf::Vector2f(p));
             line[i].color = c->color;

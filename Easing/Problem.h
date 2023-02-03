@@ -6,7 +6,7 @@ using namespace std;
 struct Problem
 {
 	Problem() { assert("default contructor should not be called"); };
-	Problem(string title, string description, string solution, float (*target)(float), float (*starter)(float)) :
+	Problem(string title, string description, string solution,  float (*starter)(float), float (*target)(float)) :
 		title(title), description(description), target(target), starter(starter)
 	{
 	};
