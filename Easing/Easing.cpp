@@ -21,9 +21,12 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 #include <cassert>
+#include <map>
 
 #include"Graph.h"
 #include"Viewport.h"
+#include"Functions.h"
+#include"Problem.h"
 
 
 int width = 800;
@@ -162,43 +165,7 @@ float easeInOutBack(float t) {
     return  t < 0.5 ? easeInBack(t) : easeOutBack(t);
 }
 
-//void testThickLine() {
-//    sf::RenderWindow sfmlWin(sf::VideoMode(500, 500), "Hello World SFML Window");
-//
-//
-//    typedef vector<sf::Vector2f> PointList;
-//
-//    PointList p;
-//    p.push_back(sf::Vector2f(50, 50));
-//    p.push_back(sf::Vector2f(250, 250));
-//    p.push_back(sf::Vector2f(300, 250));
-//    p.push_back(sf::Vector2f(300, 400));
-//
-//    PointList q;
-//
-//    ThickLine::convert(p, q, 50);
-//
-//
-//    sf::Vertex line[1000];
-//
-//
-//    int i = 0;
-//    for (auto& p :q) {
-//        line[i].position =p;
-//        line[i].color = sf::Color::White;
-//        i++;
-//    }
-//    sfmlWin.clear();
-//    sfmlWin.draw(line, i, sf::TriangleStrip);
-//    sfmlWin.display();
-//    system("pause");
-//
-//}
 int main() {
-
-    //testThickLine();
-
-    //return 0;
 
     Graph graph;
 
@@ -218,9 +185,6 @@ int main() {
     }
     sf::Text message("Press ESC to quit", font);
 
-    const int numPoints = 1002;
-    float x[numPoints];
-    float y[numPoints];
 
     float t = 0;
 
@@ -237,48 +201,69 @@ int main() {
 
     typedef float (*myFunc)(float);
 
-    myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
+    //myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
 
+    map<sf::Keyboard::Key, Problem> problems;
+	
+    problems[sf::Keyboard::Key::A] = Problem("Move line up", "Make the white line go through the grey region", "lineA", lineA, lineATarget);
+    problems[sf::Keyboard::Key::B] = Problem("Move line up", "Make the white line go through the grey region", "????", easeInOutQuadratic, easeInOutBack);
+
+    Problem currentProblem = problems[sf::Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
     while (sfmlWin.isOpen()) {
         sf::Time dt = deltaClock.restart();
         t += dt.asSeconds() / timeForAnimation.asSeconds();
 
         sf::Event e;
+		
         while (sfmlWin.pollEvent(e)) {
 
             switch (e.type) {
             case sf::Event::EventType::Closed:
                 sfmlWin.close();
                 break;
-             case sf::Event::KeyPressed:
-                {
-                    //if (event.key.code >= sf::Keyboard::A && event.key.code <= sf::Keyboard::Z) {
-                        sfmlWin.close();
-                        break;
-                
+            case sf::Event::KeyPressed:
+                if (e.key.code == sf::Keyboard::Escape) {
+                    sfmlWin.close();
+                    break;
+                }
+				auto p = problems.find(e.key.code);
+                if (p != problems.end()) {
+                    currentProblem =p->second;
+                    break;
                 }
             }
+            
         }
 
         sfmlWin.clear();
         sfmlWin.draw(message);
 
-        int i = 0;
-        for (auto f : functions) {
-            float y = f(t);
-            graph.addPoint(i, sf::Vector2f(t, y));
-            drawBalls(y, 0.1*i, sfmlWin, overallVP);
-            i++;
-        }
-        float y = easeInOutQuadratic(t);
-        float quin = easeInOutQuintic(t);
-        float easeBack = easeInOutBack(t);
+        float y;
+        y = currentProblem.starter(t);
+		
+        graph.addPoint(0, sf::Vector2f(t, y));
+        drawBalls(y, 0.1 * 0, sfmlWin, overallVP);
+
+        y = currentProblem.target(t);
+
+        graph.addPoint(1, sf::Vector2f(t, y));
+        drawBalls(y, 0.1 * 1, sfmlWin, overallVP);
+
+		
+        //int i = 0;
+        //for (auto f : functions) {
+        //    float y = f(t);
+        //    graph.addPoint(i, sf::Vector2f(t, y));
+        //    drawBalls(y, 0.1*i, sfmlWin, overallVP);
+        //    i++;
+        //}
+		
+        //float y = easeInOutQuadratic(t);
+        //float quin = easeInOutQuintic(t);
+        //float easeBack = easeInOutBack(t);
 
         graph.drawGraph(sfmlWin, graphVP);
-
-
-
 
         sf::sleep(delayTime);
 

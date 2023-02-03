@@ -77,12 +77,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="ThickLine.cpp" />
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Problem.h" />
     <ClInclude Include="ThickLine.h" />
