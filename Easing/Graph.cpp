@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <cassert>
+#include"ThickLine.h"
 
 void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
 
@@ -18,15 +19,33 @@ void Graph::drawGraph(sf::RenderWindow& window, Viewport& vp) {
     axes[4].color = sf::Color::White;
     window.draw(axes, 5, sf::LineStrip);
 
-    for (auto& c : curves){
+
+
+    //ThickLine::convert(p, q, 50);
+
+
+    //sf::Vertex line[1000];
+
+    for (auto& c : curves) {
+        PointList q;
         int i = 0;
-        for (auto& p : c->points) {
+        ThickLine::convert(c->points, q, 0.01);
+        for (auto& p : q) {
             line[i].position = vp.screenSpace(sf::Vector2f(p));
             line[i].color = c->color;
             i++;
         }
-        window.draw(line, c->points.size(), sf::LineStrip);    
-    }
+        window.draw(line, i, sf::TriangleStrip);
+    }    
+    //for (auto& c : curves) {
+    //    int i = 0;
+    //    for (auto& p : c->points) {
+    //        line[i].position = vp.screenSpace(sf::Vector2f(p));
+    //        line[i].color = c->color;
+    //        i++;
+    //    }
+    //    window.draw(line, c->points.size(), sf::LineStrip);
+    //}
 
 }
 

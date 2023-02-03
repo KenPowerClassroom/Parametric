@@ -24,7 +24,7 @@
 
 #include"Graph.h"
 #include"Viewport.h"
-#include"ThickLine.h"
+
 
 int width = 800;
 int height = 800;
@@ -162,43 +162,43 @@ float easeInOutBack(float t) {
     return  t < 0.5 ? easeInBack(t) : easeOutBack(t);
 }
 
-void testThickLine() {
-    sf::RenderWindow sfmlWin(sf::VideoMode(500, 500), "Hello World SFML Window");
-
-
-    typedef vector<sf::Vector2f> PointList;
-
-    PointList p;
-    p.push_back(sf::Vector2f(50, 50));
-    p.push_back(sf::Vector2f(250, 250));
-    p.push_back(sf::Vector2f(300, 250));
-    p.push_back(sf::Vector2f(300, 400));
-
-    PointList q;
-
-    ThickLine::convert(p, q, 50);
-
-
-    sf::Vertex line[1000];
-
-
-    int i = 0;
-    for (auto& p :q) {
-        line[i].position =p;
-        line[i].color = sf::Color::White;
-        i++;
-    }
-    sfmlWin.clear();
-    sfmlWin.draw(line, i, sf::TriangleStrip);
-    sfmlWin.display();
-    system("pause");
-
-}
+//void testThickLine() {
+//    sf::RenderWindow sfmlWin(sf::VideoMode(500, 500), "Hello World SFML Window");
+//
+//
+//    typedef vector<sf::Vector2f> PointList;
+//
+//    PointList p;
+//    p.push_back(sf::Vector2f(50, 50));
+//    p.push_back(sf::Vector2f(250, 250));
+//    p.push_back(sf::Vector2f(300, 250));
+//    p.push_back(sf::Vector2f(300, 400));
+//
+//    PointList q;
+//
+//    ThickLine::convert(p, q, 50);
+//
+//
+//    sf::Vertex line[1000];
+//
+//
+//    int i = 0;
+//    for (auto& p :q) {
+//        line[i].position =p;
+//        line[i].color = sf::Color::White;
+//        i++;
+//    }
+//    sfmlWin.clear();
+//    sfmlWin.draw(line, i, sf::TriangleStrip);
+//    sfmlWin.display();
+//    system("pause");
+//
+//}
 int main() {
 
-    testThickLine();
+    //testThickLine();
 
-    return 0;
+    //return 0;
 
     Graph graph;
 

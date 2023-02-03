@@ -14,7 +14,7 @@ struct Curve{
 };
 class Graph
 {
-	static const int MAX_POINTS = 1010;
+	static const int MAX_POINTS = 5000;
 	
 
 	vector<Curve*> curves;
