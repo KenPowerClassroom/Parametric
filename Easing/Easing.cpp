@@ -167,10 +167,7 @@ float easeInOutBack(float t) {
 
 int main() {
 
-    Graph graph;
 
-    graph.addCurve(sf::Color(100,100,100),0.03);
-    graph.addCurve(sf::Color::Green);
 
 
     sf::VideoMode mode = sf::VideoMode::getDesktopMode();
@@ -179,7 +176,7 @@ int main() {
     sf::RenderWindow sfmlWin(sf::VideoMode(width, height), "Hello World SFML Window");
     sf::Font font;
     //You need to pass the font file location
-    if (!font.loadFromFile("GOTHIC.ttf")) {
+    if (!font.loadFromFile("cmr12.ttf")) {
         return -1;
     }
     sf::Text message("Press ESC to quit", font);
@@ -189,9 +186,13 @@ int main() {
 
 
     Viewport overallVP(width*0.9, height * 0.9, width * 0.05, height * 0.05, width, height);
-    Viewport graphVP(width/2, height/2, width / 4, 3.8*height / 8, width, height);
+    Viewport graphVP(height / 2, height/2, width / 4, 3.8*height / 8, width, height);
 
+    Graph graph(sfmlWin, graphVP);
 
+    graph.addCurve(sf::Color(100, 100, 100), 0.03);
+    graph.addCurve(sf::Color::Green);
+	
     sf::Clock deltaClock;
     sf::Time timeForAnimation = sf::milliseconds(2000);
     sf::Time delayTime = sf::milliseconds(1);
@@ -276,7 +277,7 @@ int main() {
         //float quin = easeInOutQuintic(t);
         //float easeBack = easeInOutBack(t);
 
-        graph.drawGraph(sfmlWin, graphVP);
+        graph.drawGraph();
 
         sf::sleep(delayTime);
 
