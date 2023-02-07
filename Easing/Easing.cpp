@@ -25,8 +25,8 @@
 
 #include"Graph.h"
 #include"Viewport.h"
-#include"Functions.h"
 #include"Problem.h"
+#include"Functions.h"
 
 
 int width = 800;
@@ -103,82 +103,7 @@ void drawBalls(float t, float h, sf::RenderWindow& window, Viewport vp){
     drawChangeSizeBall(t, h,  window, vp);
 }
 
-float tween(float t, float start, float end) {
-    return start + t * (end - start);
-}
-float easeInQuadratic(float t) {
-    return 2 * t * t;
-}
 
-float easeOutQuadratic(float t) {
-    return 1 - easeInQuadratic(1-t);
-}
-
-float easeInOutQuadratic(float t) {
-    //return tween(t, easeInQuadratic(t), easeOutQuadratic(t));
-    return  t < 0.5 ? easeInQuadratic(t) : easeOutQuadratic(t);
-}
-
-float easeInCubic(float t) {
-    return 4*t*t*t;
-}
-
-float easeOutCubic(float t) {
-    return 1 - easeInCubic(1 - t);
-}
-
-float easeInOutCubic(float t) {
-    //return tween(t, easeInCubic(t), easeOutCubic(t));
-   return  t < 0.5 ? easeInCubic(t) : easeOutCubic(t);
-}
-
-float easeInQuintic(float t) {
-    return 16 * t *t * t * t * t;
-}
-
-float easeOutQuintic(float t) {
-    return 1 - easeInQuintic(1 - t);
-}
-
-float easeInOutQuintic(float t) {
-    //return tween(t, easeInCubic(t), easeOutCubic(t));
-    return  t < 0.5 ? easeInQuintic(t) : easeOutQuintic(t);
-}
-
-float easeInBack(float t) {
-
-    const float c1 = 1.70158;
-    const float c3 = c1 + 1;
-
-    return 4*c3 * t * t * t - 2*c1 * t * t;
-    
-}
-
-float easeOutBack(float t) {
-
-    return 1 - easeInBack(1 - t);
-
-}
-
-float easeInOutBack(float t) {
-    //return tween(t, easeInCubic(t), easeOutCubic(t));
-    return  t < 0.5 ? easeInBack(t) : easeOutBack(t);
-}
-
-float sqr(float f) { return f * f; }
-float cub(float f) { return f * f*f; }
-
-float parabola(float t) {
-
-    return 4*sqr(t-0.5);
-
-}
-
-float parabolaTarget(float t) {
-
-    return sqr(t - 0.75);
-
-}
 
 
 int main() {
@@ -195,7 +120,6 @@ int main() {
     if (!font.loadFromFile("cmr12.ttf")) {
         return -1;
     }
-    sf::Text message("Press ESC to quit", font);
 
 
     float t = 0;
@@ -221,10 +145,21 @@ int main() {
 
     map<sf::Keyboard::Key, Problem> problems;
 	
-    problems[sf::Keyboard::Key::A] = Problem("Move line up", "Make the white line go through the grey region", "lineA", lineA, lineATarget);
-    problems[sf::Keyboard::Key::B] = Problem("Move line up", "Make the white line go through the grey region", "????", easeInOutQuadratic, easeInOutBack);
-    problems[sf::Keyboard::Key::C] = Problem("Move line up", "Make the white line go through the grey region", "????", lineB, lineBTarget);    
-    problems[sf::Keyboard::Key::D] = Problem("Move line up", "Make the white line go through the grey region", "????", parabola, parabolaTarget);
+    problems[sf::Keyboard::Key::A] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", moveHorizLine, moveHorizLineTarget);
+    problems[sf::Keyboard::Key::B] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", changeSlope, changeSlopeTarget);
+    problems[sf::Keyboard::Key::C] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
+    problems[sf::Keyboard::Key::D] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", moveParabolsLeft, moveParabolsLeftTarget);
+    problems[sf::Keyboard::Key::E] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", moveParabolaUp, moveParabolaUpTarget);
+    problems[sf::Keyboard::Key::F] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", invertParabola, invertParabolaTarget);
+    problems[sf::Keyboard::Key::G] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", widenParabola, widenParabolaTarget);
+    problems[sf::Keyboard::Key::H] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", widenAndMoveParabola, widenAndMoveParabolaTarget);
+    problems[sf::Keyboard::Key::I] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", easeIn, easeInTarget);
+    problems[sf::Keyboard::Key::J] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", easeInUpsideDown, easeInUpsideDownTarget);
+    problems[sf::Keyboard::Key::K] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", easeInFlipVert, easeInFlipVertTarget);
+    problems[sf::Keyboard::Key::L] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", easeOut, easeOutTarget);
+    problems[sf::Keyboard::Key::M] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", easeInThruCentre, easeInThruCentreTarget);
+    problems[sf::Keyboard::Key::N] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", easeOutThruCentre, easeOutThruCentreTarget);
+
 
     Problem currentProblem = problems[sf::Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
@@ -268,6 +203,8 @@ int main() {
         }
 
         sfmlWin.clear();
+        sf::Text message(currentProblem.description, font);
+        message.setCharacterSize(24);
         sfmlWin.draw(message);
 
         float y;
