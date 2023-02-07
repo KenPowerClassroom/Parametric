@@ -165,6 +165,22 @@ float easeInOutBack(float t) {
     return  t < 0.5 ? easeInBack(t) : easeOutBack(t);
 }
 
+float sqr(float f) { return f * f; }
+float cub(float f) { return f * f*f; }
+
+float parabola(float t) {
+
+    return 4*sqr(t-0.5);
+
+}
+
+float parabolaTarget(float t) {
+
+    return sqr(t - 0.75);
+
+}
+
+
 int main() {
 
 
@@ -207,7 +223,8 @@ int main() {
 	
     problems[sf::Keyboard::Key::A] = Problem("Move line up", "Make the white line go through the grey region", "lineA", lineA, lineATarget);
     problems[sf::Keyboard::Key::B] = Problem("Move line up", "Make the white line go through the grey region", "????", easeInOutQuadratic, easeInOutBack);
-    problems[sf::Keyboard::Key::C] = Problem("Move line up", "Make the white line go through the grey region", "????", lineB, lineBTarget);
+    problems[sf::Keyboard::Key::C] = Problem("Move line up", "Make the white line go through the grey region", "????", lineB, lineBTarget);    
+    problems[sf::Keyboard::Key::D] = Problem("Move line up", "Make the white line go through the grey region", "????", parabola, parabolaTarget);
 
     Problem currentProblem = problems[sf::Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
