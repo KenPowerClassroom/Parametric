@@ -35,12 +35,7 @@ sf:Color ticKColor = sf::Color::White;
         ticks[i++].position = vp.screenSpace(sf::Vector2f(0, t / 10.0));
         ticks[i++].position = vp.screenSpace(sf::Vector2f(-tickLength, t / 10.0));
     }
-    //ticks[i++].position = vp.screenSpace(sf::Vector2f(1.0, 0));
-    //ticks[i++].position = vp.screenSpace(sf::Vector2f(1.0, -tickLength));
-    //ticks[i++].position = vp.screenSpace(sf::Vector2f(0, 0.5));
-    //ticks[i++].position = vp.screenSpace(sf::Vector2f(-tickLength, 0.5));
-    //ticks[i++].position = vp.screenSpace(sf::Vector2f(0, 1.0));
-    //ticks[i++].position = vp.screenSpace(sf::Vector2f(-tickLength, 1.0));
+
 
     window.draw(ticks, NUM_TICKS * 2, sf::Lines);
 
