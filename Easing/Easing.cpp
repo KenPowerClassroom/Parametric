@@ -243,7 +243,7 @@ int main() {
 
         sf::View graphView;
         graphView.reset(sf::FloatRect(-1, 1, 3.0, -3.0));
-        graphView.setViewport(sf::FloatRect(0.5, 0.1, 0.5, 0.5*((float)width/height)));
+        graphView.setViewport(sf::FloatRect(0.5, 0.0, 0.5, 0.5*((float)width/height)));
         sfmlWin.setView(graphView);
         graph.drawGraph();
 

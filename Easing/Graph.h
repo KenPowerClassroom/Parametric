@@ -36,12 +36,13 @@ public:
 		curve->thickness = thinckness;
 		curves.push_back(curve);
 	}
-	void centredText(string s, sf::Vector2f pos, int size=30) {
+
+	void centredText(string s, sf::Vector2f pos, int size=30, bool rightJust=false) {
 		auto text = sf::Text{s, font };
 		text.setCharacterSize(size);
 		text.setScale(0.005, -0.005);
 		auto center = sf::Vector2f(text.getGlobalBounds().width / 2.f, text.getGlobalBounds().height / 2.f);
-		auto localBounds = center + sf::Vector2f(text.getLocalBounds().left, text.getLocalBounds().top) ;
+		auto localBounds = center + sf::Vector2f(text.getLocalBounds().width/ (rightJust ? 1. : 2.),  text.getLocalBounds().height/2.);
 
 		text.setOrigin(localBounds.x, localBounds.y);
 		text.setPosition(pos);

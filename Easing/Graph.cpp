@@ -46,12 +46,12 @@ sf:Color ticKColor = sf::Color::White;
 
     float textOffset = 0.05;
 
-    centredText("t", vp.screenSpace(sf::Vector2f(0.5, -textOffset)));
-    centredText("f(t)", vp.screenSpace(sf::Vector2f(-textOffset, 0.5)));
-    centredText("0.0", vp.screenSpace(sf::Vector2f(0, -textOffset)),20);    
-    centredText("1.0", vp.screenSpace(sf::Vector2f(1.0, -textOffset)), 20);
-    centredText("0.0", vp.screenSpace(sf::Vector2f(-textOffset, 0.0)), 20);
-    centredText("1.0", vp.screenSpace(sf::Vector2f(-textOffset, 1.0)), 20);
+    centredText("t", sf::Vector2f(0.5, -textOffset));
+    centredText("f(t)", sf::Vector2f(-textOffset, 0.5), 30,true);
+    centredText("0.0", sf::Vector2f(0, -textOffset),10);    
+    centredText("1.0", sf::Vector2f(1.0, -textOffset), 10);
+    centredText("0.0", sf::Vector2f(-textOffset, 0.0), 10, true);
+    centredText("1.0", sf::Vector2f(-textOffset, 1.0), 10, true);
 
 
     for (auto& c : curves) {
