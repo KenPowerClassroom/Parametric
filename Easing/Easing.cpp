@@ -115,6 +115,8 @@ int main() {
     width = mode.width *0.8;
     height = mode.height*0.8;
     sf::RenderWindow sfmlWin(sf::VideoMode(width, height), "Hello World SFML Window");
+    sf::View view;
+    view.reset(sf::FloatRect(0,0,width,height));
     sf::Font font;
     //You need to pass the font file location
     if (!font.loadFromFile("cmr12.ttf")) {
@@ -145,7 +147,8 @@ int main() {
 
     map<sf::Keyboard::Key, Problem> problems;
 	
-    problems[sf::Keyboard::Key::A] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", moveHorizLine, moveHorizLineTarget);
+    string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\n so that the green line matches the grey line";
+    problems[sf::Keyboard::Key::A] = Problem("Move line up", "", "lineA", moveHorizLine, moveHorizLineTarget);
     problems[sf::Keyboard::Key::B] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", changeSlope, changeSlopeTarget);
     problems[sf::Keyboard::Key::C] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
     problems[sf::Keyboard::Key::D] = Problem("Move line up", "The green line is generated from the function lineA(t) \nwhich is found in the file functions.cpp. Your job is to \tmodify the function so that the green line follow the grey region", "lineA", moveParabolsLeft, moveParabolsLeftTarget);
@@ -168,6 +171,7 @@ int main() {
         sf::Time dt = deltaClock.restart();
         t += dt.asSeconds() / timeForAnimation.asSeconds();
 
+        
         sf::Event e;
 		
         while (sfmlWin.pollEvent(e)) {
@@ -176,6 +180,10 @@ int main() {
             case sf::Event::EventType::Closed:
                 sfmlWin.close();
                 break;
+            case sf::Event::EventType::Resized:
+                view.setViewport(sf::FloatRect(0, 0, (float)width/e.size.width, float(height)/e.size.height));
+                break;
+
             case sf::Event::KeyPressed:
                 if (e.key.code == sf::Keyboard::Escape) {
                     sfmlWin.close();
@@ -190,6 +198,7 @@ int main() {
             }
             
         }
+        sfmlWin.setView(view);
 
         if (t >= 1 or changeProblem) {
             if(!changeProblem)sf::sleep(pauseTime);
@@ -203,8 +212,9 @@ int main() {
         }
 
         sfmlWin.clear();
-        sf::Text message(currentProblem.description, font);
+        sf::Text message(commonText, font);
         message.setCharacterSize(24);
+        message.setLineSpacing(1.25);
         sfmlWin.draw(message);
 
         float y;
@@ -231,6 +241,10 @@ int main() {
         //float quin = easeInOutQuintic(t);
         //float easeBack = easeInOutBack(t);
 
+        sf::View graphView;
+        graphView.reset(sf::FloatRect(-1, 1, 3.0, -3.0));
+        graphView.setViewport(sf::FloatRect(0.5, 0.1, 0.5, 0.5*((float)width/height)));
+        sfmlWin.setView(graphView);
         graph.drawGraph();
 
         sf::sleep(delayTime);

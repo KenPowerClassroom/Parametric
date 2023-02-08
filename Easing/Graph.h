@@ -39,10 +39,11 @@ public:
 	void centredText(string s, sf::Vector2f pos, int size=30) {
 		auto text = sf::Text{s, font };
 		text.setCharacterSize(size);
-		auto center = sf::Vector2i(text.getGlobalBounds().width / 2.f, text.getGlobalBounds().height / 2.f);
-		auto localBounds = center + sf::Vector2i(text.getLocalBounds().left, text.getLocalBounds().top) ;
+		text.setScale(0.005, -0.005);
+		auto center = sf::Vector2f(text.getGlobalBounds().width / 2.f, text.getGlobalBounds().height / 2.f);
+		auto localBounds = center + sf::Vector2f(text.getLocalBounds().left, text.getLocalBounds().top) ;
 
-		text.setOrigin(localBounds.x, localBounds.x);
+		text.setOrigin(localBounds.x, localBounds.y);
 		text.setPosition(pos);
 		window.draw(text);
 	}
