@@ -188,12 +188,14 @@ public:
     void draw(float t) {
         int i = 0;
         for (auto p : problems) {
-            drawProblem(t, p,  i);
+            drawProblem(t, p,  i, problems.size());
             i++;
         }
     }
 
-    void drawProblem(float t, Problem& p, int i) {
+    void drawProblem(float t, Problem& p, int i, int numProblems) {
+        float graphSize = 1.0/numProblems;
+        float graphGap = graphSize*0.25;
         int lineHeight = 50;
         Text message("", font);
         float textVPosition = i*lineHeight;
@@ -209,23 +211,21 @@ public:
 
         y = p.target(t);
         graphs[i].addPoint(0, Vector2f(t, y));
-        //drawBalls(y, 0.1 * 0, window);
-
 
         y = p.starter(t);
         graphs[i].addPoint(1, Vector2f(t, y));
-        //drawBalls(y, 0.1 * 1, window);
+
+        const View tempView = window.getView();
+
+        View graphView;
 
 
-        //const View& tempView = window.getView();
+        graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
+        graphView.setViewport(FloatRect(0.5, i*(graphSize+graphGap), graphSize, graphSize * ((float)width / height)));
+        window.setView(graphView);
+        graphs[i].drawGraph();
 
-        //View graphView;
-        //graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
-        //graphView.setViewport(FloatRect(0.5, 0, 0.5, 0.5 * ((float)width / height)));
-        //window.setView(graphView);
-        //graphs[i].drawGraph();
-
-        //window.setView(tempView);
+        window.setView(tempView);
 
     }
 
@@ -241,30 +241,21 @@ int main() {
     RenderWindow sfmlWin(VideoMode(width, height), "Hello World SFML Window");
     View view;
     view.reset(FloatRect(0,0,width,height));
-    //You need to pass the font file location
 
     Font font;
     if (!font.loadFromFile("cmr12.ttf")) {
         return -1;
     }
-    
-
 
     float t = 0;
     Graph graph(sfmlWin);
-
-
-
 	
     Clock deltaClock;
-    Time timeForAnimation = milliseconds(2000);
+    Time timeForAnimation = milliseconds(1000);
     Time delayTime = milliseconds(1);
     Time pauseTime = milliseconds(500);
 
-
     typedef float (*myFunc)(float);
-
-    //myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
 
     map<Keyboard::Key, Problem> key_problems;
     vector<Problem> problems;
@@ -342,12 +333,12 @@ int main() {
             
         }
         sfmlWin.setView(view);
-
+        
         if (t >= 1 or changeProblem) {
             if(!changeProblem) sleep(pauseTime);
             t = 0;
             graph.reset();
-
+            mainscreen.reset();
 
             firstFrame = true;
             deltaClock.restart();
@@ -367,10 +358,10 @@ int main() {
         sfmlWin.display();
 
         if (firstFrame) {
+            mainscreen.reset();
             sleep(pauseTime);
             Time dt = deltaClock.restart(); 
             firstFrame = false;
-            mainscreen.reset();
 
         }
 
