@@ -144,26 +144,43 @@ int main() {
 
     //myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
 
-    map<Keyboard::Key, Problem> problems;
+    map<Keyboard::Key, Problem> key_problems;
+    vector<Problem> problems;
     int i = 0;
     string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\nso that the green line matches the grey line";
-    problems[Keyboard::Key::A] = Problem("Move line up", i++,"" , "moveHorizLine", moveHorizLine, moveHorizLineTarget);
-    problems[Keyboard::Key::B] = Problem("Move line up", i++, "", "changeSlope", changeSlope, changeSlopeTarget);
-    problems[Keyboard::Key::C] = Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget);
-    problems[Keyboard::Key::D] = Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget);
-    problems[Keyboard::Key::E] = Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget);
-    problems[Keyboard::Key::F] = Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget);
-    problems[Keyboard::Key::G] = Problem("Move line up", i++, "", "widenParabola", widenParabola, widenParabolaTarget);
-    problems[Keyboard::Key::H] = Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget);
-    problems[Keyboard::Key::I] = Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget);
-    problems[Keyboard::Key::J] = Problem("Move line up", i++, "", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget);
-    problems[Keyboard::Key::K] = Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipVert, easeInFlipVertTarget);
-    problems[Keyboard::Key::L] = Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget);
-    problems[Keyboard::Key::M] = Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget);
-    problems[Keyboard::Key::N] = Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget);
+    problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget));
+    problems.push_back(Problem("Move line up", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
+    problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
+    problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget));
+    problems.push_back(Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget));
+    problems.push_back(Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget));
+    problems.push_back(Problem("Move line up", i++, "", "widenParabola", widenParabola, widenParabolaTarget));
+    problems.push_back(Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipVert, easeInFlipVertTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+
+    i = 0;
+    key_problems[Keyboard::Key::A] = problems[i++];
+    key_problems[Keyboard::Key::B] = problems[i++];
+    key_problems[Keyboard::Key::C] = problems[i++];
+    key_problems[Keyboard::Key::D] = problems[i++];
+    key_problems[Keyboard::Key::E] = problems[i++];
+    key_problems[Keyboard::Key::F] = problems[i++];
+    key_problems[Keyboard::Key::G] = problems[i++];
+    key_problems[Keyboard::Key::H] = problems[i++];
+    key_problems[Keyboard::Key::I] = problems[i++];
+    key_problems[Keyboard::Key::J] = problems[i++];
+    key_problems[Keyboard::Key::K] = problems[i++];
+    key_problems[Keyboard::Key::L] = problems[i++];
+    key_problems[Keyboard::Key::M] = problems[i++];
+    key_problems[Keyboard::Key::N] = problems[i++];
 
 
-    Problem currentProblem = problems[Keyboard::Key::A];
+    Problem currentProblem = key_problems[Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
     while (sfmlWin.isOpen()) {
         bool changeProblem = false;
@@ -188,8 +205,8 @@ int main() {
                     sfmlWin.close();
                     break;
                 }
-				auto p = problems.find(e.key.code);
-                if (p != problems.end()) {
+				auto p = key_problems.find(e.key.code);
+                if (p != key_problems.end()) {
                     currentProblem =p->second;
                     changeProblem = true;
                     break;
