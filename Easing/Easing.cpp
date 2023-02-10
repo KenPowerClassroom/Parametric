@@ -34,6 +34,8 @@ using namespace sf;
 int width = 800;
 int height = 800;
 
+Font font;
+
 void drawBall(Vector2f pos, RenderWindow& window) {
 
     int radius = 25;
@@ -105,13 +107,60 @@ void drawBalls(float t, float h, RenderWindow& window){
     drawChangeSizeBall(t, h,  window);
 }
 
+void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph) {
+
+    graph.addCurve(Color(100, 100, 100), 0.03);
+    graph.addCurve(Color::Green);
+
+    Text message("", font);
+    float textVPosition = 0;
+    int paragraphSpacing = 20;
+    message.setString("Problem #" + to_string(p.index));
+    message.setCharacterSize(40);
+    message.setLineSpacing(2);
+    textVPosition += message.getGlobalBounds().height + paragraphSpacing;
+    window.draw(message);
+
+    string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\nso that the green line matches the grey line";
+
+    message.setString(commonText);
+    message.setCharacterSize(24);
+    message.setLineSpacing(1.5);
+    message.setPosition(0, textVPosition);
+    textVPosition += message.getGlobalBounds().height + paragraphSpacing;
+    window.draw(message);
+
+    message.setString(string("Function to change is called: ") + p.starterFunction);
+    message.setCharacterSize(24);
+    message.setLineSpacing(1.5);
+    message.setPosition(0, textVPosition);
+    textVPosition += message.getGlobalBounds().height + paragraphSpacing;
+    window.draw(message);
+
+    float y;
+
+    y = p.target(t);
+    graph.addPoint(0, Vector2f(t, y));
+    drawBalls(y, 0.1 * 0, window);
+
+
+    y = p.starter(t);
+    graph.addPoint(1, Vector2f(t, y));
+    drawBalls(y, 0.1 * 1, window);
+
+
+    View graphView;
+    graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
+    graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5 * ((float)width / height)));
+    window.setView(graphView);
+    graph.drawGraph();
+
+
+}
 
 
 
 int main() {
-
-
-
 
     VideoMode mode = VideoMode::getDesktopMode();
     width = mode.width *0.8;
@@ -127,12 +176,10 @@ int main() {
 
 
     float t = 0;
-
-
     Graph graph(sfmlWin);
 
-    graph.addCurve(Color(100, 100, 100), 0.03);
-    graph.addCurve(Color::Green);
+
+
 	
     Clock deltaClock;
     Time timeForAnimation = milliseconds(2000);
@@ -147,7 +194,6 @@ int main() {
     map<Keyboard::Key, Problem> key_problems;
     vector<Problem> problems;
     int i = 0;
-    string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\nso that the green line matches the grey line";
     problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget));
     problems.push_back(Problem("Move line up", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
     problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
@@ -228,47 +274,8 @@ int main() {
         }
 
         sfmlWin.clear();
-        Text message("", font);
-        float textVPosition = 0;
-        int paragraphSpacing = 20;
-        message.setString("Problem #"+ to_string(currentProblem.index));
-        message.setCharacterSize(40);
-        message.setLineSpacing(2);
-        textVPosition += message.getGlobalBounds().height+ paragraphSpacing;
-        sfmlWin.draw(message);
-
-        message.setString(commonText);
-        message.setCharacterSize(24);
-        message.setLineSpacing(1.5);
-        message.setPosition(0, textVPosition);
-        textVPosition += message.getGlobalBounds().height + paragraphSpacing;
-        sfmlWin.draw(message);
-
-        message.setString(string("Function to change is called: ")+ currentProblem.starterFunction);
-        message.setCharacterSize(24);
-        message.setLineSpacing(1.5);
-        message.setPosition(0, textVPosition);
-        textVPosition += message.getGlobalBounds().height + paragraphSpacing;
-        sfmlWin.draw(message);
-
-        float y;
-		
-        y = currentProblem.target(t);
-        graph.addPoint(0, Vector2f(t, y));
-        drawBalls(y, 0.1 * 0, sfmlWin);
-
-
-        y = currentProblem.starter(t);
-        graph.addPoint(1, Vector2f(t, y));
-        drawBalls(y, 0.1 * 1, sfmlWin);
-
-
-        View graphView;
-        graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
-        graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5*((float)width/height)));
-        sfmlWin.setView(graphView);
-        graph.drawGraph();
-
+        
+        drawProblemScreen(currentProblem, t, sfmlWin, graph);
         sleep(delayTime);
 
         sfmlWin.display();
