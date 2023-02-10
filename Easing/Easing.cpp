@@ -147,20 +147,20 @@ int main() {
     map<Keyboard::Key, Problem> problems;
     int i = 0;
     string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\n so that the green line matches the grey line";
-    problems[Keyboard::Key::A] = Problem("Move line up", i++,"", "lineA", moveHorizLine, moveHorizLineTarget);
-    problems[Keyboard::Key::B] = Problem("Move line up", i++,"" , "lineA", changeSlope, changeSlopeTarget);
-    problems[Keyboard::Key::C] = Problem("Move line up", i++,"" , "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
-    problems[Keyboard::Key::D] = Problem("Move line up", i++,"" , "lineA", moveParabolsLeft, moveParabolsLeftTarget);
-    problems[Keyboard::Key::E] = Problem("Move line up", i++,"" , "lineA", moveParabolaUp, moveParabolaUpTarget);
-    problems[Keyboard::Key::F] = Problem("Move line up", i++,"" , "lineA", invertParabola, invertParabolaTarget);
-    problems[Keyboard::Key::G] = Problem("Move line up", i++,"" , "lineA", widenParabola, widenParabolaTarget);
-    problems[Keyboard::Key::H] = Problem("Move line up", i++,"" , "lineA", widenAndMoveParabola, widenAndMoveParabolaTarget);
-    problems[Keyboard::Key::I] = Problem("Move line up", i++,"" , "lineA", easeIn, easeInTarget);
-    problems[Keyboard::Key::J] = Problem("Move line up", i++,"" , "lineA", easeInUpsideDown, easeInUpsideDownTarget);
-    problems[Keyboard::Key::K] = Problem("Move line up", i++,"" , "lineA", easeInFlipVert, easeInFlipVertTarget);
-    problems[Keyboard::Key::L] = Problem("Move line up", i++,"" , "lineA", easeOut, easeOutTarget);
-    problems[Keyboard::Key::M] = Problem("Move line up", i++,"" , "lineA", easeInThruCentre, easeInThruCentreTarget);
-    problems[Keyboard::Key::N] = Problem("Move line up", i++,"" , "lineA", easeOutThruCentre, easeOutThruCentreTarget);
+    problems[Keyboard::Key::A] = Problem("Move line up", i++,"" , "moveHorizLine", moveHorizLine, moveHorizLineTarget);
+    problems[Keyboard::Key::B] = Problem("Move line up", i++, "", "changeSlope", changeSlope, changeSlopeTarget);
+    problems[Keyboard::Key::C] = Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget);
+    problems[Keyboard::Key::D] = Problem("Move line up", i++, "", "moveParabolsLeft", moveParabolsLeft, moveParabolsLeftTarget);
+    problems[Keyboard::Key::E] = Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget);
+    problems[Keyboard::Key::F] = Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget);
+    problems[Keyboard::Key::G] = Problem("Move line up", i++, "", "widenParabola", widenParabola, widenParabolaTarget);
+    problems[Keyboard::Key::H] = Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget);
+    problems[Keyboard::Key::I] = Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget);
+    problems[Keyboard::Key::J] = Problem("Move line up", i++, "", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget);
+    problems[Keyboard::Key::K] = Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipVert, easeInFlipVertTarget);
+    problems[Keyboard::Key::L] = Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget);
+    problems[Keyboard::Key::M] = Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget);
+    problems[Keyboard::Key::N] = Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget);
 
 
     Problem currentProblem = problems[Keyboard::Key::A];
@@ -211,9 +211,27 @@ int main() {
         }
 
         sfmlWin.clear();
-        Text message(commonText, font);
+        Text message("", font);
+        float textVPosition = 0;
+        int paragraphSpacing = 20;
+        message.setString("Problem #"+ to_string(currentProblem.index));
+        message.setCharacterSize(40);
+        message.setLineSpacing(2);
+        textVPosition += message.getGlobalBounds().height+ paragraphSpacing;
+        sfmlWin.draw(message);
+
+        message.setString(commonText);
         message.setCharacterSize(24);
         message.setLineSpacing(1.5);
+        message.setPosition(0, textVPosition);
+        textVPosition += message.getGlobalBounds().height + paragraphSpacing;
+        sfmlWin.draw(message);
+
+        message.setString(string("Function to change is called: ")+ currentProblem.starterFunction);
+        message.setCharacterSize(24);
+        message.setLineSpacing(1.5);
+        message.setPosition(0, textVPosition);
+        textVPosition += message.getGlobalBounds().height + paragraphSpacing;
         sfmlWin.draw(message);
 
         float y;
