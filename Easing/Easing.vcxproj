@@ -81,7 +81,6 @@
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="ThickLine.cpp" />
-    <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Functions.h" />
@@ -89,7 +88,6 @@
     <ClInclude Include="Problem.h" />
     <ClInclude Include="TargetFunctions.h" />
     <ClInclude Include="ThickLine.h" />
-    <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Debug\TargetFunctions.lib" />

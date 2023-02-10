@@ -22,9 +22,8 @@ class Graph
 	sf::Font font;
 
 	sf::RenderWindow& window;
-	Viewport& vp;
 public:
-	Graph(sf::RenderWindow& window, Viewport& vp):window(window), vp(vp) {
+	Graph(sf::RenderWindow& window):window(window) {
 		font.loadFromFile("cmr12.ttf");
 	};
 	void drawGraph();
