@@ -28,77 +28,79 @@
 #include"Problem.h"
 #include"Functions.h"
 
+using namespace std;
+using namespace sf;
 
 int width = 800;
 int height = 800;
 
-void drawBall(sf::Vector2f pos, sf::RenderWindow& window) {
+void drawBall(Vector2f pos, RenderWindow& window) {
 
     int radius = 25;
-    sf::CircleShape circle(radius);
-    circle.setFillColor(sf::Color(100, 250, 50));
+    CircleShape circle(radius);
+    circle.setFillColor(Color(100, 250, 50));
 
     circle.setPointCount(100);
 
-    circle.setPosition(pos - sf::Vector2f(radius,0));
+    circle.setPosition(pos - Vector2f(radius,0));
 
     window.draw(circle);
 }
 
-void drawChangeColorBall(float t, float h, sf::RenderWindow& window) {
+void drawChangeColorBall(float t, float h, RenderWindow& window) {
 
     auto clamp = [](float i) {return i > 1.0 ? 1.0 : i<0?0.0:i;  };
     int radius = 25;
-    sf::CircleShape circle(radius);
+    CircleShape circle(radius);
     int trans =  0 + clamp(t) * (255 - 0);
     
-    circle.setFillColor(sf::Color(200, 150, 50, trans));
+    circle.setFillColor(Color(200, 150, 50, trans));
 
     circle.setPointCount(100);
 
-    circle.setPosition(sf::Vector2f(0.05,h));
+    circle.setPosition(Vector2f(0.05,h));
 
-    sf::CircleShape outLine(radius);
-    outLine.setFillColor(sf::Color(0,0,0, 0));
+    CircleShape outLine(radius);
+    outLine.setFillColor(Color(0,0,0, 0));
     outLine.setOutlineThickness(2);
-    outLine.setOutlineColor(sf::Color(200, 150, 50));
+    outLine.setOutlineColor(Color(200, 150, 50));
 
     outLine.setPointCount(100);
 
-    outLine.setPosition(sf::Vector2f(0.05, h));
+    outLine.setPosition(Vector2f(0.05, h));
 
     window.draw(outLine);
     window.draw(circle);
 }
 
-void drawChangeSizeBall(float t, float h, sf::RenderWindow& window) {
+void drawChangeSizeBall(float t, float h, RenderWindow& window) {
 
     int endRadius = 25;
     int radius = 0 + t * (endRadius - 0);
-    sf::CircleShape circle(radius);
+    CircleShape circle(radius);
 
-    circle.setOrigin(sf::Vector2f(radius, radius));
-    circle.setFillColor(sf::Color(100, 150, 250));
+    circle.setOrigin(Vector2f(radius, radius));
+    circle.setFillColor(Color(100, 150, 250));
 
     circle.setPointCount(100);
 
-    circle.setPosition(sf::Vector2f(0.0, h) + sf::Vector2f(endRadius, endRadius));
+    circle.setPosition(Vector2f(0.0, h) + Vector2f(endRadius, endRadius));
     
-    sf::CircleShape outLine(endRadius);
-    outLine.setOrigin(sf::Vector2f(endRadius, endRadius));
-    outLine.setFillColor(sf::Color(0, 0, 0, 0));
+    CircleShape outLine(endRadius);
+    outLine.setOrigin(Vector2f(endRadius, endRadius));
+    outLine.setFillColor(Color(0, 0, 0, 0));
     outLine.setOutlineThickness(2);
-    outLine.setOutlineColor(sf::Color(100, 150, 250));
+    outLine.setOutlineColor(Color(100, 150, 250));
 
     outLine.setPointCount(100);
 
-    outLine.setPosition(sf::Vector2f(0.0, h) + sf::Vector2f(endRadius, endRadius)) ;
+    outLine.setPosition(Vector2f(0.0, h) + Vector2f(endRadius, endRadius)) ;
 
     window.draw(outLine);
     window.draw(circle);
 }
-void drawBalls(float t, float h, sf::RenderWindow& window){
-    drawBall(sf::Vector2f(t, h), window);
+void drawBalls(float t, float h, RenderWindow& window){
+    drawBall(Vector2f(t, h), window);
     drawChangeColorBall(t, h, window);
     drawChangeSizeBall(t, h,  window);
 }
@@ -111,13 +113,13 @@ int main() {
 
 
 
-    sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+    VideoMode mode = VideoMode::getDesktopMode();
     width = mode.width *0.8;
     height = mode.height*0.8;
-    sf::RenderWindow sfmlWin(sf::VideoMode(width, height), "Hello World SFML Window");
-    sf::View view;
-    view.reset(sf::FloatRect(0,0,width,height));
-    sf::Font font;
+    RenderWindow sfmlWin(VideoMode(width, height), "Hello World SFML Window");
+    View view;
+    view.reset(FloatRect(0,0,width,height));
+    Font font;
     //You need to pass the font file location
     if (!font.loadFromFile("cmr12.ttf")) {
         return -1;
@@ -129,60 +131,60 @@ int main() {
 
     Graph graph(sfmlWin);
 
-    graph.addCurve(sf::Color(100, 100, 100), 0.03);
-    graph.addCurve(sf::Color::Green);
+    graph.addCurve(Color(100, 100, 100), 0.03);
+    graph.addCurve(Color::Green);
 	
-    sf::Clock deltaClock;
-    sf::Time timeForAnimation = sf::milliseconds(2000);
-    sf::Time delayTime = sf::milliseconds(1);
-    sf::Time pauseTime = sf::milliseconds(500);
+    Clock deltaClock;
+    Time timeForAnimation = milliseconds(2000);
+    Time delayTime = milliseconds(1);
+    Time pauseTime = milliseconds(500);
 
 
     typedef float (*myFunc)(float);
 
     //myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
 
-    map<sf::Keyboard::Key, Problem> problems;
+    map<Keyboard::Key, Problem> problems;
 	
     string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\n so that the green line matches the grey line";
-    problems[sf::Keyboard::Key::A] = Problem("Move line up", "", "lineA", moveHorizLine, moveHorizLineTarget);
-    problems[sf::Keyboard::Key::B] = Problem("Move line up","" , "lineA", changeSlope, changeSlopeTarget);
-    problems[sf::Keyboard::Key::C] = Problem("Move line up","" , "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
-    problems[sf::Keyboard::Key::D] = Problem("Move line up","" , "lineA", moveParabolsLeft, moveParabolsLeftTarget);
-    problems[sf::Keyboard::Key::E] = Problem("Move line up","" , "lineA", moveParabolaUp, moveParabolaUpTarget);
-    problems[sf::Keyboard::Key::F] = Problem("Move line up","" , "lineA", invertParabola, invertParabolaTarget);
-    problems[sf::Keyboard::Key::G] = Problem("Move line up","" , "lineA", widenParabola, widenParabolaTarget);
-    problems[sf::Keyboard::Key::H] = Problem("Move line up","" , "lineA", widenAndMoveParabola, widenAndMoveParabolaTarget);
-    problems[sf::Keyboard::Key::I] = Problem("Move line up","" , "lineA", easeIn, easeInTarget);
-    problems[sf::Keyboard::Key::J] = Problem("Move line up","" , "lineA", easeInUpsideDown, easeInUpsideDownTarget);
-    problems[sf::Keyboard::Key::K] = Problem("Move line up","" , "lineA", easeInFlipVert, easeInFlipVertTarget);
-    problems[sf::Keyboard::Key::L] = Problem("Move line up","" , "lineA", easeOut, easeOutTarget);
-    problems[sf::Keyboard::Key::M] = Problem("Move line up","" , "lineA", easeInThruCentre, easeInThruCentreTarget);
-    problems[sf::Keyboard::Key::N] = Problem("Move line up","" , "lineA", easeOutThruCentre, easeOutThruCentreTarget);
+    problems[Keyboard::Key::A] = Problem("Move line up", "", "lineA", moveHorizLine, moveHorizLineTarget);
+    problems[Keyboard::Key::B] = Problem("Move line up","" , "lineA", changeSlope, changeSlopeTarget);
+    problems[Keyboard::Key::C] = Problem("Move line up","" , "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
+    problems[Keyboard::Key::D] = Problem("Move line up","" , "lineA", moveParabolsLeft, moveParabolsLeftTarget);
+    problems[Keyboard::Key::E] = Problem("Move line up","" , "lineA", moveParabolaUp, moveParabolaUpTarget);
+    problems[Keyboard::Key::F] = Problem("Move line up","" , "lineA", invertParabola, invertParabolaTarget);
+    problems[Keyboard::Key::G] = Problem("Move line up","" , "lineA", widenParabola, widenParabolaTarget);
+    problems[Keyboard::Key::H] = Problem("Move line up","" , "lineA", widenAndMoveParabola, widenAndMoveParabolaTarget);
+    problems[Keyboard::Key::I] = Problem("Move line up","" , "lineA", easeIn, easeInTarget);
+    problems[Keyboard::Key::J] = Problem("Move line up","" , "lineA", easeInUpsideDown, easeInUpsideDownTarget);
+    problems[Keyboard::Key::K] = Problem("Move line up","" , "lineA", easeInFlipVert, easeInFlipVertTarget);
+    problems[Keyboard::Key::L] = Problem("Move line up","" , "lineA", easeOut, easeOutTarget);
+    problems[Keyboard::Key::M] = Problem("Move line up","" , "lineA", easeInThruCentre, easeInThruCentreTarget);
+    problems[Keyboard::Key::N] = Problem("Move line up","" , "lineA", easeOutThruCentre, easeOutThruCentreTarget);
 
 
-    Problem currentProblem = problems[sf::Keyboard::Key::A];
+    Problem currentProblem = problems[Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
     while (sfmlWin.isOpen()) {
         bool changeProblem = false;
-        sf::Time dt = deltaClock.restart();
+        Time dt = deltaClock.restart();
         t += dt.asSeconds() / timeForAnimation.asSeconds();
 
         
-        sf::Event e;
+        Event e;
 		
         while (sfmlWin.pollEvent(e)) {
 
             switch (e.type) {
-            case sf::Event::EventType::Closed:
+            case Event::EventType::Closed:
                 sfmlWin.close();
                 break;
-            case sf::Event::EventType::Resized:
-                view.setViewport(sf::FloatRect(0, 0, (float)width/e.size.width, float(height)/e.size.height));
+            case Event::EventType::Resized:
+                view.setViewport(FloatRect(0, 0, (float)width/e.size.width, float(height)/e.size.height));
                 break;
 
-            case sf::Event::KeyPressed:
-                if (e.key.code == sf::Keyboard::Escape) {
+            case Event::KeyPressed:
+                if (e.key.code == Keyboard::Escape) {
                     sfmlWin.close();
                     break;
                 }
@@ -198,7 +200,7 @@ int main() {
         sfmlWin.setView(view);
 
         if (t >= 1 or changeProblem) {
-            if(!changeProblem)sf::sleep(pauseTime);
+            if(!changeProblem)sleep(pauseTime);
             t = 0;
             graph.reset();
 
@@ -209,7 +211,7 @@ int main() {
         }
 
         sfmlWin.clear();
-        sf::Text message(commonText, font);
+        Text message(commonText, font);
         message.setCharacterSize(24);
         message.setLineSpacing(1.5);
         sfmlWin.draw(message);
@@ -217,28 +219,28 @@ int main() {
         float y;
 		
         y = currentProblem.target(t);
-        graph.addPoint(0, sf::Vector2f(t, y));
+        graph.addPoint(0, Vector2f(t, y));
         drawBalls(y, 0.1 * 0, sfmlWin);
 
 
         y = currentProblem.starter(t);
-        graph.addPoint(1, sf::Vector2f(t, y));
+        graph.addPoint(1, Vector2f(t, y));
         drawBalls(y, 0.1 * 1, sfmlWin);
 
 
-        sf::View graphView;
-        graphView.reset(sf::FloatRect(-0.3, 1.3, 1.5, -1.5));
-        graphView.setViewport(sf::FloatRect(0.5, 0.0, 0.5, 0.5*((float)width/height)));
+        View graphView;
+        graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
+        graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5*((float)width/height)));
         sfmlWin.setView(graphView);
         graph.drawGraph();
 
-        sf::sleep(delayTime);
+        sleep(delayTime);
 
         sfmlWin.display();
 
         if (firstFrame) {
-            sf::sleep(pauseTime);
-            sf::Time dt = deltaClock.restart(); 
+            sleep(pauseTime);
+            Time dt = deltaClock.restart(); 
             firstFrame = false;
 
         }
