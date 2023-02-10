@@ -1,15 +1,13 @@
 #pragma once
 #include"TargetFunctions.h"
 
-//float sqr(float n) { return n * n; }
-
 float moveHorizLine(float t) { return 0.25f; }
 
 float changeSlope(float t) { return t; }
 
 float changeSlopeAndMove(float t) { return t; }
 
-float moveParabolsLeft(float t) { return sqr(t); }  //sqr(t) is same as t*t 
+float moveParabolaLeft(float t) { return sqr(t); }  //sqr(t) is same as t*t 
 
 float moveParabolaUp(float t) { return sqr(t - 0.5); }
 

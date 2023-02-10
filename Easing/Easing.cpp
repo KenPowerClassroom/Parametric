@@ -146,11 +146,11 @@ int main() {
 
     map<Keyboard::Key, Problem> problems;
     int i = 0;
-    string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\n so that the green line matches the grey line";
+    string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\nso that the green line matches the grey line";
     problems[Keyboard::Key::A] = Problem("Move line up", i++,"" , "moveHorizLine", moveHorizLine, moveHorizLineTarget);
     problems[Keyboard::Key::B] = Problem("Move line up", i++, "", "changeSlope", changeSlope, changeSlopeTarget);
     problems[Keyboard::Key::C] = Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget);
-    problems[Keyboard::Key::D] = Problem("Move line up", i++, "", "moveParabolsLeft", moveParabolsLeft, moveParabolsLeftTarget);
+    problems[Keyboard::Key::D] = Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget);
     problems[Keyboard::Key::E] = Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget);
     problems[Keyboard::Key::F] = Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget);
     problems[Keyboard::Key::G] = Problem("Move line up", i++, "", "widenParabola", widenParabola, widenParabolaTarget);
