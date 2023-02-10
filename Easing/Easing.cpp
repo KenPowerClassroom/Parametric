@@ -34,7 +34,7 @@ using namespace sf;
 int width = 800;
 int height = 800;
 
-Font font;
+
 
 void drawBall(Vector2f pos, RenderWindow& window) {
 
@@ -107,12 +107,12 @@ void drawBalls(float t, float h, RenderWindow& window){
     drawChangeSizeBall(t, h,  window);
 }
 
-void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph) {
+void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, Font& cmr) {
 
     graph.addCurve(Color(100, 100, 100), 0.03);
     graph.addCurve(Color::Green);
 
-    Text message("", font);
+    Text message("", cmr);
     float textVPosition = 0;
     int paragraphSpacing = 20;
     message.setString("Problem #" + to_string(p.index));
@@ -158,6 +158,79 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph) {
 
 }
 
+class MainScreen {
+
+    vector<Graph> graphs;
+    vector<Problem> problems;
+    RenderWindow& window;
+    Font& font;
+
+public:
+    MainScreen(RenderWindow& w, Font& f) :window(w), font(f) {}
+
+    void init(vector<Problem> ps) {
+
+        for (auto p : ps) {
+            graphs.push_back(Graph(window));
+            problems.push_back(p);
+        }
+        for (auto& g : graphs) {
+            g.addCurve(Color(100, 100, 100), 0.03);
+            g.addCurve(Color::Green);
+        }
+    }
+
+    void reset() {
+        for (auto& g : graphs) {
+            g.reset();
+        }
+    }
+    void draw(float t) {
+        int i = 0;
+        for (auto p : problems) {
+            drawProblem(t, p,  i);
+            i++;
+        }
+    }
+
+    void drawProblem(float t, Problem& p, int i) {
+        int lineHeight = 50;
+        Text message("", font);
+        float textVPosition = i*lineHeight;
+        int paragraphSpacing = 20;
+        message.setString("Problem #" + to_string(i));
+        message.setCharacterSize(40);
+        message.setLineSpacing(2);
+        message.setPosition(0,textVPosition);
+
+        window.draw(message);
+
+        float y;
+
+        y = p.target(t);
+        graphs[i].addPoint(0, Vector2f(t, y));
+        //drawBalls(y, 0.1 * 0, window);
+
+
+        y = p.starter(t);
+        graphs[i].addPoint(1, Vector2f(t, y));
+        //drawBalls(y, 0.1 * 1, window);
+
+
+        //const View& tempView = window.getView();
+
+        //View graphView;
+        //graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
+        //graphView.setViewport(FloatRect(0.5, 0, 0.5, 0.5 * ((float)width / height)));
+        //window.setView(graphView);
+        //graphs[i].drawGraph();
+
+        //window.setView(tempView);
+
+    }
+
+
+};
 
 
 int main() {
@@ -168,11 +241,13 @@ int main() {
     RenderWindow sfmlWin(VideoMode(width, height), "Hello World SFML Window");
     View view;
     view.reset(FloatRect(0,0,width,height));
-    Font font;
     //You need to pass the font file location
+
+    Font font;
     if (!font.loadFromFile("cmr12.ttf")) {
         return -1;
     }
+    
 
 
     float t = 0;
@@ -228,6 +303,12 @@ int main() {
 
     Problem currentProblem = key_problems[Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
+
+    enum Screen { menu, problem} screen = menu;
+
+    MainScreen mainscreen(sfmlWin, font);
+    mainscreen.init(problems);
+
     while (sfmlWin.isOpen()) {
         bool changeProblem = false;
         Time dt = deltaClock.restart();
@@ -263,7 +344,7 @@ int main() {
         sfmlWin.setView(view);
 
         if (t >= 1 or changeProblem) {
-            if(!changeProblem)sleep(pauseTime);
+            if(!changeProblem) sleep(pauseTime);
             t = 0;
             graph.reset();
 
@@ -274,8 +355,13 @@ int main() {
         }
 
         sfmlWin.clear();
+        if (screen == menu)
+            //drawMainScreen(problems, t, sfmlWin, graph, font);
+            mainscreen.draw(t);
+
+        if (screen == problem)
+            drawProblemScreen(currentProblem, t, sfmlWin, graph, font);
         
-        drawProblemScreen(currentProblem, t, sfmlWin, graph);
         sleep(delayTime);
 
         sfmlWin.display();
@@ -284,6 +370,7 @@ int main() {
             sleep(pauseTime);
             Time dt = deltaClock.restart(); 
             firstFrame = false;
+            mainscreen.reset();
 
         }
 
