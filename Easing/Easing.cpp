@@ -145,22 +145,22 @@ int main() {
     //myFunc functions[3] = { &easeInOutQuadratic , &easeInOutQuintic, &easeInOutBack };
 
     map<Keyboard::Key, Problem> problems;
-	
+    int i = 0;
     string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\n so that the green line matches the grey line";
-    problems[Keyboard::Key::A] = Problem("Move line up", "", "lineA", moveHorizLine, moveHorizLineTarget);
-    problems[Keyboard::Key::B] = Problem("Move line up","" , "lineA", changeSlope, changeSlopeTarget);
-    problems[Keyboard::Key::C] = Problem("Move line up","" , "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
-    problems[Keyboard::Key::D] = Problem("Move line up","" , "lineA", moveParabolsLeft, moveParabolsLeftTarget);
-    problems[Keyboard::Key::E] = Problem("Move line up","" , "lineA", moveParabolaUp, moveParabolaUpTarget);
-    problems[Keyboard::Key::F] = Problem("Move line up","" , "lineA", invertParabola, invertParabolaTarget);
-    problems[Keyboard::Key::G] = Problem("Move line up","" , "lineA", widenParabola, widenParabolaTarget);
-    problems[Keyboard::Key::H] = Problem("Move line up","" , "lineA", widenAndMoveParabola, widenAndMoveParabolaTarget);
-    problems[Keyboard::Key::I] = Problem("Move line up","" , "lineA", easeIn, easeInTarget);
-    problems[Keyboard::Key::J] = Problem("Move line up","" , "lineA", easeInUpsideDown, easeInUpsideDownTarget);
-    problems[Keyboard::Key::K] = Problem("Move line up","" , "lineA", easeInFlipVert, easeInFlipVertTarget);
-    problems[Keyboard::Key::L] = Problem("Move line up","" , "lineA", easeOut, easeOutTarget);
-    problems[Keyboard::Key::M] = Problem("Move line up","" , "lineA", easeInThruCentre, easeInThruCentreTarget);
-    problems[Keyboard::Key::N] = Problem("Move line up","" , "lineA", easeOutThruCentre, easeOutThruCentreTarget);
+    problems[Keyboard::Key::A] = Problem("Move line up", i++,"", "lineA", moveHorizLine, moveHorizLineTarget);
+    problems[Keyboard::Key::B] = Problem("Move line up", i++,"" , "lineA", changeSlope, changeSlopeTarget);
+    problems[Keyboard::Key::C] = Problem("Move line up", i++,"" , "lineA", changeSlopeAndMove, changeSlopeAndMoveTarget);
+    problems[Keyboard::Key::D] = Problem("Move line up", i++,"" , "lineA", moveParabolsLeft, moveParabolsLeftTarget);
+    problems[Keyboard::Key::E] = Problem("Move line up", i++,"" , "lineA", moveParabolaUp, moveParabolaUpTarget);
+    problems[Keyboard::Key::F] = Problem("Move line up", i++,"" , "lineA", invertParabola, invertParabolaTarget);
+    problems[Keyboard::Key::G] = Problem("Move line up", i++,"" , "lineA", widenParabola, widenParabolaTarget);
+    problems[Keyboard::Key::H] = Problem("Move line up", i++,"" , "lineA", widenAndMoveParabola, widenAndMoveParabolaTarget);
+    problems[Keyboard::Key::I] = Problem("Move line up", i++,"" , "lineA", easeIn, easeInTarget);
+    problems[Keyboard::Key::J] = Problem("Move line up", i++,"" , "lineA", easeInUpsideDown, easeInUpsideDownTarget);
+    problems[Keyboard::Key::K] = Problem("Move line up", i++,"" , "lineA", easeInFlipVert, easeInFlipVertTarget);
+    problems[Keyboard::Key::L] = Problem("Move line up", i++,"" , "lineA", easeOut, easeOutTarget);
+    problems[Keyboard::Key::M] = Problem("Move line up", i++,"" , "lineA", easeInThruCentre, easeInThruCentreTarget);
+    problems[Keyboard::Key::N] = Problem("Move line up", i++,"" , "lineA", easeOutThruCentre, easeOutThruCentreTarget);
 
 
     Problem currentProblem = problems[Keyboard::Key::A];

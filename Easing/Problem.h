@@ -5,13 +5,14 @@ using namespace std;
 
 struct Problem
 {
-	Problem() { assert("default contructor should not be called"); };
-	Problem(string title, string description, string solution,  float (*starter)(float), float (*target)(float)) :
-		title(title), description(description), target(target), starter(starter)
+	Problem():title(""), description(""), target(NULL), starter(NULL) { assert("default contructor should not be called"); };
+	Problem(string title, int index, string description, string solution,  float (*starter)(float), float (*target)(float)) :
+		title(title), index(index), description(description), target(target), starter(starter)
 	{
 	};
 	
 	string title;
+	int index = 0;
 	string description;
 	string starterFunction;
 
