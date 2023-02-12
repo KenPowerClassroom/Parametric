@@ -187,15 +187,25 @@ public:
     }
     void draw(float t) {
         int i = 0;
+        float graphSize = 1.0 / problems.size();
+        float graphGap = graphSize * 0.25;
+        const View tempView = window.getView();
+        
+        View graphView;
+        graphView.reset(FloatRect(-2.8, 1.3, 3.5, -1.5));
         for (auto p : problems) {
-            drawProblem(t, p,  i, problems.size());
+
+            graphView.setViewport(FloatRect(0.0, i * (graphSize + graphGap), 0.5+ graphSize, graphSize * ((float)width / height)));
+            window.setView(graphView);
+            drawProblem(t, p,  i);
             i++;
         }
+        
+        window.setView(tempView);
     }
 
-    void drawProblem(float t, Problem& p, int i, int numProblems) {
-        float graphSize = 1.0/numProblems;
-        float graphGap = graphSize*0.25;
+    void drawProblem(float t, Problem& p, int i) {
+
         int lineHeight = 50;
         Text message("", font);
         float textVPosition = i*lineHeight;
@@ -215,17 +225,9 @@ public:
         y = p.starter(t);
         graphs[i].addPoint(1, Vector2f(t, y));
 
-        const View tempView = window.getView();
-
-        View graphView;
-
-
-        graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
-        graphView.setViewport(FloatRect(0.5, i*(graphSize+graphGap), graphSize, graphSize * ((float)width / height)));
-        window.setView(graphView);
         graphs[i].drawGraph();
 
-        window.setView(tempView);
+
 
     }
 
