@@ -7,7 +7,7 @@ void Graph::drawGraph() {
 
     sf::Vertex axes[5];
 
-    float unit = 100;
+    float unit = 500;
     axes[0].position = sf::Vector2f(0, unit);
     axes[0].color = sf::Color::White;
     axes[1].position = sf::Vector2f(0, 0);
@@ -26,13 +26,13 @@ sf:Color ticKColor = sf::Color::White;
     for (int i = 0; i < NUM_TICKS * 2; i++) {
         ticks[i].color = ticKColor;
     }
-    float tickLength = 2;
+    float tickLength = 0.02 * unit;
     int i = 0;
-    for (int t = 0; t <= 100; t+=10) {
+    for (int t = 0; t <= unit; t+=(unit/10)) {
         ticks[i++].position = sf::Vector2f(t, 0);
         ticks[i++].position = sf::Vector2f(t, -tickLength);
     }
-    for (int t = 0; t <= 100; t+=10) {
+    for (int t = 0; t <= unit; t += (unit / 10)) {
         ticks[i++].position = sf::Vector2f(0, t );
         ticks[i++].position = sf::Vector2f(-tickLength, t );
     }
@@ -40,14 +40,16 @@ sf:Color ticKColor = sf::Color::White;
 
     window.draw(ticks, NUM_TICKS * 2, sf::Lines);
 
-    float textOffset = 5.f;
+    float textOffset = unit/20.0;
+    int labelTextSize = 40;
+    int axisTextSize = 25;
 
-    centredText("t", sf::Vector2f(50, -textOffset),5);
-    centredText("f(t)", sf::Vector2f(-textOffset, 50), 5,true);
-    centredText("0.0", sf::Vector2f(0, -textOffset),3);    
-    centredText("1.0", sf::Vector2f(100, -textOffset), 3);
-    centredText("0.0", sf::Vector2f(-textOffset, 0.0), 3, true);
-    centredText("1.0", sf::Vector2f(-textOffset, 100), 3, true);
+    centredText("t", sf::Vector2f(unit/2, -textOffset), labelTextSize);
+    centredText("f(t)", sf::Vector2f(-textOffset, unit / 2), labelTextSize,true);
+    centredText("0.0", sf::Vector2f(0, -textOffset), axisTextSize);
+    centredText("1.0", sf::Vector2f(unit, -textOffset), axisTextSize);
+    centredText("0.0", sf::Vector2f(-textOffset, 0), axisTextSize, true);
+    centredText("1.0", sf::Vector2f(-textOffset, unit), axisTextSize, true);
 
 
     for (auto& c : curves) {
@@ -55,7 +57,7 @@ sf:Color ticKColor = sf::Color::White;
         int i = 0;
         ThickLine::convert(c->points, q, c->thickness);
         for (auto& p : q) {
-            line[i].position = sf::Vector2f(p.x*100, p.y*100);
+            line[i].position = sf::Vector2f(p.x*unit, p.y*unit);
             line[i].color = c->color;
             i++;
         }

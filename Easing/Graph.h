@@ -40,10 +40,13 @@ public:
 		auto text = sf::Text{s, font };
 		text.setCharacterSize(size);
 		text.setScale(1,-1);
-		auto center = sf::Vector2f(text.getGlobalBounds().width / 2.f, text.getGlobalBounds().height / 2.f);
-		auto localBounds = center + sf::Vector2f(text.getLocalBounds().width/(rightJust ? 1. : 2.),  +text.getLocalBounds().height/2.);
+		auto lb = text.getLocalBounds();
+		auto gb = text.getGlobalBounds();
 
-		text.setOrigin(localBounds.x, localBounds.y);
+		auto center = sf::Vector2f(text.getGlobalBounds().width / (rightJust ? 1. : 2.), text.getGlobalBounds().height / 2.f);
+		//auto localBounds = center + sf::Vector2f(text.getLocalBounds().width/(rightJust ? 1. : 2.),  +text.getLocalBounds().height/2.);
+
+		text.setOrigin(center.x, center.y);
 		text.setPosition(pos);
 		window.draw(text);
 	}

@@ -150,7 +150,7 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
 
 
     View graphView;
-    graphView.reset(FloatRect(-30, 130, 150, -150));
+    graphView.reset(FloatRect(-150, 650, 750, -750));
     graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5 * ((float)width / height)));
     window.setView(graphView);
     graph.drawGraph();
