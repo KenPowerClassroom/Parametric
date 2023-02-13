@@ -150,7 +150,7 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
 
 
     View graphView;
-    graphView.reset(FloatRect(-0.3, 1.3, 1.5, -1.5));
+    graphView.reset(FloatRect(-30, 130, 150, -150));
     graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5 * ((float)width / height)));
     window.setView(graphView);
     graph.drawGraph();
@@ -192,11 +192,11 @@ public:
         const View tempView = window.getView();
         
         View graphView;
-        float problemLocalWidth = 3.5f;
-        float problemLocalHeight = 1.5f;
+        float problemLocalWidth = 350.f;
+        float problemLocalHeight = 150.f;
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
-        graphView.reset(FloatRect(-2.8, 1.3, problemLocalWidth, -problemLocalHeight));
+        graphView.reset(FloatRect(-280, 130, problemLocalWidth, -problemLocalHeight));
         for (auto p : problems) {
 
             graphView.setViewport(FloatRect(0.0, i * problemHeight, problemHeight *aspect, problemHeight));
@@ -215,9 +215,9 @@ public:
         float textVPosition = i*lineHeight;
         int paragraphSpacing = 20;
         message.setString("Problem #" + to_string(i));
-        message.setCharacterSize(1);
+        message.setCharacterSize(50);
         //message.setLineSpacing(2);
-        message.setPosition(0,0);
+        message.setPosition(-250,0);
 
         window.draw(message);
 
@@ -301,7 +301,7 @@ int main() {
     Problem currentProblem = key_problems[Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
 
-    enum Screen { menu, problem} screen = menu;
+    enum Screen { menu, problem} screen = problem;
 
     MainScreen mainscreen(sfmlWin, font);
     mainscreen.init(problems);
