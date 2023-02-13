@@ -186,41 +186,57 @@ public:
         }
     }
     void draw(float t) {
-        int i = 0;
-        float problemHeight = 1.0 / problems.size();
-        float problemPadding = problemHeight * 0.15;
+        float graphUnit = Graph::Unit;
+        float padding = graphUnit * 0.1;
+        
+
+        int problemsPerColumn = problems.size() / 2;
+        float problemHeight = 1.0 / problemsPerColumn;
+        float problemPadding = problemHeight * 0.25;
         const View tempView = window.getView();
         
         View graphView;
-        float problemLocalWidth = 350.f;
-        float problemLocalHeight = 150.f;
+        int lineHeight = 50;
+        Text message("Problem #888", font);
+        message.setScale(1, -1);
+        message.setCharacterSize(200);
+
+
+        float textWidth = message.getGlobalBounds().width;
+        float textHeight = message.getGlobalBounds().height;
+
+        float problemLocalWidth = textWidth + 3 * padding + graphUnit;;
+        float problemLocalHeight = graphUnit + 2 * padding;
+        float problemLocalLeft = -2 * padding - textWidth;
+        float problemLocalTop = padding + graphUnit;
+
+        message.setPosition(-textWidth - padding, textHeight+ (problemLocalHeight - textHeight) / 2);
+
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
-        graphView.reset(FloatRect(-280, 130, problemLocalWidth, -problemLocalHeight));
+        float columnLeft = 0.0;
+        int i = 0;
+        int rowsInColumn = 0;
+        graphView.reset(FloatRect(problemLocalLeft, problemLocalTop, problemLocalWidth, -problemLocalHeight));
         for (auto p : problems) {
 
-            graphView.setViewport(FloatRect(0.0, i * problemHeight, problemHeight *aspect, problemHeight));
+            graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect, problemHeight));
             window.setView(graphView);
+            message.setString("Problem #" + to_string(i));
+            window.draw(message);
             drawProblem(t, p,  i);
             i++;
+            rowsInColumn++;
+            if (rowsInColumn >= problemsPerColumn) {
+                rowsInColumn = 0;
+                columnLeft = 0.5;
+            }
         }
         
         window.setView(tempView);
     }
 
     void drawProblem(float t, Problem& p, int i) {
-
-        int lineHeight = 50;
-        Text message("", font);
-        float textVPosition = i*lineHeight;
-        int paragraphSpacing = 20;
-        message.setString("Problem #" + to_string(i));
-        message.setCharacterSize(50);
-        //message.setLineSpacing(2);
-        message.setPosition(-250,0);
-
-        window.draw(message);
-
         float y;
 
         y = p.target(t);
@@ -301,7 +317,7 @@ int main() {
     Problem currentProblem = key_problems[Keyboard::Key::A];
     bool firstFrame = true, lastFrame = false;
 
-    enum Screen { menu, problem} screen = problem;
+    enum Screen { menu, problem} screen = menu;
 
     MainScreen mainscreen(sfmlWin, font);
     mainscreen.init(problems);

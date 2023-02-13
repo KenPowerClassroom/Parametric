@@ -22,7 +22,10 @@ class Graph
 	sf::Font font;
 
 	sf::RenderWindow& window;
+
 public:
+	static const int Unit{ 500 };
+
 	Graph(sf::RenderWindow& window):window(window) {
 		font.loadFromFile("cmr12.ttf");
 	};

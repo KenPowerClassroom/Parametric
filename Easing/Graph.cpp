@@ -7,7 +7,7 @@ void Graph::drawGraph() {
 
     sf::Vertex axes[5];
 
-    float unit = 500;
+    float unit = Unit;
     axes[0].position = sf::Vector2f(0, unit);
     axes[0].color = sf::Color::White;
     axes[1].position = sf::Vector2f(0, 0);
