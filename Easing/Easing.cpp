@@ -187,15 +187,19 @@ public:
     }
     void draw(float t) {
         int i = 0;
-        float graphSize = 1.0 / problems.size();
-        float graphGap = graphSize * 0.25;
+        float problemHeight = 1.0 / problems.size();
+        float problemPadding = problemHeight * 0.15;
         const View tempView = window.getView();
         
         View graphView;
-        graphView.reset(FloatRect(-2.8, 1.3, 3.5, -1.5));
+        float problemLocalWidth = 3.5f;
+        float problemLocalHeight = 1.5f;
+        float aspect = abs(problemLocalWidth / problemLocalHeight);
+
+        graphView.reset(FloatRect(-2.8, 1.3, problemLocalWidth, -problemLocalHeight));
         for (auto p : problems) {
 
-            graphView.setViewport(FloatRect(0.0, i * (graphSize + graphGap), 0.5+ graphSize, graphSize * ((float)width / height)));
+            graphView.setViewport(FloatRect(0.0, i * problemHeight, problemHeight *aspect, problemHeight));
             window.setView(graphView);
             drawProblem(t, p,  i);
             i++;
@@ -211,9 +215,9 @@ public:
         float textVPosition = i*lineHeight;
         int paragraphSpacing = 20;
         message.setString("Problem #" + to_string(i));
-        message.setCharacterSize(40);
-        message.setLineSpacing(2);
-        message.setPosition(0,textVPosition);
+        message.setCharacterSize(1);
+        //message.setLineSpacing(2);
+        message.setPosition(0,0);
 
         window.draw(message);
 
