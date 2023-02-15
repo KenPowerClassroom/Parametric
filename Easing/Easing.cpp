@@ -124,25 +124,25 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     window.draw(message);
 
     string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\nso that the green line matches the grey line";
-
+    int leftMargin = 10;
     message.setString(commonText);
     message.setCharacterSize(24);
     message.setLineSpacing(1.5);
-    message.setPosition(0, textVPosition);
+    message.setPosition(leftMargin, textVPosition);
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
     message.setString(string("Function to change is called: ") );
     message.setCharacterSize(24);
     message.setLineSpacing(1.5);
-    message.setPosition(0, textVPosition);
+    message.setPosition(leftMargin, textVPosition);
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
     fnMessage.setString(string("float ")+p.starterFunction + "(float t);");
     fnMessage.setCharacterSize(24);
     fnMessage.setLineSpacing(1.5);
-    fnMessage.setPosition(0, textVPosition);
+    fnMessage.setPosition(leftMargin, textVPosition);
     textVPosition += fnMessage.getGlobalBounds().height + paragraphSpacing;
     window.draw(fnMessage);
 
@@ -159,7 +159,7 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
 
 
     View graphView;
-    graphView.reset(FloatRect(-150, 650, 750, -750));
+    graphView.reset(FloatRect(-150, 550, 750, -750));
     graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5 * ((float)width / height)));
     window.setView(graphView);
     graph.drawGraph();
@@ -199,27 +199,25 @@ public:
         float padding = graphUnit * 0.1;
         
 
-        int problemsPerColumn = problems.size() / 2;
-        float problemHeight = 1.0 / problemsPerColumn;
-        float problemPadding = problemHeight * 0.25;
-        const View tempView = window.getView();
+
         
         View graphView;
         int lineHeight = 50;
-        Text message("Problem #888XXX", font);
+        int baseFontSize = 120;
+        Text message("Problem #888XX", font);
         message.setScale(1, -1);
-        message.setCharacterSize(150);
+        message.setCharacterSize(baseFontSize);
         Text textMatch("Function matches", font);
         textMatch.setScale(1, -1);
-        textMatch.setCharacterSize(100);
+        textMatch.setCharacterSize(baseFontSize*0.90);
         textMatch.setFillColor(sf::Color::Green);
-        Text textNoMatch("Function does not match", font);
+        Text textNoMatch("Does not match", font);
         textNoMatch.setScale(1, -1);
-        textNoMatch.setCharacterSize(100);
+        textNoMatch.setCharacterSize(baseFontSize * 0.90);
         textNoMatch.setFillColor(sf::Color::Red);
-        Text moreInfo("For more info, press XXX", font);
+        Text moreInfo("more info, press XXX", font);
         moreInfo.setScale(1, -1);
-        moreInfo.setCharacterSize(75);
+        moreInfo.setCharacterSize(baseFontSize * 0.75);
         moreInfo.setFillColor(sf::Color(100,100,100));
 
 
@@ -239,13 +237,19 @@ public:
 
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
+        int problemsPerColumn = problems.size() / 3;
+        float problemHeight = 1.0 / problemsPerColumn;
+        float problemPadding = problemHeight * 0.25;
+        const View tempView = window.getView();
+
         float columnLeft = 0.0;
         int i = 0;
         int rowsInColumn = 0;
+        int numColumns = 3;
         graphView.reset(FloatRect(problemLocalLeft, problemLocalTop, problemLocalWidth, -problemLocalHeight));
         for (auto p : problems) {
 
-            graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect*0.9, problemHeight));
+            graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect*0.8, problemHeight));
             window.setView(graphView);
             message.setString("Problem #" + to_string(i));
             window.draw(message);
@@ -253,7 +257,7 @@ public:
                 window.draw(textMatch);
             else
                 window.draw(textNoMatch);
-            moreInfo.setString(string("for more info, press [") + char('A' + i) + string("]"));
+            moreInfo.setString(string("more info, press [") + char('A' + i) + string("]"));
             window.draw(moreInfo);
             
 
@@ -262,7 +266,7 @@ public:
             rowsInColumn++;
             if (rowsInColumn >= problemsPerColumn) {
                 rowsInColumn = 0;
-                columnLeft = 0.5;
+                columnLeft += 1.0/ numColumns;
             }
         }
         
@@ -332,6 +336,13 @@ int main() {
     problems.push_back(Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipVert, easeInFlipVertTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
 
 
