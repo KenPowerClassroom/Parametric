@@ -148,6 +148,11 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
 
     float y;
 
+    View ballView;
+    ballView.reset(FloatRect(-150, 550, 750, -750));
+    ballView.setViewport(FloatRect(0.0, 0.5, 1, 0.5));
+    window.setView(ballView);
+
     y = p.target(t);
     graph.addPoint(0, Vector2f(t, y));
     drawBalls(y, 0.1 * 0, window);
