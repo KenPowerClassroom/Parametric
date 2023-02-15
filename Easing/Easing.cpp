@@ -197,9 +197,9 @@ public:
         
         View graphView;
         int lineHeight = 50;
-        Text message("Problem #888", font);
+        Text message("Problem #888XXXXXX", font);
         message.setScale(1, -1);
-        message.setCharacterSize(200);
+        message.setCharacterSize(150);
 
 
         float textWidth = message.getGlobalBounds().width;
@@ -222,7 +222,7 @@ public:
 
             graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect, problemHeight));
             window.setView(graphView);
-            message.setString("Problem #" + to_string(i));
+            message.setString("Problem #" + to_string(i) +" ["+ char('A' + i) + "]");
             window.draw(message);
             drawProblem(t, p,  i);
             i++;
@@ -279,7 +279,6 @@ int main() {
 
     typedef float (*myFunc)(float);
 
-    map<Keyboard::Key, Problem> key_problems;
     vector<Problem> problems;
     int i = 0;
     problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget));
@@ -297,24 +296,8 @@ int main() {
     problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
 
-    i = 0;
-    key_problems[Keyboard::Key::A] = problems[i++];
-    key_problems[Keyboard::Key::B] = problems[i++];
-    key_problems[Keyboard::Key::C] = problems[i++];
-    key_problems[Keyboard::Key::D] = problems[i++];
-    key_problems[Keyboard::Key::E] = problems[i++];
-    key_problems[Keyboard::Key::F] = problems[i++];
-    key_problems[Keyboard::Key::G] = problems[i++];
-    key_problems[Keyboard::Key::H] = problems[i++];
-    key_problems[Keyboard::Key::I] = problems[i++];
-    key_problems[Keyboard::Key::J] = problems[i++];
-    key_problems[Keyboard::Key::K] = problems[i++];
-    key_problems[Keyboard::Key::L] = problems[i++];
-    key_problems[Keyboard::Key::M] = problems[i++];
-    key_problems[Keyboard::Key::N] = problems[i++];
 
-
-    Problem currentProblem = key_problems[Keyboard::Key::A];
+    Problem currentProblem = problems.at(0);
     bool firstFrame = true, lastFrame = false;
 
     enum Screen { menu, problem} screen = menu;
@@ -345,10 +328,17 @@ int main() {
                     sfmlWin.close();
                     break;
                 }
-				auto p = key_problems.find(e.key.code);
-                if (p != key_problems.end()) {
-                    currentProblem =p->second;
+                if (screen == problem) {
+                    screen = menu;
+                    break;
+                }
+                    
+                int k = e.key.code;
+                if (k>= 0 && k < problems.size()) {
+				    auto& p = problems.at(k);
+                    currentProblem = p;
                     changeProblem = true;
+                    screen = problem;
                     break;
                 }
             }
