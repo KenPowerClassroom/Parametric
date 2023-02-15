@@ -11,6 +11,7 @@ struct Problem
 	{
 	};
 	
+	bool check();
 	string title;
 	int index = 0;
 	string description;

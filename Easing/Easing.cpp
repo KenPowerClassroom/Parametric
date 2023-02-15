@@ -208,6 +208,10 @@ public:
         textNoMatch.setScale(1, -1);
         textNoMatch.setCharacterSize(100);
         textNoMatch.setFillColor(sf::Color::Red);
+        Text moreInfo("For more info, press XXX", font);
+        moreInfo.setScale(1, -1);
+        moreInfo.setCharacterSize(75);
+        moreInfo.setFillColor(sf::Color(100,100,100));
 
 
         float textWidth = message.getGlobalBounds().width;
@@ -220,7 +224,8 @@ public:
 
         message.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight)*2.0 / 3);
         textMatch.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight)*1.0 / 3);
-        textNoMatch.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight)*1.0 / 3);
+        textNoMatch.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight) * 1.0 / 3);
+        moreInfo.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight) * 0.0 / 3);
 
 
         float aspect = abs(problemLocalWidth / problemLocalHeight);
@@ -233,9 +238,15 @@ public:
 
             graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect, problemHeight));
             window.setView(graphView);
-            message.setString("Problem #" + to_string(i) +" ["+ char('A' + i) + "]");
+            message.setString("Problem #" + to_string(i));
             window.draw(message);
-            window.draw(textNoMatch);
+            if(p.check())
+                window.draw(textMatch);
+            else
+                window.draw(textNoMatch);
+            moreInfo.setString(string("for more info, press [") + char('A' + i) + string("]"));
+            window.draw(moreInfo);
+            
 
             drawProblem(t, p,  i);
             i++;
@@ -278,9 +289,16 @@ int main() {
     view.reset(FloatRect(0,0,width,height));
 
     Font font;
-    if (!font.loadFromFile("cmr12.ttf")) {
+    if (!font.loadFromFile("cmr6.ttf")) {
         return -1;
     }
+
+    Font monoFont;
+    if (!monoFont.loadFromFile("AnonymousPro.ttf")) {
+        return -1;
+    }
+
+
 
     float t = 0;
     Graph graph(sfmlWin);
