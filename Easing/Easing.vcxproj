@@ -77,7 +77,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Easing.cpp" />
-    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Problem.cpp" />
     <ClCompile Include="ThickLine.cpp" />
