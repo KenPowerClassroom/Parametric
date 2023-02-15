@@ -16,6 +16,8 @@ struct Problem
 	string description;
 	string starterFunction;
 
+	bool passing = false;
+
 	float (*target)(float);
 	float (*starter)(float);
 };

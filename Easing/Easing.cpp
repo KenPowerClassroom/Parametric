@@ -197,9 +197,17 @@ public:
         
         View graphView;
         int lineHeight = 50;
-        Text message("Problem #888XXXXXX", font);
+        Text message("Problem #888XXX", font);
         message.setScale(1, -1);
         message.setCharacterSize(150);
+        Text textMatch("Function matches", font);
+        textMatch.setScale(1, -1);
+        textMatch.setCharacterSize(100);
+        textMatch.setFillColor(sf::Color::Green);
+        Text textNoMatch("Function does not match", font);
+        textNoMatch.setScale(1, -1);
+        textNoMatch.setCharacterSize(100);
+        textNoMatch.setFillColor(sf::Color::Red);
 
 
         float textWidth = message.getGlobalBounds().width;
@@ -210,7 +218,10 @@ public:
         float problemLocalLeft = -2 * padding - textWidth;
         float problemLocalTop = padding + graphUnit;
 
-        message.setPosition(-textWidth - padding, textHeight+ (problemLocalHeight - textHeight) / 2);
+        message.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight)*2.0 / 3);
+        textMatch.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight)*1.0 / 3);
+        textNoMatch.setPosition(-textWidth - padding, textHeight + (problemLocalHeight - textHeight)*1.0 / 3);
+
 
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
@@ -224,6 +235,8 @@ public:
             window.setView(graphView);
             message.setString("Problem #" + to_string(i) +" ["+ char('A' + i) + "]");
             window.draw(message);
+            window.draw(textNoMatch);
+
             drawProblem(t, p,  i);
             i++;
             rowsInColumn++;
