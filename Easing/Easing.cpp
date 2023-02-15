@@ -245,7 +245,7 @@ public:
         graphView.reset(FloatRect(problemLocalLeft, problemLocalTop, problemLocalWidth, -problemLocalHeight));
         for (auto p : problems) {
 
-            graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect, problemHeight));
+            graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect*0.9, problemHeight));
             window.setView(graphView);
             message.setString("Problem #" + to_string(i));
             window.draw(message);
