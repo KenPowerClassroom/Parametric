@@ -107,12 +107,14 @@ void drawBalls(float t, float h, RenderWindow& window){
     drawChangeSizeBall(t, h,  window);
 }
 
-void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, Font& cmr) {
+void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, Font& cmr, Font& mono) {
 
     graph.addCurve(Color(100, 100, 100), 0.03);
     graph.addCurve(Color::Green);
 
     Text message("", cmr);
+    Text fnMessage("", mono);
+
     float textVPosition = 0;
     int paragraphSpacing = 20;
     message.setString("Problem #" + to_string(p.index));
@@ -130,12 +132,19 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
-    message.setString(string("Function to change is called: ") + p.starterFunction);
+    message.setString(string("Function to change is called: ") );
     message.setCharacterSize(24);
     message.setLineSpacing(1.5);
     message.setPosition(0, textVPosition);
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
+
+    fnMessage.setString(string("float ")+p.starterFunction + "(float t);");
+    fnMessage.setCharacterSize(24);
+    fnMessage.setLineSpacing(1.5);
+    fnMessage.setPosition(0, textVPosition);
+    textVPosition += fnMessage.getGlobalBounds().height + paragraphSpacing;
+    window.draw(fnMessage);
 
     float y;
 
@@ -394,7 +403,7 @@ int main() {
             mainscreen.draw(t);
 
         if (screen == problem)
-            drawProblemScreen(currentProblem, t, sfmlWin, graph, font);
+            drawProblemScreen(currentProblem, t, sfmlWin, graph, font, monoFont);
         
         sleep(delayTime);
 
