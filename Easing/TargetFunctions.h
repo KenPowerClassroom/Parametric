@@ -2,6 +2,8 @@
 #pragma comment(lib,"TargetFunctions.lib")
 
 float sqr(float n);
+float cub(float n);
+
 
 float moveHorizLineTarget(float t);
 

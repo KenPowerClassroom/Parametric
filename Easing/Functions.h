@@ -13,13 +13,15 @@ float moveParabolaUp(float t) { return sqr(t - 0.5); }
 
 float invertParabola(float t) { return sqr(t - 0.5); }
 
-float widenParabola(float t) { return 2 * sqr(t - 0.5); }
+float narrowParabola(float t) { return sqr(t - 0.5); }
 
-float widenAndMoveParabola(float t) { return  2 * sqr(t - 0.75); }
+float widenAndMoveParabola(float t) { return  4 * sqr(t - 0.5); }
 
-float easeIn(float t) { return sqr(t); }
+float cubic(float t) { return  13*cub(t) -10 * sqr(t) + 1 ; }
 
-float easeInUpsideDown(float t) { return 1 - sqr(t); }
+float easeIn(float t) { return t; }
+
+float easeInUpsideDown(float t) { return t; }
 
 float easeInFlipVert(float t) { return sqr(1 - t); }
 

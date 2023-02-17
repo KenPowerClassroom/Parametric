@@ -188,6 +188,7 @@ class MainScreen {
     vector<Problem> problems;
     RenderWindow& window;
     Font& font;
+    Color moreInfoColor{ 150, 150, 150 };
 
 public:
     MainScreen(RenderWindow& w, Font& f) :window(w), font(f) {}
@@ -233,7 +234,7 @@ public:
         Text moreInfo("more info, press XXX", font);
         moreInfo.setScale(1, -1);
         moreInfo.setCharacterSize(baseFontSize * 0.75);
-        moreInfo.setFillColor(sf::Color(100,100,100));
+        moreInfo.setFillColor(moreInfoColor);
 
         //print username
         Text usernameMessage("Username: "+username, font);
@@ -262,7 +263,7 @@ public:
 
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
-        int problemsPerColumn = problems.size() / 3;
+        int problemsPerColumn = ceil(problems.size() / 3.0);
         float problemHeight = (1.0-normalizedHeaderHeight) / problemsPerColumn;
         float problemPadding = problemHeight * 0.25;
         const View tempView = window.getView();
@@ -354,16 +355,18 @@ int main() {
 
     vector<Problem> problems;
     int i = 0;
-    problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget));
+    problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
     problems.push_back(Problem("Move line up", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
     problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
-    problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget));
+    problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget)); //3
     problems.push_back(Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget));
     problems.push_back(Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget));
-    problems.push_back(Problem("Move line up", i++, "", "widenParabola", widenParabola, widenParabolaTarget));
+    problems.push_back(Problem("Move line up", i++, "", "widenParabola", narrowParabola, widenParabolaTarget));  //6
     problems.push_back(Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget));
+    problems.push_back(Problem("Move line up", i++, "", "moveCubicLeft", cubic, moveHorizLineTarget)); //8
+    problems.push_back(Problem("Move line up", i++, "", "moveCubicDown", cubic, moveHorizLineTarget)); 
     problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget));
+    problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipVert, easeInFlipVertTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget));
     problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget));
