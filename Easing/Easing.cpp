@@ -34,17 +34,21 @@ using namespace sf;
 int width = 800;
 int height = 800;
 
+const Color grey = Color(100, 100, 100);
+Color colorOfFunction;
 
+void drawBall(float t, float startx, float endx, float y, RenderWindow& window, Color color= Color::Green) {
 
-void drawBall(Vector2f pos, RenderWindow& window) {
-
-    int radius = 25;
+    int radius = 3;
+    startx += radius;
+    endx -= radius;
     CircleShape circle(radius);
-    circle.setFillColor(Color(100, 250, 50));
+    circle.setOrigin(radius, radius);
+    circle.setFillColor(color);
 
     circle.setPointCount(100);
 
-    circle.setPosition(pos - Vector2f(radius,0));
+    circle.setPosition(Vector2f(startx+t*(endx-startx),y));
 
     window.draw(circle);
 }
@@ -101,10 +105,11 @@ void drawChangeSizeBall(float t, float h, RenderWindow& window) {
     window.draw(outLine);
     window.draw(circle);
 }
-void drawBalls(float t, float h, RenderWindow& window){
-    drawBall(Vector2f(t, h), window);
-    drawChangeColorBall(t, h, window);
-    drawChangeSizeBall(t, h,  window);
+void drawBalls(float t, float h, RenderWindow& window, bool shadow = false){
+    Color color = shadow ? grey : colorOfFunction;
+    drawBall(t, 0, 100, h, window, color );
+    //drawChangeColorBall(t, h, window);
+    //drawChangeSizeBall(t, h,  window);
 }
 
 void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, Font& cmr, Font& mono) {
@@ -149,18 +154,21 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     float y;
 
     View ballView;
-    ballView.reset(FloatRect(-150, 550, 750, -750));
-    ballView.setViewport(FloatRect(0.0, 0.5, 1, 0.5));
+    float padding = 0.025;
+    float screenHeight = 0.4;
+    float aspectRatio = screenHeight * ((float)height / width);
+    ballView.reset(FloatRect(0, 0 , 100, 100 * aspectRatio));
+    ballView.setViewport(FloatRect(0.0, 1-screenHeight, 1, screenHeight));
     window.setView(ballView);
 
     y = p.target(t);
     graph.addPoint(0, Vector2f(t, y));
-    drawBalls(y, 0.1 * 0, window);
+    drawBalls(y,15, window, true);
 
 
     y = p.starter(t);
     graph.addPoint(1, Vector2f(t, y));
-    drawBalls(y, 0.1 * 1, window);
+    drawBalls(y, 5, window);
 
 
     View graphView;
@@ -304,6 +312,7 @@ int main() {
     View view;
     view.reset(FloatRect(0,0,width,height));
 
+    colorOfFunction = Color::Green; // need to do here as Color not available globally
     Font font;
     if (!font.loadFromFile("cmr6.ttf")) {
         return -1;
