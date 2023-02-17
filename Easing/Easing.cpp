@@ -22,6 +22,7 @@
 #include <iostream>
 #include <cassert>
 #include <map>
+#include <cstdlib>     /* getenv */
 
 #include"Graph.h"
 #include"Viewport.h"
@@ -36,6 +37,7 @@ int height = 800;
 
 const Color grey = Color(100, 100, 100);
 Color colorOfFunction;
+string username;
 
 void drawBall(float t, float startx, float endx, float y, RenderWindow& window, Color color= Color::Green) {
 
@@ -233,6 +235,16 @@ public:
         moreInfo.setCharacterSize(baseFontSize * 0.75);
         moreInfo.setFillColor(sf::Color(100,100,100));
 
+        //print username
+        Text usernameMessage("Username: "+username, font);
+
+        usernameMessage.setCharacterSize(baseFontSize*0.35);
+        usernameMessage.setPosition(10, -10);
+        window.draw(usernameMessage);
+
+        float headerHeight = usernameMessage.getGlobalBounds().height;
+        float normalizedHeaderHeight = headerHeight / height;
+
 
         float textWidth = message.getGlobalBounds().width;
         float textHeight = message.getGlobalBounds().height;
@@ -251,7 +263,7 @@ public:
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
         int problemsPerColumn = problems.size() / 3;
-        float problemHeight = 1.0 / problemsPerColumn;
+        float problemHeight = (1.0-normalizedHeaderHeight) / problemsPerColumn;
         float problemPadding = problemHeight * 0.25;
         const View tempView = window.getView();
 
@@ -262,7 +274,7 @@ public:
         graphView.reset(FloatRect(problemLocalLeft, problemLocalTop, problemLocalWidth, -problemLocalHeight));
         for (auto p : problems) {
 
-            graphView.setViewport(FloatRect(columnLeft, rowsInColumn * problemHeight, problemHeight *aspect*0.8, problemHeight));
+            graphView.setViewport(FloatRect(columnLeft, normalizedHeaderHeight+rowsInColumn * problemHeight, problemHeight *aspect*0.8, problemHeight));
             window.setView(graphView);
             message.setString("Problem #" + to_string(i));
             window.draw(message);
@@ -324,6 +336,11 @@ int main() {
     }
 
 
+    char* pValue;
+    size_t len;
+    _dupenv_s(&pValue, &len, "USERNAME");
+    username = string(pValue);
+    free(pValue);
 
     float t = 0;
     Graph graph(sfmlWin);
