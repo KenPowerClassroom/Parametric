@@ -243,6 +243,17 @@ public:
         usernameMessage.setPosition(10, -10);
         window.draw(usernameMessage);
 
+        //int h = 0;
+        //for (int i = 2; i < 100; i += 3) {
+        //    usernameMessage.setCharacterSize(i);
+        //    usernameMessage.setPosition(10,h);
+        //    h += i;
+        //    h += 3;
+        //    window.draw(usernameMessage);
+        //}
+
+        //return;
+
         float headerHeight = usernameMessage.getGlobalBounds().height;
         float normalizedHeaderHeight = headerHeight / height;
 
@@ -330,6 +341,7 @@ int main() {
     if (!font.loadFromFile("cmr6.ttf")) {
         return -1;
     }
+
 
     Font monoFont;
     if (!monoFont.loadFromFile("AnonymousPro.ttf")) {
