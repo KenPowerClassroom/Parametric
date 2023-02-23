@@ -7,6 +7,10 @@ float changeSlope(float t) { return t; }
 
 float changeSlopeAndMove(float t) { return t; }
 
+float makeParabolic(float t) {
+    return t;
+}
+
 float moveParabolaLeft(float t) { return sqr(t); }  //sqr(t) is same as t*t 
 
 float moveParabolaUp(float t) { return sqr(t - 0.5); }
@@ -17,20 +21,45 @@ float narrowParabola(float t) { return sqr(t - 0.5); }
 
 float widenAndMoveParabola(float t) { return  4 * sqr(t - 0.5); }
 
-float cubic(float t) { return  13*cub(t) -10 * sqr(t) + 1 ; }
+float moveCubicLeft(float t) { return  13 * cub(t) - 10 * sqr(t) + 1; }
+
+float moveCubicDown(float t) { return  13*cub(t) -10 * sqr(t) + 1 ; }
 
 float easeIn(float t) { return t; }
 
 float easeInUpsideDown(float t) { return t; }
 
-float easeInFlipVert(float t) { return sqr(1 - t); }
+float easeInFlipLeftRight(float t) { return t; }
 
-float easeOut(float t) { return 1 - sqr(1 - t); }
+float easeOut(float t) { return t; }
 
-float easeInThruCentre(float t) { return 2 * sqr(t); }
+float easeInThruCentre(float t) { return t; }
 
-float easeOutThruCentre(float t) { return 1 - 2 * sqr(1 - t); }
+float easeOutThruCentre(float t) { return t; }
 
+float easeInOut(float t) { 
+    if (t < 0.5)
+        return t;
+    else
+        return 0.5;
+}
+
+float easeInCubic(float t) {
+    return t * t;
+}
+
+float easeInCubicThruCenter(float t) {
+    return t * t;
+}
+
+float easeInOutCubic(float t) {
+    return t;
+}
+
+
+
+//=============================================
+//delete these?
 float tween(float t, float start, float end) {
     return start + t * (end - start);
 }
@@ -47,18 +76,13 @@ float easeInOutQuadratic(float t) {
     return  t < 0.5 ? easeInQuadratic(t) : easeOutQuadratic(t);
 }
 
-float easeInCubic(float t) {
-    return 4 * t * t * t;
-}
 
-float easeOutCubic(float t) {
-    return 1 - easeInCubic(1 - t);
-}
+//
+//float easeOutCubic(float t) {
+//    return 1 - easeInCubic(1 - t);
+//}
 
-float easeInOutCubic(float t) {
-    //return tween(t, easeInCubic(t), easeOutCubic(t));
-    return  t < 0.5 ? easeInCubic(t) : easeOutCubic(t);
-}
+
 
 float easeInQuintic(float t) {
     return 16 * t * t * t * t * t;
@@ -93,8 +117,6 @@ float easeInOutBack(float t) {
     return  t < 0.5 ? easeInBack(t) : easeOutBack(t);
 }
 
-//float sqr(float f) { return f * f; }
-float cub(float f) { return f * f * f; }
 
 float parabola(float t) {
 
