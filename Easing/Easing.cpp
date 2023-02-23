@@ -451,7 +451,7 @@ int main() {
         sfmlWin.setView(view);
         
         if (t >= 1 or changeProblem) {
-            if(!changeProblem) sleep(pauseTime);
+            if(!changeProblem) ::sleep(pauseTime);
             t = 0;
             graph.reset();
             mainscreen.reset();
@@ -469,13 +469,13 @@ int main() {
         if (screen == problem)
             drawProblemScreen(currentProblem, t, sfmlWin, graph, font, monoFont);
         
-        sleep(delayTime);
+        ::sleep(delayTime);
 
         sfmlWin.display();
 
         if (firstFrame) {
             mainscreen.reset();
-            sleep(pauseTime);
+            ::sleep(pauseTime);
             Time dt = deltaClock.restart(); 
             firstFrame = false;
 
