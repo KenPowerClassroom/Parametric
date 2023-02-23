@@ -399,14 +399,15 @@ int main() {
 
     MainScreen mainscreen(sfmlWin, font);
     mainscreen.init(problems);
-
+    bool pause = false;
     while (sfmlWin.isOpen()) {
         bool changeProblem = false;
         Time dt = deltaClock.restart();
         t += dt.asSeconds() / timeForAnimation.asSeconds();
 
-        
+  
         Event e;
+       
 		
         while (sfmlWin.pollEvent(e)) {
 
@@ -421,6 +422,10 @@ int main() {
             case Event::KeyPressed:
                 if (e.key.code == Keyboard::Escape) {
                     sfmlWin.close();
+                    break;
+                }
+                if (e.key.code == Keyboard::Space) {
+                    pause = !pause;
                     break;
                 }
                 if (screen == problem) {
@@ -438,6 +443,10 @@ int main() {
                 }
             }
             
+        }
+        if (pause) {
+            deltaClock.restart();
+            continue;
         }
         sfmlWin.setView(view);
         
