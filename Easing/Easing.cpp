@@ -130,7 +130,7 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
-    string commonText = "The green line is generated from a function\nwhich is found in the file functions.cpp.\nYour job is to modify the function\nso that the green line matches the grey line";
+    string commonText = "The green line is generated from a method\nwhich is found in the file Methods.cpp.\nYour job is to modify the method\nso that the green line matches the grey line";
     int leftMargin = 10;
     message.setString(commonText);
     message.setCharacterSize(24);
@@ -139,7 +139,7 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
-    message.setString(string("Function to change is called: ") );
+    message.setString(string("Method to change is called: ") );
     message.setCharacterSize(24);
     message.setLineSpacing(1.5);
     message.setPosition(leftMargin, textVPosition);
