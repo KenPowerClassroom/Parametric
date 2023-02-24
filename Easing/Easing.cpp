@@ -27,7 +27,7 @@
 #include"Graph.h"
 #include"Viewport.h"
 #include"Problem.h"
-#include"Functions.h"
+#include"Methods.h"
 
 using namespace std;
 using namespace sf;

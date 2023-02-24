@@ -37,7 +37,7 @@
     <ClInclude Include="TargetFunctions.h">
       <Filter>Headers%28don%27t touch these%29</Filter>
     </ClInclude>
-    <ClInclude Include="Functions.h" />
+    <ClInclude Include="Methods.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Debug\TargetFunctions.lib" />

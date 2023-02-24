@@ -82,7 +82,7 @@
     <ClCompile Include="ThickLine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Functions.h" />
+    <ClInclude Include="Methods.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Problem.h" />
     <ClInclude Include="TargetFunctions.h" />
