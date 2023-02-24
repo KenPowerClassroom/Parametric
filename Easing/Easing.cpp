@@ -388,7 +388,7 @@ int main() {
     problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget,true));
-    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeInOut, easeInOutTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeInOut", easeInOut, easeInOutTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeInCubic", easeInCubic, easeInCubicTarget,true));    
     problems.push_back(Problem("Move line up", i++, "", "easeInCubicThruCenter", easeInCubicThruCenter, easeInCubicThruCenterTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeInOutCubic", easeInOutCubic, easeInOutCubicTarget,true));
