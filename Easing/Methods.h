@@ -1,7 +1,7 @@
 #pragma once
 #include"TargetFunctions.h"
 
-float moveHorizLine(float t) { return 0.25f; }
+float moveHorizLine(float t) { return 0.3f; }
 
 float changeSlope(float t) { return t; }
 

@@ -153,24 +153,29 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     textVPosition += fnMessage.getGlobalBounds().height + paragraphSpacing;
     window.draw(fnMessage);
 
+
+   
     float y;
 
     View ballView;
     float padding = 0.025;
     float screenHeight = 0.4;
     float aspectRatio = screenHeight * ((float)height / width);
-    ballView.reset(FloatRect(0, 0 , 100, 100 * aspectRatio));
-    ballView.setViewport(FloatRect(0.0, 1-screenHeight, 1, screenHeight));
+    ballView.reset(FloatRect(0, 0, 100, 100 * aspectRatio));
+    ballView.setViewport(FloatRect(0.0, 1 - screenHeight, 1, screenHeight));
     window.setView(ballView);
+    
 
     y = p.target(t);
     graph.addPoint(0, Vector2f(t, y));
-    drawBalls(y,15, window, true);
+    if (p.showBall) 
+        drawBalls(y, 15, window, true);
 
 
     y = p.starter(t);
     graph.addPoint(1, Vector2f(t, y));
-    drawBalls(y, 5, window);
+    if (p.showBall) 
+        drawBalls(y, 5, window);
 
 
     View graphView;
@@ -178,7 +183,6 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     graphView.setViewport(FloatRect(0.5, 0.0, 0.5, 0.5 * ((float)width / height)));
     window.setView(graphView);
     graph.drawGraph();
-
 
 }
 
@@ -231,7 +235,7 @@ public:
         textNoMatch.setScale(1, -1);
         textNoMatch.setCharacterSize(baseFontSize * 0.90);
         textNoMatch.setFillColor(sf::Color::Red);
-        Text moreInfo("more info, press XXX", font);
+        Text moreInfo("for details, press XXX", font);
         moreInfo.setScale(1, -1);
         moreInfo.setCharacterSize(baseFontSize * 0.75);
         moreInfo.setFillColor(moreInfoColor);
@@ -294,7 +298,7 @@ public:
                 window.draw(textMatch);
             else
                 window.draw(textNoMatch);
-            moreInfo.setString(string("more info, press [") + char('A' + i) + string("]"));
+            moreInfo.setString(string("for details, press [") + char('A' + i) + string("]"));
             window.draw(moreInfo);
             
 
@@ -378,16 +382,16 @@ int main() {
     problems.push_back(Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget));
     problems.push_back(Problem("Move line up", i++, "", "moveCubicDown", moveCubicDown, moveCubicDownTarget));
     problems.push_back(Problem("Move line up", i++, "", "moveCubicLeft", moveCubicLeft, moveCubicLeftTarget)); //8
-    problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget));
-    problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipLeftRight, easeInFlipVertTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeInOut, easeInOutTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeInCubic", easeInCubic, easeInCubicTarget));    
-    problems.push_back(Problem("Move line up", i++, "", "easeInCubicThruCenter", easeInCubicThruCenter, easeInCubicThruCenterTarget));
-    problems.push_back(Problem("Move line up", i++, "", "easeInOutCubic", easeInOutCubic, easeInOutCubicTarget));
+    problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget,true));
+    problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipLeftRight, easeInFlipVertTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeInOut, easeInOutTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeInCubic", easeInCubic, easeInCubicTarget,true));    
+    problems.push_back(Problem("Move line up", i++, "", "easeInCubicThruCenter", easeInCubicThruCenter, easeInCubicThruCenterTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeInOutCubic", easeInOutCubic, easeInOutCubicTarget,true));
 
 
     Problem currentProblem = problems.at(0);
