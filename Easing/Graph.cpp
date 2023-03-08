@@ -22,21 +22,45 @@ Do not edit any code in this file!!!
 
 void Graph::drawGraph() {
 
-
-    sf::Vertex axes[5];
-
     float unit = Unit;
-    axes[0].position = sf::Vector2f(0, unit);
+
+    bool zoom = false;
+    
+    sf::Vector2f origin(0, 0);
+    sf::Vector2f width(1, 1);
+    if (zoom) {
+        width = sf::Vector2f(5, 5);
+        origin = sf::Vector2f(unit/2, unit/2);
+    }
+
+    sf::Vertex boundary[5];
+
+    boundary[0].position = sf::Vector2f(0, unit);
+    boundary[0].color = sf::Color::White;
+    boundary[1].position = sf::Vector2f(0, 0);
+    boundary[1].color = sf::Color::White;
+    boundary[2].position = sf::Vector2f(unit, 0);
+    boundary[2].color = sf::Color::White;
+    boundary[3].position = sf::Vector2f(unit, unit);
+    boundary[3].color = sf::Color::White;
+    boundary[4].position = sf::Vector2f(0, unit);
+    boundary[4].color = sf::Color::White;
+    window.draw(boundary, 5, sf::LineStrip);
+
+    sf::Vertex axes[4];
+    //x-axis
+    axes[0].position = sf::Vector2f(0   , origin.y);
     axes[0].color = sf::Color::White;
-    axes[1].position = sf::Vector2f(0, 0);
+    axes[1].position = sf::Vector2f(unit, origin.y);
     axes[1].color = sf::Color::White;
-    axes[2].position = sf::Vector2f(unit, 0);
+    
+    //y-axis
+    axes[2].position = sf::Vector2f(origin.x, 0);
     axes[2].color = sf::Color::White;
-    axes[3].position = sf::Vector2f(unit, unit);
+    axes[3].position = sf::Vector2f(origin.x, unit);
     axes[3].color = sf::Color::White;
-    axes[4].position = sf::Vector2f(0, unit);
-    axes[4].color = sf::Color::White;
-    window.draw(axes, 5, sf::LineStrip);
+
+    window.draw(axes, 4, sf::Lines);
 
     sf:Color ticKColor = sf::Color::White;
     const int NUM_TICKS = 22;
@@ -47,12 +71,12 @@ void Graph::drawGraph() {
     float tickLength = 0.02 * unit;
     int i = 0;
     for (int t = 0; t <= unit; t+=(unit/10)) {
-        ticks[i++].position = sf::Vector2f((float)t, 0);
-        ticks[i++].position = sf::Vector2f((float)t, -tickLength);
+        ticks[i++].position = sf::Vector2f((float)t, origin.y);
+        ticks[i++].position = sf::Vector2f((float)t, origin.y -tickLength);
     }
     for (int t = 0; t <= unit; t += (unit / 10)) {
-        ticks[i++].position = sf::Vector2f(0, (float)t );
-        ticks[i++].position = sf::Vector2f(-tickLength, (float)t );
+        ticks[i++].position = sf::Vector2f(origin.x, (float)t );
+        ticks[i++].position = sf::Vector2f(origin.x -tickLength, (float)t );
     }
 
 
@@ -65,9 +89,9 @@ void Graph::drawGraph() {
     centredText("t", sf::Vector2f(unit/2, -textOffset), labelTextSize);
     centredText("f(t)", sf::Vector2f(-textOffset, unit / 2), labelTextSize,true);
     centredText("0.0", sf::Vector2f(0, -textOffset), axisTextSize);
-    centredText("1.0", sf::Vector2f(unit, -textOffset), axisTextSize);
+    centredText("1.0", sf::Vector2f(unit, origin.y -textOffset), axisTextSize);
     centredText("0.0", sf::Vector2f(-textOffset, 0), axisTextSize, true);
-    centredText("1.0", sf::Vector2f(-textOffset, unit), axisTextSize, true);
+    centredText("1.0", sf::Vector2f(origin.y -textOffset, unit), axisTextSize, true);
 
 
     for (auto& c : curves) {
@@ -75,7 +99,7 @@ void Graph::drawGraph() {
         int i = 0;
         ThickLine::convert(c->points, q, c->thickness);
         for (auto& p : q) {
-            line[i].position = sf::Vector2f(p.x*unit, p.y*unit);
+            line[i].position = sf::Vector2f(p.x*unit/width.x+origin.x, p.y*unit/width.y + origin.y);
             line[i].color = c->color;
             i++;
         }
