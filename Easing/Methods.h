@@ -131,6 +131,36 @@ float easeInOutCubic(float t) {
     return t;
 }
 
+sf::Vector2f dougnut(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = 1.5 * cos(t) + -cos(30 * t);
+    r.y = 1.5 * sin(t) + -sin(30 * t);
+ 
+    return r;
+}
+
+sf::Vector2f cartoid(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = 0.5 * cos(t) + -0.25 * cos(2 * t);
+    r.y = 0.5 * sin(t) + -0.25 * sin(2 * t);
+
+    return r;
+}
+
+sf::Vector2f XXXXXX(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = t + 2 * cos(2 * t);
+    r.y = t + 2 * sin(5 * t);
+
+    return r;
+}
+
 /*
       ____
    .d""  ""b.        `7MMF' `YMM'                        `7MM"""Mq.
