@@ -393,7 +393,7 @@ int main() {
     problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
     problems.push_back(Problem("Change slope of line", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
     problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
-    problems.push_back(Problem("Make parabolic", i++, "", "makePArabolic", makeParabolic, makeParabolicTarget));
+    problems.push_back(Problem("Make parabolic", i++, "", "makeParabolic", makeParabolic, makeParabolicTarget));
     problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget)); //3
     problems.push_back(Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget));
     problems.push_back(Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget));
