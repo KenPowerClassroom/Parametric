@@ -60,7 +60,7 @@ string username;
 
 void drawBall(float t, float startx, float endx, float y, RenderWindow& window, Color color= Color::Green) {
 
-    int radius = 3;
+    float radius = 3.f;
     startx += radius;
     endx -= radius;
     CircleShape circle(radius);
@@ -79,15 +79,15 @@ void drawChangeColorBall(float t, float h, RenderWindow& window) {
     auto clamp = [](float i) {return i > 1.0 ? 1.0 : i<0?0.0:i;  };
     int radius = 25;
     CircleShape circle(radius);
-    int trans =  0 + clamp(t) * (255 - 0);
+    double trans =  0 + clamp(t) * (255 - 0);
     
-    circle.setFillColor(Color(200, 150, 50, trans));
+    circle.setFillColor(Color(200, 150, 50, (int)trans));
 
     circle.setPointCount(100);
 
-    circle.setPosition(Vector2f(0.05,h));
+    circle.setPosition(Vector2f(0.05f,h));
 
-    CircleShape outLine(radius);
+    CircleShape outLine((float)radius);
     outLine.setFillColor(Color(0,0,0, 0));
     outLine.setOutlineThickness(2);
     outLine.setOutlineColor(Color(200, 150, 50));
@@ -357,7 +357,7 @@ int main() {
     height = mode.height*0.8;
     RenderWindow sfmlWin(VideoMode(width, height), "Hello World SFML Window");
     View view;
-    view.reset(FloatRect(0,0,width,height));
+    view.reset(FloatRect(0,0, (float)width, (float)height));
 
     colorOfFunction = Color::Green; // need to do here as Color not available globally
     Font font;
@@ -375,7 +375,7 @@ int main() {
     char* pValue;
     size_t len;
     _dupenv_s(&pValue, &len, "USERNAME");
-    username = string(pValue);
+    username = string(pValue==NULL? "unknown": pValue);
     free(pValue);
 
     float t = 0;
@@ -454,7 +454,7 @@ int main() {
                     break;
                 }
                     
-                int k = e.key.code;
+                unsigned int k = e.key.code;
                 if (k>= 0 && k < problems.size()) {
 				    auto& p = problems.at(k);
                     currentProblem = p;

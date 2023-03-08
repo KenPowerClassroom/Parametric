@@ -28,7 +28,7 @@ typedef vector<sf::Vector2f> PointList;
 struct Curve{
 	PointList points;
 	sf::Color color = sf::Color::White;
-	float thickness;
+	float thickness = 1;
 
 };
 class Graph
@@ -64,7 +64,7 @@ public:
 		auto lb = text.getLocalBounds();
 		auto gb = text.getGlobalBounds();
 
-		auto center = sf::Vector2f(text.getGlobalBounds().width / (rightJust ? 1. : 2.), text.getGlobalBounds().height / 2.f);
+		auto center = sf::Vector2f(text.getGlobalBounds().width / (rightJust ? 1.f : 2.f), text.getGlobalBounds().height / 2.f);
 		//auto localBounds = center + sf::Vector2f(text.getLocalBounds().width/(rightJust ? 1. : 2.),  +text.getLocalBounds().height/2.);
 
 		text.setOrigin(center.x, center.y);

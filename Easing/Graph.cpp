@@ -38,7 +38,7 @@ void Graph::drawGraph() {
     axes[4].color = sf::Color::White;
     window.draw(axes, 5, sf::LineStrip);
 
-sf:Color ticKColor = sf::Color::White;
+    sf:Color ticKColor = sf::Color::White;
     const int NUM_TICKS = 22;
     sf::Vertex ticks[NUM_TICKS * 2];
     for (int i = 0; i < NUM_TICKS * 2; i++) {
@@ -47,18 +47,18 @@ sf:Color ticKColor = sf::Color::White;
     float tickLength = 0.02 * unit;
     int i = 0;
     for (int t = 0; t <= unit; t+=(unit/10)) {
-        ticks[i++].position = sf::Vector2f(t, 0);
-        ticks[i++].position = sf::Vector2f(t, -tickLength);
+        ticks[i++].position = sf::Vector2f((float)t, 0);
+        ticks[i++].position = sf::Vector2f((float)t, -tickLength);
     }
     for (int t = 0; t <= unit; t += (unit / 10)) {
-        ticks[i++].position = sf::Vector2f(0, t );
-        ticks[i++].position = sf::Vector2f(-tickLength, t );
+        ticks[i++].position = sf::Vector2f(0, (float)t );
+        ticks[i++].position = sf::Vector2f(-tickLength, (float)t );
     }
 
 
     window.draw(ticks, NUM_TICKS * 2, sf::Lines);
 
-    float textOffset = unit/20.0;
+    float textOffset = unit/20.0f;
     int labelTextSize = 40;
     int axisTextSize = 25;
 
