@@ -403,7 +403,7 @@ int main() {
     problems.push_back(Problem("Move line up", i++, "", "moveCubicLeft", moveCubicLeft, moveCubicLeftTarget)); //8
     problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget,true));
     problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget,true));
-    problems.push_back(Problem("Move line up", i++, "", "easeInFlipVert", easeInFlipLeftRight, easeInFlipVertTarget,true));
+    problems.push_back(Problem("Move line up", i++, "", "easeInFlipLeftRight", easeInFlipLeftRight, easeInFlipVertTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget,true));
     problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget,true));
