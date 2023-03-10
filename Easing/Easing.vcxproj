@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Methods.h" />
+    <ClInclude Include="globals.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Problem.h" />
     <ClInclude Include="TargetFunctions.h" />

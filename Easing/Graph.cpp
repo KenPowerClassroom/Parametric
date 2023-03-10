@@ -16,6 +16,7 @@ Do not edit any code in this file!!!
    ██    ██   ██ ██ ███████     ██      ██ ███████ ███████ ██
 
 ==============================================================================*/
+#include"globals.h"
 #include "Graph.h"
 #include <cassert>
 #include"ThickLine.h"
@@ -23,12 +24,10 @@ Do not edit any code in this file!!!
 void Graph::drawGraph() {
 
     float unit = Unit;
-
-    bool zoom = false;
     
     sf::Vector2f origin(0, 0);
     sf::Vector2f width(1, 1);
-    if (zoom) {
+    if (parametric) {
         width = sf::Vector2f(5, 5);
         origin = sf::Vector2f(unit/2, unit/2);
     }

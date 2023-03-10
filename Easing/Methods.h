@@ -131,7 +131,7 @@ float easeInOutCubic(float t) {
     return t;
 }
 
-sf::Vector2f dougnut(float t) {
+sf::Vector2f doughnut(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f r;
