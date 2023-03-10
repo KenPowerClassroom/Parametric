@@ -98,6 +98,7 @@ void Graph::drawGraph() {
         int i = 0;
         ThickLine::convert(c->points, q, c->thickness);
         for (auto& p : q) {
+            assert(i < MAX_POINTS);
             line[i].position = sf::Vector2f(p.x*unit/width.x+origin.x, p.y*unit/width.y + origin.y);
             line[i].color = c->color;
             i++;

@@ -50,6 +50,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;$(SFML_SDK)/include</AdditionalIncludeDirectories>
+      <FloatingPointExceptions>true</FloatingPointExceptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -135,10 +135,7 @@ void drawBalls(float t, float h, RenderWindow& window, bool shadow = false){
     //drawChangeSizeBall(t, h,  window);
 }
 
-void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, Font& cmr, Font& mono) {
-
-    graph.addCurve(Color(100, 100, 100), 0.03);
-    graph.addCurve(Color::Green);
+void drawProblemScreen(Problem& p, float t, RenderWindow& window, Graph& graph, Font& cmr, Font& mono) {
 
     Text message("", cmr);
     Text fnMessage("", mono);
@@ -160,14 +157,14 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
-    message.setString(string("Method to change is called: ") );
+    message.setString(string("Method to change is called: "));
     message.setCharacterSize(24);
     message.setLineSpacing(1.5);
     message.setPosition(leftMargin, textVPosition);
     textVPosition += message.getGlobalBounds().height + paragraphSpacing;
     window.draw(message);
 
-    fnMessage.setString(string("float ")+p.starterFunction + "(float t);");
+    fnMessage.setString(string("float ") + p.starterFunction + "(float t);");
     fnMessage.setCharacterSize(24);
     fnMessage.setLineSpacing(1.5);
     fnMessage.setPosition(leftMargin, textVPosition);
@@ -175,7 +172,7 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     window.draw(fnMessage);
 
 
-   
+
     float y;
 
     View ballView;
@@ -185,18 +182,42 @@ void drawProblemScreen(Problem p, float t, RenderWindow& window, Graph& graph, F
     ballView.reset(FloatRect(0, 0, 100, 100 * aspectRatio));
     ballView.setViewport(FloatRect(0.0, 1 - screenHeight, 1, screenHeight));
     window.setView(ballView);
-    
 
-    y = p.target(t);
-    graph.addPoint(0, Vector2f(t, y));
-    if (p.showBall) 
-        drawBalls(y, 15, window, true);
+    Vector2f pointTarget;
+    Vector2f pointStarter;
 
+    int iterations = (p.interval > 1.1) ? 5 : 1;
+    double step = (t - p.lastT) / iterations;
 
-    y = p.starter(t);
-    graph.addPoint(1, Vector2f(t, y));
-    if (p.showBall) 
-        drawBalls(y, 5, window);
+    for (double rt = p.lastT; rt < t; rt += step) {
+        double rts = rt * p.interval;
+
+        if (p.ptarget) {
+            pointTarget = p.ptarget(rts);
+        }
+        else {
+            pointTarget.x = rts;
+            pointTarget.y = p.target(rts);
+
+        }
+        graph.addPoint(0, pointTarget);
+        if (p.pstarter) {
+            pointStarter = p.pstarter(rts);
+        }
+        else {
+            pointStarter.x = rts;
+            pointStarter.y = p.starter(rts);
+
+        }
+        graph.addPoint(1, pointStarter);
+    }
+
+    p.lastT = t;
+
+    if (p.showBall) {
+        drawBalls(pointTarget.y, 15, window, true);
+        drawBalls(pointStarter.y, 5, window);
+    }
 
 
     View graphView;
@@ -351,6 +372,47 @@ public:
     }
 };
 
+# define M_PI           3.14159265358979323846  /* pi */
+const float TWO_PI = M_PI * 2.0;
+
+void setProblems(vector<Problem>& problems) {
+    problems.clear();
+
+    int i = 0;
+    if (parametric) {
+        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, doughnut, doughnut, TWO_PI)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+    }
+    else {
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Change slope of line", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
+        problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
+        problems.push_back(Problem("Make parabolic", i++, "", "makeParabolic", makeParabolic, makeParabolicTarget));
+        problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget)); //3
+        problems.push_back(Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget));
+        problems.push_back(Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget));
+        problems.push_back(Problem("Move line up", i++, "", "widenParabola", narrowParabola, widenParabolaTarget));  //6
+        problems.push_back(Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget));
+        problems.push_back(Problem("Move line up", i++, "", "moveCubicDown", moveCubicDown, moveCubicDownTarget));
+        problems.push_back(Problem("Move line up", i++, "", "moveCubicLeft", moveCubicLeft, moveCubicLeftTarget)); //8
+        problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget, true));
+        problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeInFlipLeftRight", easeInFlipLeftRight, easeInFlipVertTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeInOut", easeInOut, easeInOutTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeInCubic", easeInCubic, easeInCubicTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeInCubicThruCenter", easeInCubicThruCenter, easeInCubicThruCenterTarget, true));
+        problems.push_back(Problem("Move line up", i++, "", "easeInOutCubic", easeInOutCubic, easeInOutCubicTarget, true));
+    }
+}
 
 int main() {
 
@@ -391,40 +453,7 @@ int main() {
     typedef float (*myFunc)(float);
 
     vector<Problem> problems;
-    int i = 0;
-    if (parametric) {
-        problems.push_back(Problem("Move line up", i++, "", "doughnut", NULL, NULL, false, NULL, NULL)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-    }
-    else {
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Change slope of line", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
-        problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
-        problems.push_back(Problem("Make parabolic", i++, "", "makeParabolic", makeParabolic, makeParabolicTarget));
-        problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget)); //3
-        problems.push_back(Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget));
-        problems.push_back(Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget));
-        problems.push_back(Problem("Move line up", i++, "", "widenParabola", narrowParabola, widenParabolaTarget));  //6
-        problems.push_back(Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget));
-        problems.push_back(Problem("Move line up", i++, "", "moveCubicDown", moveCubicDown, moveCubicDownTarget));
-        problems.push_back(Problem("Move line up", i++, "", "moveCubicLeft", moveCubicLeft, moveCubicLeftTarget)); //8
-        problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget, true));
-        problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInFlipLeftRight", easeInFlipLeftRight, easeInFlipVertTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInOut", easeInOut, easeInOutTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInCubic", easeInCubic, easeInCubicTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInCubicThruCenter", easeInCubicThruCenter, easeInCubicThruCenterTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInOutCubic", easeInOutCubic, easeInOutCubicTarget, true));
-    }
+    setProblems(problems);
 
     Problem currentProblem = problems.at(0);
     bool firstFrame = true, lastFrame = false;
@@ -434,6 +463,10 @@ int main() {
     MainScreen mainscreen(sfmlWin, font);
     mainscreen.init(problems);
     bool pause = false;
+    
+    graph.addCurve(Color(100, 100, 100), 0.03);
+    graph.addCurve(Color::Green);
+
     while (sfmlWin.isOpen()) {
         bool changeProblem = false;
         Time dt = deltaClock.restart();
@@ -464,6 +497,7 @@ int main() {
                 }
                 if (e.key.code == Keyboard::Backslash) {
                     parametric = !parametric;
+                    setProblems(problems);
                     break;
                 }
                 if (screen == problem) {
@@ -493,6 +527,8 @@ int main() {
             t = 0;
             graph.reset();
             mainscreen.reset();
+
+            for (auto& p : problems) p.lastT = 0;
 
             firstFrame = true;
             deltaClock.restart();
