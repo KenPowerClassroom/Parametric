@@ -19,6 +19,7 @@ Do not edit any code in this file!!!
 #pragma once
 #include <string>
 #include<assert.h>
+#include<vector>
 #include<SFML/System/Vector2.hpp>
 using namespace std;
 
@@ -51,5 +52,14 @@ struct Problem
 	//parametric
 	Vec2 (*ptarget)(float);
 	Vec2 (*pstarter)(float);
+
+	Vec2 getPointStarter(float t);
+	Vec2 getPointTarget(float t);
+
+	vector<Vec2> starterPoints;
+	vector<Vec2> targetPoints;
+
+	vector<Vec2>& getNextStarterPoints(float t);
+	vector<Vec2>& getNextTargetPoints(float t);
 };
 

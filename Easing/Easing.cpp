@@ -52,6 +52,11 @@ Do not edit any code in this file!!!
 using namespace std;
 using namespace sf;
 
+#include <float.h>
+unsigned int current_word = 0;
+//unsigned int fp_control_state = _controlfp_s(&current_word,_EM_INEXACT, _MCW_EM);
+
+
 bool parametric = false;
 int width = 800;
 int height = 800;
@@ -186,33 +191,18 @@ void drawProblemScreen(Problem& p, float t, RenderWindow& window, Graph& graph, 
     Vector2f pointTarget;
     Vector2f pointStarter;
 
-    int iterations = (p.interval > 1.1) ? 5 : 1;
-    double step = (t - p.lastT) / iterations;
-
-    for (double rt = p.lastT; rt < t; rt += step) {
-        double rts = rt * p.interval;
-
-        if (p.ptarget) {
-            pointTarget = p.ptarget(rts);
-        }
-        else {
-            pointTarget.x = rts;
-            pointTarget.y = p.target(rts);
-
-        }
-        graph.addPoint(0, pointTarget);
-        if (p.pstarter) {
-            pointStarter = p.pstarter(rts);
-        }
-        else {
-            pointStarter.x = rts;
-            pointStarter.y = p.starter(rts);
-
-        }
-        graph.addPoint(1, pointStarter);
+    auto spts = p.getNextStarterPoints(t);
+    for (auto p : spts) {
+        graph.addPoint(0, p);
+        pointStarter = p;
     }
 
-    p.lastT = t;
+
+    auto tpts = p.getNextTargetPoints(t);
+    for (auto p : tpts) {
+        graph.addPoint(1, p);
+        pointTarget = p;
+    }
 
     if (p.showBall) {
         drawBalls(pointTarget.y, 15, window, true);
@@ -357,13 +347,26 @@ public:
     }
 
     void drawProblem(float t, Problem& p, int i) {
-        float y;
+        
+        //auto spts = p.getNextStarterPoints(t);
+        //for (auto p : spts) {
+        //    graphs[i].addPoint(0, p);
+  
+        //}
 
-        y = p.target(t);
-        graphs[i].addPoint(0, Vector2f(t, y));
 
-        y = p.starter(t);
-        graphs[i].addPoint(1, Vector2f(t, y));
+        //auto tpts = p.getNextTargetPoints(t);
+        //for (auto p : tpts) {
+        //    graphs[i].addPoint(1, p);
+
+        //}
+        Vec2 pt;
+
+        pt= p.getPointTarget(t);
+        graphs[i].addPoint(0, pt);
+
+        pt = p.getPointStarter(t);
+        graphs[i].addPoint(1, pt);
 
         graphs[i].drawGraph();
 
@@ -372,7 +375,7 @@ public:
     }
 };
 
-# define M_PI           3.14159265358979323846  /* pi */
+# define M_PI 3.14159265358979323846  /* pi */
 const float TWO_PI = M_PI * 2.0;
 
 void setProblems(vector<Problem>& problems) {
@@ -381,6 +384,7 @@ void setProblems(vector<Problem>& problems) {
     int i = 0;
     if (parametric) {
         problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, doughnut, doughnut, TWO_PI)); //0
+        problems.push_back(Problem("Circle", i++, "", "circle", NULL, NULL, false, circle, circle, TWO_PI)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
@@ -388,6 +392,7 @@ void setProblems(vector<Problem>& problems) {
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+
     }
     else {
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0

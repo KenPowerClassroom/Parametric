@@ -151,12 +151,12 @@ sf::Vector2f cartoid(float t) {
     return r;
 }
 
-sf::Vector2f XXXXXX(float t) {
+sf::Vector2f circle(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f r;
-    r.x = t + 2 * cos(2 * t);
-    r.y = t + 2 * sin(5 * t);
+    r.x = cos(t);
+    r.y = sin(t);
 
     return r;
 }

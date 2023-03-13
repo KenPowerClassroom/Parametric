@@ -33,8 +33,8 @@ struct Curve{
 };
 class Graph
 {
-	static const int MAX_POINTS = 5000;
-	sf::Vertex line[MAX_POINTS];
+	static const int MAX_POINTS = 50000;
+	sf::Vertex* line;
 
 	vector<Curve*> curves;
 	sf::Font font;
@@ -46,6 +46,7 @@ public:
 
 	Graph(sf::RenderWindow& window):window(window) {
 		font.loadFromFile("cmr12.ttf");
+		line = new sf::Vertex[MAX_POINTS];
 	};
 	void drawGraph();
 	void addPoint(int i, sf::Vector2f point);
