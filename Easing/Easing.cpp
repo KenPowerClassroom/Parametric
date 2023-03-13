@@ -533,7 +533,8 @@ int main() {
             graph.reset();
             mainscreen.reset();
 
-            for (auto& p : problems) p.lastT = 0;
+            for (auto& p : problems) p.reset();
+    
 
             firstFrame = true;
             deltaClock.restart();

@@ -67,14 +67,14 @@ vector<Vec2>& Problem::getNextStarterPoints(float t) {
 	starterPoints.clear();
 
 	int iterations = (interval > 1.1) ? 20 : 1;
-	double step = (t - lastT) / iterations;
+	double step = (t - lastStarterT) / iterations;
 
 
-	for (double rt = lastT; rt < t; rt += step) {
+	for (double rt = lastStarterT; rt < t; rt += step) {
 		starterPoints.push_back(getPointStarter(rt));
 	}
 
-	lastT = t;
+	lastStarterT = t;
 
 	return starterPoints;
 }
@@ -82,14 +82,14 @@ vector<Vec2>& Problem::getNextTargetPoints(float t) {
 	targetPoints.clear();
 
 	int iterations = (interval > 1.1) ? 20 : 1;
-	double step = (t - lastT) / iterations;
+	double step = (t - lastTargetT) / iterations;
 
 
-	for (double rt = lastT; rt < t; rt += step) {
+	for (double rt = lastTargetT; rt < t; rt += step) {
 		targetPoints.push_back(getPointTarget(rt));
 	}
 
-	lastT = t;
+	lastTargetT = t;
 
 	return targetPoints;
 }

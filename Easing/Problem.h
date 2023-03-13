@@ -41,7 +41,8 @@ struct Problem
 	float interval;
 	string description;
 	string starterFunction;
-	float lastT=0;
+	float lastStarterT = 0;
+	float lastTargetT =0;
 
 	bool passing = false;
 	bool showBall = false;
@@ -61,5 +62,10 @@ struct Problem
 
 	vector<Vec2>& getNextStarterPoints(float t);
 	vector<Vec2>& getNextTargetPoints(float t);
+
+	void reset(){
+		lastStarterT = 0;
+		lastTargetT = 0;
+	}
 };
 
