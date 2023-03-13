@@ -63,7 +63,7 @@ enum graphType {
 };
 
 
-bool parametric = false;
+bool parametric = true;
 int width = 800;
 int height = 800;
 
@@ -239,7 +239,7 @@ public:
 
         graphs.clear();
         problems.clear();
-        for (auto p : ps) {
+        for (auto& p : ps) {
             graphs.push_back(Graph(window));
             problems.push_back(p);
         }
@@ -316,7 +316,7 @@ public:
         int rowsInColumn = 0;
         int numColumns = (parametric ? 1 : 3);
         graphView.reset(FloatRect(problemLocalLeft, problemLocalTop, problemLocalWidth, -problemLocalHeight));
-        for (auto p : problems) {
+        for (auto& p : problems) {
 
             graphView.setViewport(FloatRect(columnLeft, normalizedHeaderHeight+rowsInColumn * problemHeight, problemHeight * aspect*0.8, problemHeight));
             window.setView(graphView);
@@ -344,15 +344,16 @@ public:
 
     void drawProblem(float t, Problem& prob, int i) {
         
-        //auto spts = prob.getNextStarterPoints(t);
-        //for (auto p : spts) {
-        //    graphs[i].addPoint(graphType::starter, p);
+        auto spts = prob.getNextStarterPoints(t);
+        for (auto& p : spts) {
+            graphs[i].addPoint(graphType::starter, p);
   
-        //}
+        }
 
         Vec2 pt;
-        pt = prob.getPointStarter(t);
-        graphs[i].addPoint(graphType::starter, pt);
+
+        //pt = prob.getPointStarter(t);
+        //graphs[i].addPoint(graphType::starter, pt);
 
 
         //auto tpts = prob.getNextTargetPoints(t);
@@ -363,7 +364,7 @@ public:
 
         pt= prob.getPointTarget(t);
         graphs[i].addPoint(graphType::target, pt);
-
+        
         graphs[i].drawGraph();
     }
 };
