@@ -36,7 +36,7 @@ bool Problem::check() {
 	return true;
 }
 
-Vec2  Problem::getPointStarter(float t) {
+Vec2  Problem::getPointTarget(float t) {
 	t *= interval;
 	Vec2 point;
 	if (ptarget) {
@@ -50,7 +50,7 @@ Vec2  Problem::getPointStarter(float t) {
 	return point;
 }
 
-Vec2  Problem::getPointTarget(float t) {
+Vec2  Problem::getPointStarter(float t) {
 	t *= interval;
 	Vec2 point;
 	if (pstarter) {

@@ -42,7 +42,7 @@ struct Problem
 	string description;
 	string starterFunction;
 	float lastStarterT = 0;
-	float lastTargetT =0;
+	float lastTargetT = 0;
 
 	bool passing = false;
 	bool showBall = false;

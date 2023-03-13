@@ -56,6 +56,12 @@ using namespace sf;
 unsigned int current_word = 0;
 //unsigned int fp_control_state = _controlfp_s(&current_word,_EM_INEXACT, _MCW_EM);
 
+enum graphType {
+    starter = 1,
+    target  = 0
+
+};
+
 
 bool parametric = false;
 int width = 800;
@@ -193,14 +199,14 @@ void drawProblemScreen(Problem& p, float t, RenderWindow& window, Graph& graph, 
 
     auto spts = p.getNextStarterPoints(t);
     for (auto p : spts) {
-        graph.addPoint(0, p);
+        graph.addPoint(graphType::starter, p);
         pointStarter = p;
     }
 
 
     auto tpts = p.getNextTargetPoints(t);
     for (auto p : tpts) {
-        graph.addPoint(1, p);
+        graph.addPoint(graphType::target, p);
         pointTarget = p;
     }
 
@@ -231,6 +237,8 @@ public:
 
     void init(vector<Problem> ps) {
 
+        graphs.clear();
+        problems.clear();
         for (auto p : ps) {
             graphs.push_back(Graph(window));
             problems.push_back(p);
@@ -242,17 +250,16 @@ public:
     }
 
     void reset() {
-        for (auto& g : graphs) {
-            g.reset();
-        }
+        for (auto& g : graphs)   g.reset();
+
+        for (auto& p : problems) p.reset();
     }
+
     void draw(float t) {
         float graphUnit = Graph::Unit;
         float padding = graphUnit * 0.1;
         
 
-
-        
         View graphView;
         int lineHeight = 50;
         int baseFontSize = 120;
@@ -278,17 +285,6 @@ public:
         usernameMessage.setCharacterSize(baseFontSize*0.35);
         usernameMessage.setPosition(10, -10);
         window.draw(usernameMessage);
-
-        //int h = 0;
-        //for (int i = 2; i < 100; i += 3) {
-        //    usernameMessage.setCharacterSize(i);
-        //    usernameMessage.setPosition(10,h);
-        //    h += i;
-        //    h += 3;
-        //    window.draw(usernameMessage);
-        //}
-
-        //return;
 
         float headerHeight = usernameMessage.getGlobalBounds().height;
         float normalizedHeaderHeight = headerHeight / height;
@@ -346,32 +342,29 @@ public:
         window.setView(tempView);
     }
 
-    void drawProblem(float t, Problem& p, int i) {
+    void drawProblem(float t, Problem& prob, int i) {
         
-        //auto spts = p.getNextStarterPoints(t);
+        //auto spts = prob.getNextStarterPoints(t);
         //for (auto p : spts) {
-        //    graphs[i].addPoint(0, p);
+        //    graphs[i].addPoint(graphType::starter, p);
   
         //}
 
+        Vec2 pt;
+        pt = prob.getPointStarter(t);
+        graphs[i].addPoint(graphType::starter, pt);
 
-        //auto tpts = p.getNextTargetPoints(t);
+
+        //auto tpts = prob.getNextTargetPoints(t);
         //for (auto p : tpts) {
-        //    graphs[i].addPoint(1, p);
+        //    graphs[i].addPoint(graphType::target, p);
 
         //}
-        Vec2 pt;
 
-        pt= p.getPointTarget(t);
-        graphs[i].addPoint(0, pt);
-
-        pt = p.getPointStarter(t);
-        graphs[i].addPoint(1, pt);
+        pt= prob.getPointTarget(t);
+        graphs[i].addPoint(graphType::target, pt);
 
         graphs[i].drawGraph();
-
-
-
     }
 };
 
@@ -383,9 +376,9 @@ void setProblems(vector<Problem>& problems) {
 
     int i = 0;
     if (parametric) {
-        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, doughnut, doughnut, TWO_PI)); //0
+        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, circle, doughnut, TWO_PI)); //0
         problems.push_back(Problem("Circle", i++, "", "circle", NULL, NULL, false, circle, circle, TWO_PI)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveParabolaLeft, moveParabolsLeftTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
         problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
@@ -503,6 +496,7 @@ int main() {
                 if (e.key.code == Keyboard::Backslash) {
                     parametric = !parametric;
                     setProblems(problems);
+                    mainscreen.init(problems);
                     break;
                 }
                 if (screen == problem) {

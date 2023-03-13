@@ -108,7 +108,6 @@ void Graph::drawGraph() {
 }
 
 void Graph::addPoint(int curve, sf::Vector2f point) {
-    assert(curves[curve]->points.size() < MAX_POINTS);
     curves[curve]->points.push_back(point);
 
 }
