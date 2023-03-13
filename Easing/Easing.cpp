@@ -356,14 +356,14 @@ public:
         //graphs[i].addPoint(graphType::starter, pt);
 
 
-        //auto tpts = prob.getNextTargetPoints(t);
-        //for (auto p : tpts) {
-        //    graphs[i].addPoint(graphType::target, p);
+        auto tpts = prob.getNextTargetPoints(t);
+        for (auto p : tpts) {
+            graphs[i].addPoint(graphType::target, p);
 
-        //}
+        }
 
-        pt= prob.getPointTarget(t);
-        graphs[i].addPoint(graphType::target, pt);
+        //pt= prob.getPointTarget(t);
+        //graphs[i].addPoint(graphType::target, pt);
         
         graphs[i].drawGraph();
     }
