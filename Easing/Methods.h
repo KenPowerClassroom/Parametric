@@ -131,6 +131,38 @@ float easeInOutCubic(float t) {
     return t;
 }
 
+/////////////////////////////////////////////////////////////////
+
+sf::Vector2f circle1(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = cos(t);
+    r.y = sin(t);
+
+    return r;
+}
+
+sf::Vector2f circle2(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = cos(t);
+    r.y = sin(t);
+
+    return r;
+}
+
+sf::Vector2f circle3(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = cos(t);
+    r.y = sin(t);
+
+    return r;
+}
+
 sf::Vector2f doughnut(float t) {
 
     //0 <= t <= 2PI

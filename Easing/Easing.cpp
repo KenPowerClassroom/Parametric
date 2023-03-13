@@ -306,7 +306,7 @@ public:
 
         float aspect = abs(problemLocalWidth / problemLocalHeight);
 
-        int problemsPerColumn = ceil(problems.size() / 3.0);
+        int problemsPerColumn = 7;// ceil(problems.size() / 3.0);
         float problemHeight = (1.0-normalizedHeaderHeight) / problemsPerColumn;
         float problemPadding = problemHeight * 0.25;
         const View tempView = window.getView();
@@ -314,7 +314,7 @@ public:
         float columnLeft = 0.0;
         int i = 0;
         int rowsInColumn = 0;
-        int numColumns = (parametric ? 1 : 3);
+        int numColumns = 3;
         graphView.reset(FloatRect(problemLocalLeft, problemLocalTop, problemLocalWidth, -problemLocalHeight));
         for (auto& p : problems) {
 
@@ -377,15 +377,11 @@ void setProblems(vector<Problem>& problems) {
 
     int i = 0;
     if (parametric) {
+        problems.push_back(Problem("Circle move", i++, "", "circle1", NULL, NULL, false, circle1, circle1, TWO_PI)); //0
+        problems.push_back(Problem("Circle change size", i++, "", "circle2", NULL, NULL, false, circle2, circle2, TWO_PI)); //0
+        problems.push_back(Problem("Circle change size & move", i++, "", "circle3", NULL, NULL, false, circle3, circle3, TWO_PI)); //0
         problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, circle, doughnut, TWO_PI)); //0
-        problems.push_back(Problem("Circle", i++, "", "circle", NULL, NULL, false, circle, circle, TWO_PI)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveParabolaLeft, moveParabolsLeftTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
+        problems.push_back(Problem("Cartoid", i++, "", "cartoid", NULL, NULL, false, cartoid, cartoid, TWO_PI)); //0
 
     }
     else {

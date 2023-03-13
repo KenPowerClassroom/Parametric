@@ -23,6 +23,9 @@
     <ClCompile Include="ThickLine.cpp">
       <Filter>Source%28don%27t thouch these%29</Filter>
     </ClCompile>
+    <ClCompile Include="curve.cpp">
+      <Filter>Source%28don%27t thouch these%29</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graph.h">
@@ -39,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="Methods.h" />
     <ClInclude Include="globals.h">
+      <Filter>Headers%28don%27t touch these%29</Filter>
+    </ClInclude>
+    <ClInclude Include="curve.h">
       <Filter>Headers%28don%27t touch these%29</Filter>
     </ClInclude>
   </ItemGroup>

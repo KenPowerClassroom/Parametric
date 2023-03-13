@@ -29,9 +29,9 @@ struct Problem
 {
 	Problem():title(""), description(""), target(NULL), starter(NULL) { assert("default contructor should not be called"); };
 	Problem(string title, int index, string description, string starterFunction,  
-		float (*starter)(float), float (*target)(float), bool s=false, Vec2(*ptarget)(float) =NULL, Vec2(*pstarter)(float) =NULL, float interval = 1.0f) :
+		float (*starter)(float), float (*target)(float), bool s=false, Vec2(*pstarter)(float) = NULL, Vec2(*ptarget)(float) =NULL, float interval = 1.0f) :
 		title(title), index(index), description(description), starterFunction(starterFunction), target(target), starter(starter), showBall(s),
-		ptarget(ptarget), pstarter(pstarter), interval(interval)
+		pstarter(pstarter), ptarget(ptarget), interval(interval)
 	{
 	};
 	
