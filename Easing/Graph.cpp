@@ -21,6 +21,8 @@ Do not edit any code in this file!!!
 #include <cassert>
 #include"ThickLine.h"
 
+
+
 void Graph::drawGraph() {
 
     float unit = Unit;
@@ -104,6 +106,21 @@ void Graph::drawGraph() {
             i++;
         }
         window.draw(line, i, sf::TriangleStrip);
+       
+        //draw endpoint
+        if (c->points.size() > 0) {
+            float radius = 5.0f;
+            CircleShape circle(radius);
+            circle.setOrigin(radius, radius);
+            circle.setFillColor(c->color);
+
+            circle.setPointCount(10);
+
+            Vector2f end = c->points.back();
+            circle.setPosition(sf::Vector2f(end.x * unit / width.x + origin.x, end.y * unit / width.y + origin.y));
+
+            window.draw(circle);
+        }
     }    
 }
 

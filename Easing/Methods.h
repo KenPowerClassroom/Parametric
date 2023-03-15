@@ -133,34 +133,112 @@ float easeInOutCubic(float t) {
 
 /////////////////////////////////////////////////////////////////
 
+
+sf::Vector2f line1(float t) {
+
+    sf::Vector2f result;
+    float startX = -1.5;
+    float startY =  0.0;
+    float endX = +1.5;
+    float endY = +1.5;
+
+    
+    result.x = startX + t*(endX - startX);
+    result.y = startY + t*(endY - startY);
+
+    return result;
+}
+
+sf::Vector2f line2(float t) {
+
+    sf::Vector2f result;
+    sf::Vector2f start(2, -1.0);
+    sf::Vector2f end(-1, 2);
+
+    result = start + t * (end - start);
+
+    return result;
+}
+
 sf::Vector2f circle1(float t) {
 
     //0 <= t <= 2PI
-    sf::Vector2f r;
-    r.x = cos(t);
-    r.y = sin(t);
+    sf::Vector2f result;
+    result.x = cos(t);
+    result.y = sin(t);
 
-    return r;
+    return result;
 }
 
 sf::Vector2f circle2(float t) {
 
     //0 <= t <= 2PI
-    sf::Vector2f r;
-    r.x = cos(t);
-    r.y = sin(t);
+    sf::Vector2f result;
+    result.x = cos(t);
+    result.y = sin(t);
 
-    return r;
+    return result;
+}
+
+sf::Vector2f circleThreeTimes(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+    result.x = cos(3*t);
+    result.y = sin(3*t);
+
+    return result;
+}
+
+sf::Vector2f circleMoveRight(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+
+    float s = t * 3;
+    result.x = t/10 + cos(s);
+    result.y = sin(s);
+
+    return result;
+}
+
+sf::Vector2f spiral(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+
+    float s = t * 5;
+    float r = 0 + t / 5;
+
+    result.x = r * cos(s);
+    result.y = r * sin(s);
+
+    return result;
+}
+
+sf::Vector2f expSpiral(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+
+    float s = t * 5;
+    float r = t*t;
+
+    result.x = r * cos(s);
+    result.y = r * sin(s);
+
+    return result;
 }
 
 sf::Vector2f circle3(float t) {
 
     //0 <= t <= 2PI
-    sf::Vector2f r;
-    r.x = cos(t);
-    r.y = sin(t);
+    sf::Vector2f result;
 
-    return r;
+    result.x = cos(t);
+    result.y = sin(t);
+
+    return result;
 }
 
 sf::Vector2f doughnut(float t) {
@@ -192,6 +270,31 @@ sf::Vector2f circle(float t) {
 
     return r;
 }
+
+sf::Vector2f astroid(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+    r.x = cub(cos(t));
+    r.y = cub(sin(t));
+
+    return r;
+}
+
+sf::Vector2f hypocycloid(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f r;
+
+    float a = 2.0;
+    float b = a / 3;
+
+    r.x = (a-b)*cos(t) + b*cos((a/b - 1)*t);
+    r.y = (a-b)*sin(t) - b*sin((a/b - 1)*t);
+
+    return r;
+}
+
 
 /*
       ____

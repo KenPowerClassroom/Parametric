@@ -63,7 +63,7 @@ enum graphType {
 };
 
 
-bool parametric = true;
+bool parametric = false;
 int width = 800;
 int height = 800;
 
@@ -377,11 +377,20 @@ void setProblems(vector<Problem>& problems) {
 
     int i = 0;
     if (parametric) {
+        problems.push_back(Problem("Parametric line", i++, "", "line1", NULL, NULL, false, line1, line1)); //0        
+        problems.push_back(Problem("Parametric line", i++, "", "line2", NULL, NULL, false, line2, line2)); //0        
         problems.push_back(Problem("Circle move", i++, "", "circle1", NULL, NULL, false, circle1, circle1, TWO_PI)); //0
         problems.push_back(Problem("Circle change size", i++, "", "circle2", NULL, NULL, false, circle2, circle2, TWO_PI)); //0
         problems.push_back(Problem("Circle change size & move", i++, "", "circle3", NULL, NULL, false, circle3, circle3, TWO_PI)); //0
+        problems.push_back(Problem("Circle 3 times", i++, "", "circleThreeTimes", NULL, NULL, false, circleThreeTimes, circleThreeTimes, TWO_PI)); //0
+        problems.push_back(Problem("Circle spiral right", i++, "", "circleMoveRight", NULL, NULL, false, circleMoveRight, circleMoveRight, TWO_PI)); //0
+        problems.push_back(Problem("Spiral", i++, "", "spiral", NULL, NULL, false, spiral, spiral, TWO_PI)); //0
+        problems.push_back(Problem("Exponential Spiral", i++, "", "expSpiral", NULL, NULL, false, expSpiral, expSpiral, TWO_PI)); //0
+
         problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, circle, doughnut, TWO_PI)); //0
         problems.push_back(Problem("Cartoid", i++, "", "cartoid", NULL, NULL, false, cartoid, cartoid, TWO_PI)); //0
+        problems.push_back(Problem("Astroid", i++, "", "astroid", NULL, NULL, false, astroid, astroid, TWO_PI)); //0
+        problems.push_back(Problem("Hypocycloid", i++, "", "hypocycloid", NULL, NULL, false, hypocycloid, hypocycloid, TWO_PI)); //0
 
     }
     else {
