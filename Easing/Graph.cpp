@@ -87,13 +87,28 @@ void Graph::drawGraph() {
     int labelTextSize = 40;
     int axisTextSize = 25;
 
-    centredText("t", sf::Vector2f(unit/2, -textOffset), labelTextSize);
-    centredText("f(t)", sf::Vector2f(-textOffset, unit / 2), labelTextSize,true);
-    centredText("0.0", sf::Vector2f(0, -textOffset), axisTextSize);
-    centredText("1.0", sf::Vector2f(unit, origin.y -textOffset), axisTextSize);
-    centredText("0.0", sf::Vector2f(-textOffset, 0), axisTextSize, true);
-    centredText("1.0", sf::Vector2f(origin.y -textOffset, unit), axisTextSize, true);
-
+    if (parametric) {
+        //xaxis
+        centredText("t", sf::Vector2f(unit / 2, -textOffset), labelTextSize);
+        centredText("f(t)", sf::Vector2f(-textOffset, unit / 2), labelTextSize, true);
+        centredText("-1.0", sf::Vector2f(unit * 0.3, origin.y - textOffset / 2), axisTextSize);
+        centredText("1.0",  sf::Vector2f(unit * 0.7, origin.y - textOffset/2), axisTextSize);
+        centredText("-2.0", sf::Vector2f(unit * 0.1, origin.y - textOffset / 2), axisTextSize);
+        centredText("2.0", sf::Vector2f(unit * 0.9, origin.y - textOffset / 2), axisTextSize);
+        //yaxis
+        centredText("-1.0", sf::Vector2f(origin.y - textOffset/2, unit * 0.3 + textOffset / 3), axisTextSize, true);
+        centredText("1.0", sf::Vector2f(origin.y - textOffset/2, unit * 0.7 + textOffset / 3), axisTextSize, true);
+        centredText("-2.0", sf::Vector2f(origin.y - textOffset/2, unit * 0.1 + textOffset / 3), axisTextSize, true);
+        centredText("2.0", sf::Vector2f(origin.y - textOffset/2, unit * 0.9 + textOffset / 3), axisTextSize, true);
+    }
+    else {
+        centredText("t", sf::Vector2f(unit / 2, -textOffset), labelTextSize);
+        centredText("f(t)", sf::Vector2f(-textOffset, unit / 2), labelTextSize, true);
+        centredText("0.0", sf::Vector2f(0, -textOffset), axisTextSize);
+        centredText("1.0", sf::Vector2f(unit, origin.y - textOffset), axisTextSize);
+        centredText("0.0", sf::Vector2f(-textOffset, 0), axisTextSize, true);
+        centredText("1.0", sf::Vector2f(origin.y - textOffset, unit), axisTextSize, true);
+    }
 
     for (auto& c : curves) {
         PointList q;

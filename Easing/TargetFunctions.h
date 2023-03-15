@@ -64,3 +64,34 @@ float easeInCubicTarget(float t);
 float easeInOutCubicTarget(float t);
 
 float easeInCubicThruCenterTarget(float t);
+
+
+sf::Vector2f line1Target(float t);
+
+sf::Vector2f line2Target(float t);
+
+sf::Vector2f circleMoveTarget(float t);
+
+sf::Vector2f circleScaleTarget(float t);
+
+sf::Vector2f circleMoveAndScaleTarget(float t);
+
+sf::Vector2f ellipseTarget(float t);
+
+sf::Vector2f circleThreeTimesTarget(float t);
+
+sf::Vector2f circleThreeTimesMoveRightTarget(float t);
+
+sf::Vector2f spiralTarget(float t);
+
+sf::Vector2f expSpiralTarget(float t);
+
+sf::Vector2f doughnutTarget(float t);
+
+sf::Vector2f cartoidTarget(float t);
+
+sf::Vector2f circleTarget(float t);
+
+sf::Vector2f astroidTarget(float t);
+
+sf::Vector2f hypocycloidTarget(float t);

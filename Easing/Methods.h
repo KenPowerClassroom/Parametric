@@ -160,22 +160,42 @@ sf::Vector2f line2(float t) {
     return result;
 }
 
-sf::Vector2f circle1(float t) {
+sf::Vector2f circleMove(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
-    result.x = cos(t);
-    result.y = sin(t);
+    result.x = 1 + cos(t);
+    result.y = 0 + sin(t);
 
     return result;
 }
 
-sf::Vector2f circle2(float t) {
+sf::Vector2f circleScale(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
-    result.x = cos(t);
-    result.y = sin(t);
+    result.x = 2 * cos(t);
+    result.y = 2 * sin(t);
+
+    return result;
+}
+
+sf::Vector2f circleMoveAndScale(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+    result.x = -2 + 1.5 * cos(t);
+    result.y = -2 + 1.5 * sin(t);
+
+    return result;
+}
+
+sf::Vector2f ellipse(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+    result.x = 2 *  cos(t);
+    result.y = 0.5* sin(t);
 
     return result;
 }
@@ -190,7 +210,7 @@ sf::Vector2f circleThreeTimes(float t) {
     return result;
 }
 
-sf::Vector2f circleMoveRight(float t) {
+sf::Vector2f circleThreeTimesMoveRight(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
@@ -226,17 +246,6 @@ sf::Vector2f expSpiral(float t) {
 
     result.x = r * cos(s);
     result.y = r * sin(s);
-
-    return result;
-}
-
-sf::Vector2f circle3(float t) {
-
-    //0 <= t <= 2PI
-    sf::Vector2f result;
-
-    result.x = cos(t);
-    result.y = sin(t);
 
     return result;
 }
@@ -278,6 +287,7 @@ sf::Vector2f astroid(float t) {
     r.x = cub(cos(t));
     r.y = cub(sin(t));
 
+
     return r;
 }
 
@@ -287,7 +297,7 @@ sf::Vector2f hypocycloid(float t) {
     sf::Vector2f r;
 
     float a = 2.0;
-    float b = a / 3;
+    float b = a / 3;  //hint
 
     r.x = (a-b)*cos(t) + b*cos((a/b - 1)*t);
     r.y = (a-b)*sin(t) - b*sin((a/b - 1)*t);
