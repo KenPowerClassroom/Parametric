@@ -377,21 +377,22 @@ void setProblems(vector<Problem>& problems) {
 
     int i = 0;
     if (parametric) {
-        problems.push_back(Problem("Parametric line", i++, "", "line1", NULL, NULL, false, line1, line1)); //0        
-        problems.push_back(Problem("Parametric line", i++, "", "line2", NULL, NULL, false, line2, line2)); //0        
-        problems.push_back(Problem("Circle move", i++, "", "circleMove", NULL, NULL, false, circleMove, circleMove, TWO_PI)); //0
-        problems.push_back(Problem("Circle change size", i++, "", "circleScale", NULL, NULL, false, circleScale, circleScale, TWO_PI)); //0
-        problems.push_back(Problem("Circle change size & move", i++, "", "circleMoveAndScale", NULL, NULL, false, circleMoveAndScale, circleMoveAndScale, TWO_PI)); //0
-        problems.push_back(Problem("Ellipse", i++, "", "ellipse", NULL, NULL, false, ellipse, ellipse, TWO_PI)); //0
-        problems.push_back(Problem("Circle 3 times", i++, "", "circleThreeTimes", NULL, NULL, false, circleThreeTimes, circleThreeTimes, TWO_PI)); //0
-        problems.push_back(Problem("Circle spiral right", i++, "", "circleThreeTimesMoveRight", NULL, NULL, false, circleThreeTimesMoveRight, circleThreeTimesMoveRight, TWO_PI)); //0
-        problems.push_back(Problem("Spiral", i++, "", "spiral", NULL, NULL, false, spiral, spiral, TWO_PI)); //0
-        problems.push_back(Problem("Exponential Spiral", i++, "", "expSpiral", NULL, NULL, false, expSpiral, expSpiral, TWO_PI)); //0
+        problems.push_back(Problem("Parametric line", i++, "", "line1", NULL, NULL, false, line1, line1Target)); //0        
+        problems.push_back(Problem("Parametric line", i++, "", "line2", NULL, NULL, false, line2, line2Target)); //0        
+        problems.push_back(Problem("Circle move", i++, "", "circleMove", NULL, NULL, false, circleMove, circleMoveTarget, TWO_PI)); //0
+        problems.push_back(Problem("Circle change size", i++, "", "circleScale", NULL, NULL, false, circleScale, circleScaleTarget, TWO_PI)); //0
+        problems.push_back(Problem("Circle change size & move", i++, "", "circleMoveAndScale", NULL, NULL, false, circleMoveAndScale, circleMoveAndScaleTarget, TWO_PI)); //0
+        problems.push_back(Problem("Ellipse", i++, "", "ellipse", NULL, NULL, false, ellipse, ellipseTarget, TWO_PI)); //0
+        problems.push_back(Problem("Circle Half way around", i++, "", "circleHalfTimes", NULL, NULL, false, circleHalfTimes, circleHalfTimesTarget, TWO_PI)); //0
+        problems.push_back(Problem("Circle 3 times", i++, "", "circleThreeTimes", NULL, NULL, false, circleThreeTimes, circleThreeTimesTarget, TWO_PI)); //0
+        problems.push_back(Problem("Circle spiral right", i++, "", "circleThreeTimesMoveRight", NULL, NULL, false, circleThreeTimesMoveRight, circleThreeTimesMoveRightTarget, TWO_PI)); //0
+        problems.push_back(Problem("Spiral", i++, "", "spiral", NULL, NULL, false, spiral, spiralTarget, TWO_PI)); //0
+        problems.push_back(Problem("Exponential Spiral", i++, "", "expSpiral", NULL, NULL, false, expSpiral, expSpiralTarget, TWO_PI)); //0
 
-        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, circle, doughnut, TWO_PI)); //0
-        problems.push_back(Problem("Cartoid", i++, "", "cartoid", NULL, NULL, false, cartoid, cartoid, TWO_PI)); //0
-        problems.push_back(Problem("Astroid", i++, "", "astroid", NULL, NULL, false, astroid, astroid, TWO_PI)); //0
-        problems.push_back(Problem("Hypocycloid", i++, "", "hypocycloid", NULL, NULL, false, hypocycloid, hypocycloid, TWO_PI)); //0
+        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, circle, doughnutTarget, TWO_PI)); //0
+        problems.push_back(Problem("Cartoid", i++, "", "cartoid", NULL, NULL, false, cartoid, cartoidTarget, TWO_PI)); //0
+        problems.push_back(Problem("Astroid", i++, "", "astroid", NULL, NULL, false, astroid, astroidTarget, TWO_PI)); //0
+        problems.push_back(Problem("Hypocycloid", i++, "", "hypocycloid", NULL, NULL, false, hypocycloid, hypocycloidTarget, TWO_PI)); //0
 
     }
     else {

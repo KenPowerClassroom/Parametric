@@ -142,7 +142,9 @@ sf::Vector2f line1(float t) {
     float endX = +1.5;
     float endY = +1.5;
 
-    
+    // As this is theparametric form of a line, we need to calculate and return both x(t) and y(t) 
+    // We can return both x(t) and y(t) as x & y component of a vector
+
     result.x = startX + t*(endX - startX);
     result.y = startY + t*(endY - startY);
 
@@ -155,6 +157,8 @@ sf::Vector2f line2(float t) {
     sf::Vector2f start(2, -1.0);
     sf::Vector2f end(-1, 2);
 
+    // what is the difference between this parametric form of a line and the previous function?
+
     result = start + t * (end - start);
 
     return result;
@@ -164,6 +168,7 @@ sf::Vector2f circleMove(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
+
     result.x = 1 + cos(t);
     result.y = 0 + sin(t);
 
@@ -174,6 +179,7 @@ sf::Vector2f circleScale(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
+
     result.x = 2 * cos(t);
     result.y = 2 * sin(t);
 
@@ -184,6 +190,7 @@ sf::Vector2f circleMoveAndScale(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
+
     result.x = -2 + 1.5 * cos(t);
     result.y = -2 + 1.5 * sin(t);
 
@@ -194,8 +201,20 @@ sf::Vector2f ellipse(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
+
     result.x = 2 *  cos(t);
     result.y = 0.5* sin(t);
+
+    return result;
+}
+
+sf::Vector2f circleHalfTimes(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+
+    result.x = cos(0.5 * t);
+    result.y = sin(0.5 * t);
 
     return result;
 }
@@ -204,6 +223,7 @@ sf::Vector2f circleThreeTimes(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f result;
+
     result.x = cos(3*t);
     result.y = sin(3*t);
 
@@ -215,9 +235,16 @@ sf::Vector2f circleThreeTimesMoveRight(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    float s = t * 3;
-    result.x = t/10 + cos(s);
-    result.y = sin(s);
+    //float s = t * 3;
+    //result.x = t/10 + cos(s);
+    //result.y = sin(s);
+
+    float s = t;
+    result.x = 16*cub(sin(s));
+    result.y = 13*cos(s) - 5*cos(2*t) - 2*cos(3*t) - cos(4*t);
+
+    result = (1 / 16.0f) * result;
+
 
     return result;
 }

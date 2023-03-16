@@ -78,6 +78,8 @@ sf::Vector2f circleMoveAndScaleTarget(float t);
 
 sf::Vector2f ellipseTarget(float t);
 
+sf::Vector2f circleHalfTimesTarget(float t);
+
 sf::Vector2f circleThreeTimesTarget(float t);
 
 sf::Vector2f circleThreeTimesMoveRightTarget(float t);
