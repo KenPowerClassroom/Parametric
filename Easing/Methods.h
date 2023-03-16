@@ -137,12 +137,12 @@ float easeInOutCubic(float t) {
 sf::Vector2f line1(float t) {
 
     sf::Vector2f result;
-    float startX = -1.5;
+    float startX =  0.0;
     float startY =  0.0;
-    float endX = +1.5;
-    float endY = +1.5;
+    float endX = +1.0;
+    float endY = +1.0;
 
-    // As this is theparametric form of a line, we need to calculate and return both x(t) and y(t) 
+    // As this is the parametric form of a line, we need to calculate and return both x(t) and y(t) 
     // We can return both x(t) and y(t) as x & y component of a vector
 
     result.x = startX + t*(endX - startX);
@@ -154,8 +154,8 @@ sf::Vector2f line1(float t) {
 sf::Vector2f line2(float t) {
 
     sf::Vector2f result;
-    sf::Vector2f start(2, -1.0);
-    sf::Vector2f end(-1, 2);
+    sf::Vector2f start(0,0);
+    sf::Vector2f end;
 
     // what is the difference between this parametric form of a line and the previous function?
 
@@ -169,8 +169,8 @@ sf::Vector2f circleMove(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    result.x = 1 + cos(t);
-    result.y = 0 + sin(t);
+    result.x = cos(t);
+    result.y = sin(t);
 
     return result;
 }
@@ -180,8 +180,8 @@ sf::Vector2f circleScale(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    result.x = 2 * cos(t);
-    result.y = 2 * sin(t);
+    result.x = cos(t);
+    result.y = sin(t);
 
     return result;
 }
@@ -191,8 +191,8 @@ sf::Vector2f circleMoveAndScale(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    result.x = -2 + 1.5 * cos(t);
-    result.y = -2 + 1.5 * sin(t);
+    result.x = cos(t);
+    result.y = sin(t);
 
     return result;
 }
@@ -202,8 +202,8 @@ sf::Vector2f ellipse(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    result.x = 2 *  cos(t);
-    result.y = 0.5* sin(t);
+    result.x = cos(t);
+    result.y = sin(t);
 
     return result;
 }
@@ -213,8 +213,8 @@ sf::Vector2f circleHalfTimes(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    result.x = cos(0.5 * t);
-    result.y = sin(0.5 * t);
+    result.x = cos(t);
+    result.y = sin(t);
 
     return result;
 }
@@ -224,8 +224,8 @@ sf::Vector2f circleThreeTimes(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    result.x = cos(3*t);
-    result.y = sin(3*t);
+    result.x = cos(t);
+    result.y = sin(t);
 
     return result;
 }
@@ -235,16 +235,8 @@ sf::Vector2f circleThreeTimesMoveRight(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    //float s = t * 3;
-    //result.x = t/10 + cos(s);
-    //result.y = sin(s);
-
-    float s = t;
-    result.x = 16*cub(sin(s));
-    result.y = 13*cos(s) - 5*cos(2*t) - 2*cos(3*t) - cos(4*t);
-
-    result = (1 / 16.0f) * result;
-
+    result.x = 1 + cos(t);
+    result.y =     sin(t);
 
     return result;
 }
@@ -255,7 +247,7 @@ sf::Vector2f spiral(float t) {
     sf::Vector2f result;
 
     float s = t * 5;
-    float r = 0 + t / 5;
+    float r = 2.0; // radius needs to increase with time
 
     result.x = r * cos(s);
     result.y = r * sin(s);
@@ -268,11 +260,12 @@ sf::Vector2f expSpiral(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    float s = t * 5;
-    float r = t*t;
+    float s = t * 5; //don't change
 
-    result.x = r * cos(s);
-    result.y = r * sin(s);
+    float r = 2.0; //<= this is the only line to change
+
+    result.x = r * cos(s);//don't change
+    result.y = r * sin(s);//don't change
 
     return result;
 }
@@ -280,11 +273,14 @@ sf::Vector2f expSpiral(float t) {
 sf::Vector2f doughnut(float t) {
 
     //0 <= t <= 2PI
-    sf::Vector2f r;
-    r.x = 1.5 * cos(t) + -cos(30 * t);
-    r.y = 1.5 * sin(t) + -sin(30 * t);
+    sf::Vector2f result;
+
+    float radius = 1.0;
+
+    result.x = radius * cos(t) + -cos(30 * t);
+    result.y = radius * sin(t) + -sin(30 * t);
  
-    return r;
+    return result;
 }
 
 sf::Vector2f cartoid(float t) {
@@ -331,6 +327,21 @@ sf::Vector2f hypocycloid(float t) {
 
     return r;
 }
+
+sf::Vector2f heart(float t) {
+
+    //0 <= t <= 2PI
+    sf::Vector2f result;
+
+    float s = t;
+    result.x = 16 * cub(sin(s));
+    result.y = 13 * cos(s) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t);
+
+    result = (1 / 16.0f) * result;
+
+    return result;
+}
+
 
 
 /*

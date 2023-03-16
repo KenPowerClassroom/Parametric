@@ -96,4 +96,6 @@ sf::Vector2f circleTarget(float t);
 
 sf::Vector2f astroidTarget(float t);
 
-sf::Vector2f hypocycloidTarget(float t);
+sf::Vector2f hypocycloidTarget(float t); 
+
+sf::Vector2f heartTarget(float t);

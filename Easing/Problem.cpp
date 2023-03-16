@@ -30,7 +30,7 @@ bool Problem::check() {
 		}
 	else
 		for (; t < 1.0; t += step) {
-			if ((fabs(ptarget(t).x - pstarter(t).x) > error && fabs(ptarget(t).y - pstarter(t).y) > error))
+			if ((fabs(ptarget(t).x - pstarter(t).x) > error || fabs(ptarget(t).y - pstarter(t).y) > error))
 				return false;
 		}
 	return true;

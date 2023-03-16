@@ -124,7 +124,7 @@ void Graph::drawGraph() {
        
         //draw endpoint
         if (c->points.size() > 0) {
-            float radius = 5.0f;
+            float radius = max(c->thickness*150.0f, 5.0f);
             CircleShape circle(radius);
             circle.setOrigin(radius, radius);
             circle.setFillColor(c->color);

@@ -244,7 +244,7 @@ public:
             problems.push_back(p);
         }
         for (auto& g : graphs) {
-            g.addCurve(Color(100, 100, 100), 0.03);
+            g.addCurve(Color(100, 100, 100), 0.06);
             g.addCurve(Color::Green);
         }
     }
@@ -389,10 +389,11 @@ void setProblems(vector<Problem>& problems) {
         problems.push_back(Problem("Spiral", i++, "", "spiral", NULL, NULL, false, spiral, spiralTarget, TWO_PI)); //0
         problems.push_back(Problem("Exponential Spiral", i++, "", "expSpiral", NULL, NULL, false, expSpiral, expSpiralTarget, TWO_PI)); //0
 
-        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, circle, doughnutTarget, TWO_PI)); //0
+        problems.push_back(Problem("Doughnut", i++, "", "doughnut", NULL, NULL, false, doughnut, doughnutTarget, TWO_PI)); //0
         problems.push_back(Problem("Cartoid", i++, "", "cartoid", NULL, NULL, false, cartoid, cartoidTarget, TWO_PI)); //0
         problems.push_back(Problem("Astroid", i++, "", "astroid", NULL, NULL, false, astroid, astroidTarget, TWO_PI)); //0
         problems.push_back(Problem("Hypocycloid", i++, "", "hypocycloid", NULL, NULL, false, hypocycloid, hypocycloidTarget, TWO_PI)); //0
+        problems.push_back(Problem("Heart", i++, "", "heart", NULL, NULL, false, heart, heartTarget, TWO_PI)); //0
 
     }
     else {
@@ -470,7 +471,7 @@ int main() {
     mainscreen.init(problems);
     bool pause = false;
     
-    graph.addCurve(Color(100, 100, 100), 0.03);
+    graph.addCurve(Color(100, 100, 100), 0.06);
     graph.addCurve(Color::Green);
 
     while (sfmlWin.isOpen()) {
