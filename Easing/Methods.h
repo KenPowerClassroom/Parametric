@@ -287,26 +287,20 @@ sf::Vector2f cartoid(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f r;
-    r.x = 0.5 * cos(t) + -0.25 * cos(2 * t);
-    r.y = 0.5 * sin(t) + -0.25 * sin(2 * t);
+    float a = 0.0; // Why does this look like a circle when a=0 ?
+
+    r.x = cos(t) + a * cos(2 * t);
+    r.y = sin(t) + a * sin(2 * t);
 
     return r;
 }
 
-sf::Vector2f circle(float t) {
-
-    //0 <= t <= 2PI
-    sf::Vector2f r;
-    r.x = cos(t);
-    r.y = sin(t);
-
-    return r;
-}
 
 sf::Vector2f astroid(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f r;
+
     r.x = cub(cos(t));
     r.y = cub(sin(t));
 
@@ -320,7 +314,8 @@ sf::Vector2f hypocycloid(float t) {
     sf::Vector2f r;
 
     float a = 2.0;
-    float b = a / 3;  //hint
+
+    float b = a / 3;  //hint: can you see "threeness" in the green curve? That is controlled by the "3" on here
 
     r.x = (a-b)*cos(t) + b*cos((a/b - 1)*t);
     r.y = (a-b)*sin(t) - b*sin((a/b - 1)*t);
@@ -333,11 +328,10 @@ sf::Vector2f heart(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    float s = t;
-    result.x = 16 * cub(sin(s));
-    result.y = 13 * cos(s) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t);
+    float scale = (1 / 16.0f);
 
-    result = (1 / 16.0f) * result;
+    result.x = scale*((16 * cub(sin(t))));
+    result.y = scale*(13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t));
 
     return result;
 }
