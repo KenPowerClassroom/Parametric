@@ -63,7 +63,7 @@ enum graphType {
 };
 
 
-bool parametric = false;
+bool parametric = true;
 int width = 800;
 int height = 800;
 
@@ -376,7 +376,7 @@ void setProblems(vector<Problem>& problems) {
     problems.clear();
 
     int i = 0;
-    if (parametric) {
+
         problems.push_back(Problem("Parametric line", i++, "", "line1", NULL, NULL, false, line1, line1Target)); //0        
         problems.push_back(Problem("Parametric line", i++, "", "line2", NULL, NULL, false, line2, line2Target)); //0        
         problems.push_back(Problem("Circle move", i++, "", "circleMove", NULL, NULL, false, circleMove, circleMoveTarget, TWO_PI)); //0
@@ -395,30 +395,7 @@ void setProblems(vector<Problem>& problems) {
         problems.push_back(Problem("Hypocycloid", i++, "", "hypocycloid", NULL, NULL, false, hypocycloid, hypocycloidTarget, TWO_PI)); //0
         problems.push_back(Problem("Heart", i++, "", "heart", NULL, NULL, false, heart, heartTarget, TWO_PI)); //0
 
-    }
-    else {
-        problems.push_back(Problem("Move line up", i++, "", "moveHorizLine", moveHorizLine, moveHorizLineTarget)); //0
-        problems.push_back(Problem("Change slope of line", i++, "", "changeSlope", changeSlope, changeSlopeTarget));
-        problems.push_back(Problem("Move line up", i++, "", "changeSlopeAndMove", changeSlopeAndMove, changeSlopeAndMoveTarget));
-        problems.push_back(Problem("Make parabolic", i++, "", "makeParabolic", makeParabolic, makeParabolicTarget));
-        problems.push_back(Problem("Move line up", i++, "", "moveParabolaLeft", moveParabolaLeft, moveParabolsLeftTarget)); //3
-        problems.push_back(Problem("Move line up", i++, "", "moveParabolaUp", moveParabolaUp, moveParabolaUpTarget));
-        problems.push_back(Problem("Move line up", i++, "", "invertParabola", invertParabola, invertParabolaTarget));
-        problems.push_back(Problem("Move line up", i++, "", "widenParabola", narrowParabola, widenParabolaTarget));  //6
-        problems.push_back(Problem("Move line up", i++, "", "widenAndMoveParabola", widenAndMoveParabola, widenAndMoveParabolaTarget));
-        problems.push_back(Problem("Move line up", i++, "", "moveCubicDown", moveCubicDown, moveCubicDownTarget));
-        problems.push_back(Problem("Move line up", i++, "", "moveCubicLeft", moveCubicLeft, moveCubicLeftTarget)); //8
-        problems.push_back(Problem("Move line up", i++, "", "easeIn", easeIn, easeInTarget, true));
-        problems.push_back(Problem("Move line up", i++, "use the function form the last problem and reflect it", "easeInUpsideDown", easeInUpsideDown, easeInUpsideDownTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInFlipLeftRight", easeInFlipLeftRight, easeInFlipVertTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeOut", easeOut, easeOutTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInThruCentre", easeInThruCentre, easeInThruCentreTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeOutThruCentre", easeOutThruCentre, easeOutThruCentreTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInOut", easeInOut, easeInOutTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInCubic", easeInCubic, easeInCubicTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInCubicThruCenter", easeInCubicThruCenter, easeInCubicThruCenterTarget, true));
-        problems.push_back(Problem("Move line up", i++, "", "easeInOutCubic", easeInOutCubic, easeInOutCubicTarget, true));
-    }
+  
 }
 
 int main() {
