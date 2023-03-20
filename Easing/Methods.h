@@ -149,7 +149,7 @@ sf::Vector2f spiral(float t) {
     sf::Vector2f result;
 
     float s = t * 5;
-    float r = 2.0; // radius needs to increase with time
+    float r = 2.0; // radius needs to increase with time (t)
 
     result.x = r * cos(s);
     result.y = r * sin(s);
@@ -189,7 +189,7 @@ sf::Vector2f cartoid(float t) {
 
     //0 <= t <= 2PI
     sf::Vector2f r;
-    float a = 0.0; // Why does this look like a circle when a=0 ?
+    float a = 0.0; // Why does this look like a circle when a=0 ? 
 
     r.x = cos(t) + a * cos(2 * t);
     r.y = sin(t) + a * sin(2 * t);
@@ -203,7 +203,7 @@ sf::Vector2f astroid(float t) {
     //0 <= t <= 2PI
     sf::Vector2f r;
 
-    r.x = cub(cos(t));
+    r.x = cub(cos(t));   // cub(x) =>  x*x*x 
     r.y = cub(sin(t));
 
 
@@ -230,7 +230,7 @@ sf::Vector2f heart(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    float scale = (1 / 16.0f);
+    float scale = (1 / 16.0f); // try modifying this line first
 
     result.x = scale*((16 * cub(sin(t))));
     result.y = scale*(13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t));
