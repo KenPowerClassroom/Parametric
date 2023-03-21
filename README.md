@@ -1,1 +1,1 @@
-# Easing
+# Parametric
