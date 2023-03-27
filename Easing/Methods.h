@@ -260,8 +260,19 @@ sf::Vector2f expSpiral(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    float s = t * 5; //don't change
+    float s = t * 3; //don't change
 
+    //Hint:
+	// the radius of this spiral for various values of t:
+    //+-----+----------+ 
+    //| t   |   radius |
+    //+-----+----------+
+    //| 1.0 |    0.1   |
+    //| 2.0 |    0.4   |
+    //| 3.0 |    0.9   |
+    //| 4.0 |    1.6   |
+    //+----------------+ 
+    
     float r = 2.0; //<= this is the only line to change
 
     result.x = r * cos(s);//don't change
