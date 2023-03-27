@@ -148,10 +148,11 @@ sf::Vector2f spiral(float t) {
     //0 <= t <= 2PI
     sf::Vector2f result;
 
-    float s = t * 5;
+    float s = t * 5; // don't change
+
     float r = 2.0; // radius needs to increase with time (t)
 
-    result.x = r * cos(s);
+	result.x = r * cos(s); // what is the difference between this and the circleScale function?
     result.y = r * sin(s);
 
     return result;
